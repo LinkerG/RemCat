@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+  
+  laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        uid: 1000  # Valor de ejemplo para el ID de usuario
+        user: chocu  # Valor de ejemplo para el nombre de usuario
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./laravel:/var/www/html
+    command: sh -c "php /var/www/html/artisan serve --host 0.0.0.0 --port 8000"
+    depends_on:
+      - mongodb
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
