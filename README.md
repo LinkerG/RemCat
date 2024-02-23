@@ -1,3 +1,3 @@
-```bash
-cd g
+```javascript
+console.log("hola");
 ```
