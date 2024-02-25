@@ -8,7 +8,7 @@ services:
       - "27017:27017"
     restart: always
     volumes:
-      - ./mongodb:/data/db
+      - ./mongoData:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=chocu
