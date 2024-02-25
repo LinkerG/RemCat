@@ -1,3 +1,4 @@
-```javascript
-console.log("hola");
+To start the project:
+```bash
+docker-compose up -d --build
 ```
