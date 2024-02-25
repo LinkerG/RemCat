@@ -22,3 +22,4 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 RUN cd /var/www/html
 WORKDIR /var/www/html
+#RUN composer install

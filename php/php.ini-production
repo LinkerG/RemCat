@@ -1,5 +1,5 @@
 [PHP]
-
+extension="mongodb.so"
 ;;;;;;;;;;;;;;;;;;;
 ; About php.ini   ;
 ;;;;;;;;;;;;;;;;;;;
@@ -941,7 +941,7 @@ default_socket_timeout = 60
 ;extension=oci8_12c  ; Use with Oracle Database 12c Instant Client
 ;extension=oci8_19  ; Use with Oracle Database 19 Instant Client
 ;extension=odbc
-;extension=openssl
+extension=openssl
 ;extension=pdo_firebird
 ;extension=pdo_mysql
 ;extension=pdo_oci
