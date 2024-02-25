@@ -62,7 +62,7 @@ services:
       - mainNet
 
 volumes:
-   mongodb:
+   mongoData:
     driver: local
    clientdb:
     driver: local
