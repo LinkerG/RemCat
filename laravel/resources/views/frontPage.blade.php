@@ -16,10 +16,6 @@
         </style>
     </head>
     <body>
-        <h1>Prueba de MONGODB - NIGGER</h1>
-        <?php
-        $usuarios = DB::collection("Users")->get();
-        var_dump($usuarios);
-        ?>
+        
     </body>
 </html>
