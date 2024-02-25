@@ -10,8 +10,8 @@ services:
     volumes:
       - ./mongodb:/data/db
     environment:
-    - MONGO_INITDB_ROOT_USERNAME=root
-    - MONGO_INITDB_ROOT_PASSWORD=chocu
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=chocu
     networks:
       - mainNet
   
@@ -27,7 +27,10 @@ services:
       - "8000:8000"
     volumes:
       - ./laravel:/var/www/html
-    command: sh -c "php /var/www/html/artisan serve --host 0.0.0.0 --port 8000"
+      - ./php:/usr/local/etc/php
+    command: >
+      sh -c "
+      php /var/www/html/artisan serve --host 0.0.0.0 --port 8000"
     depends_on:
       - mongodb
     links:

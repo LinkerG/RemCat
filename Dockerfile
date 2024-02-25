@@ -5,9 +5,14 @@ ARG uid
 RUN apt update && apt install -y \
     git \
     curl \
+    zip \
+    unzip \
     libpng-dev \
     libonig-dev \
-    libxml2-dev
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    pkg-config \
+    libssl-dev
 RUN yes '' | pecl install mongodb && docker-php-ext-enable mongodb
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
