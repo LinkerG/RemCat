@@ -16,4 +16,38 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
+    
+}
+
+.banner-logo{
+    height: 80%;
+}
+
+.textWrapper{
+    margin-right: auto;
+    margin-left: 17rem;
+}
+p.selfWrittingText{
+    color: white;
+    text-transform: capitalize;
+    font-weight: bolder;
+}
+
+span {
+    color: white;
+    border-right: .05em solid;
+    animation: caratteri 1s steps(1) infinite;
+}
+  
+@keyframes caratteri {
+    50% {
+      border-color: transparent;
+    }
+}
+
+.mask > .container{
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
