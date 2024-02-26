@@ -25,12 +25,13 @@
 
 .textWrapper{
     margin-right: auto;
-    margin-left: 17rem;
+    margin-left: 8rem;
 }
 p.selfWrittingText{
     color: white;
     text-transform: capitalize;
     font-weight: bolder;
+    text-align: center;
 }
 
 span {
@@ -45,9 +46,11 @@ span {
     }
 }
 
-.mask > .container{
+.container.over-banner{
+    position: absolute;
     height: 300px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    z-index: 3;
 }
