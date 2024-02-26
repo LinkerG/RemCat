@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     background: url(../images/banner.png) no-repeat center/cover;
+    background-position-y: -10px;
     z-index: 0;
     position: relative; /* Añadido */
 }
