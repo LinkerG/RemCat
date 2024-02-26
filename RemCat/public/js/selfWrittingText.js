@@ -1,5 +1,5 @@
 window.addEventListener('load', function () {
-    var dataText = ["Esforç", "Dedicació", "Compromís", "Disciplina", "Sacrifici", "Constància", "Companyerisme", "Respecte", "Deportivitat"];
+    var dataText = ["Companyerisme", "Dedicació", "Compromís", "Disciplina", "Sacrifici", "Constància", "Esforç", "Respecte", "Deportivitat"];
 
     function typeWriter(text, i, fnCallback) {
         if (i < text.length) {

@@ -1,36 +1,41 @@
-.banner-container{
+.banner-container {
     padding: 0;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url(../images/banner.png) no-repeat center/cover;
+    z-index: 0;
+    position: relative; /* Añadido */
 }
 
-.banner-image{
-    object-fit:cover;
+.banner-container::before {
+    content: "";
+    width: 100%;
+    height: 300px;
+    background-color: hsla(0, 0%, 0%, 0.5);
+    position: absolute;
+}
+
+.banner-image {
+    object-fit: cover;
     width: 100%;
     height: 300px;
     z-index: 0;
 }
 
-.mask{
-    position: absolute;
-    height: 300px;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    
-}
-
-.banner-logo{
+.banner-logo {
     height: 80%;
 }
 
-.textWrapper{
-    margin-right: auto;
-    margin-left: 17rem;
+.textWrapper {
+    margin: 0 auto; /* Simplificado */
 }
-p.selfWrittingText{
+
+.selfWrittingText {
     color: white;
     text-transform: capitalize;
     font-weight: bolder;
+    text-align: center;
 }
 
 span {
@@ -38,16 +43,37 @@ span {
     border-right: .05em solid;
     animation: caratteri 1s steps(1) infinite;
 }
-  
+
 @keyframes caratteri {
     50% {
-      border-color: transparent;
+        border-color: transparent;
     }
 }
 
-.mask > .container{
+.container.over-banner {
     height: 300px;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
+    z-index: 3;
+}
+
+@media (max-width: 767px) { /* Corregido */
+    .container.over-banner {
+        justify-content: center;
+    }
+    .textWrapper {
+        width: 100%; /* Corregido */
+    }
+}
+
+@media (min-width: 1001px) { /* Corregido */
+    .h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (min-width: 1501px) { /* Corregido */
+    .h1 {
+        font-size: 4.5rem;
+    }
 }

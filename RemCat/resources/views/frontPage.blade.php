@@ -12,14 +12,13 @@
 <body>
     @include("components.header")
     <div class="container-fluid bg-dark banner-container">
-        <img src="{{asset('images/banner.png')}}" alt="banner image" class="img-fluid banner-image">
-        <div class="mask">
-            <div class="container">
-                <img src="{{asset('images/logo-white.png')}}" alt="rem cat logo" class="banner-logo">
-                <div class="textWrapper">
-                    <p class="selfWrittingText display-1">TEXTO</p>
-                </div>
+        <div class="container over-banner">
+            <img src="{{asset('images/logo-white.png')}}" alt="rem cat logo" class="banner-logo">
+            <div class="textWrapper">
+                <p class="selfWrittingText h1"></p>
             </div>
+        </div>
+        <div class="mask">
         </div>
     </div>
     @include("components.footer")
