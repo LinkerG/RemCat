@@ -15,6 +15,6 @@ use App\Http\Controllers\TUserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontPage');
 });
 Route::get('/users', [TUserController::class, 'index'])->name('users.index');

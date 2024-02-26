@@ -1,0 +1,4 @@
+.header-gradient{
+    background: rgb(252,200,1);
+    background: linear-gradient(90deg, rgba(252,200,1,1) 75%, rgba(234,104,46,1) 100%);
+}
