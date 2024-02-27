@@ -18,8 +18,6 @@
                 <p class="selfWrittingText h1"></p>
             </div>
         </div>
-        <div class="mask">
-        </div>
     </div>
     @include("components.footer")
 </body>

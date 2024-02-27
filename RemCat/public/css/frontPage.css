@@ -1,15 +1,15 @@
-.banner-container {
+.banner-container{
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: url(../images/banner.png) no-repeat center/cover;
-    background-position-y: -10px;
+    background-image: url(../images/banner.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     z-index: 0;
-    position: relative; /* Añadido */
 }
-
-.banner-container::before {
+.banner-container::before{
     content: "";
     width: 100%;
     height: 300px;
@@ -17,22 +17,17 @@
     position: absolute;
 }
 
-.banner-image {
-    object-fit: cover;
-    width: 100%;
-    height: 300px;
-    z-index: 0;
-}
-
-.banner-logo {
+.banner-logo{
     height: 80%;
+    object-fit: contain;
+    
 }
 
-.textWrapper {
-    margin: 0 auto; /* Simplificado */
+.textWrapper{
+    margin-right: auto;
+    margin-left: auto;
 }
-
-.selfWrittingText {
+p.selfWrittingText{
     color: white;
     text-transform: capitalize;
     font-weight: bolder;
@@ -44,37 +39,51 @@ span {
     border-right: .05em solid;
     animation: caratteri 1s steps(1) infinite;
 }
-
+  
 @keyframes caratteri {
     50% {
-        border-color: transparent;
+      border-color: transparent;
     }
 }
 
-.container.over-banner {
+.container.over-banner{
+    
     height: 300px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     z-index: 3;
+    
 }
 
-@media (max-width: 767px) { /* Corregido */
-    .container.over-banner {
-        justify-content: center;
+@media (width < 768px){
+    .banner-logo{
+        width: 100%;
     }
-    .textWrapper {
-        width: 100%; /* Corregido */
+    .banner-container{
+        max-width: 100%;
+    }
+    .container.over-banner{
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+    }
+    .textWrapper{
+        text-align: center;
+        min-width: 100vw;
     }
 }
 
-@media (min-width: 1001px) { /* Corregido */
-    .h1 {
+@media (width > 1000px){
+    .h1{
         font-size: 3.5rem;
     }
-}
+    
+}   
 
-@media (min-width: 1501px) { /* Corregido */
-    .h1 {
+@media (width > 1500px){
+    .h1{
         font-size: 4.5rem;
     }
+    
 }
