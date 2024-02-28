@@ -12,7 +12,7 @@ class TUserController extends Controller
         
         
         
-        $users = (new TUser())->setCollection('Users')->paginate(10);
+        $users = (new TUser())->setCollection('Users')->get();
         
         return view("index", compact("users"));
         
