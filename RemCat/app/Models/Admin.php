@@ -8,5 +8,5 @@ use MongoDB\Laravel\Eloquent\Model;
 class Admin extends Model
 {
     protected $connection = "mongodb";
-    protected $collection = "Admin";
+    protected $collection = "Admins";
 }

@@ -8,5 +8,5 @@ use MongoDB\Laravel\Eloquent\Model;
 class Sponsor extends Model
 {
     protected $connection = "mongodb";
-    protected $collection = "Sponsor";
+    protected $collection = "Sponsors";
 }
