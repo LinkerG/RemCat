@@ -22,3 +22,10 @@ Route::get('/login', function() { return view('login'); });
 Route::get('/admin', function() { return view('admin/loginAdmin'); });
 // Listar usuarios prueba
 Route::get('/users', [TUserController::class, 'index'])->name('users.index');
+// Formulario sponsors
+Route::get('/admin/sponsors/add', function() { return view('admin/addSponsors'); });
+// Respuesta formulario sponsors
+Route::post('/admin/sponsors/add', function() { 
+    
+    return view('admin/addSponsors'); 
+});
