@@ -7,5 +7,6 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Admin extends Model
 {
-    use HasFactory;
+    protected $connection = "mongodb";
+    protected $collection = "Admin";
 }

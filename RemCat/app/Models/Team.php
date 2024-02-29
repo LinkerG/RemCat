@@ -7,5 +7,6 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Team extends Model
 {
-    use HasFactory;
+    protected $connection = "mongodb";
+    protected $collection = "Team";
 }

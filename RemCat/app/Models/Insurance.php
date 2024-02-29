@@ -7,5 +7,6 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Insurance extends Model
 {
-    use HasFactory;
+    protected $connection = "mongodb";
+    protected $collection = "Insurance";
 }
