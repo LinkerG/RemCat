@@ -3,7 +3,7 @@
         <div class="container">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="navbar-brand text-light" href="#">RemCat 🚣</a>
+                    <a class="navbar-brand text-light" href="/">RemCat 🚣</a>
                 </li>
                 <li class="nav-item">
                     <div class="btn-group">
