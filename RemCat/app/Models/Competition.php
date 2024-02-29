@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
-class TUser extends Model
+class Competition extends Model
 {
     protected $connection = "mongodb";
     protected $collection;   
@@ -12,5 +14,4 @@ class TUser extends Model
         $this->collection = $col;
         return $this;
     }
-    
 }
