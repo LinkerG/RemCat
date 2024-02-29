@@ -18,3 +18,6 @@ Route::get('/', function () {
     return view('frontPage');
 });
 Route::get('/users', [TUserController::class, 'index'])->name('users.index');
+Route::get('/admin', function() {
+    return view('admin/loginAdmin');
+});
