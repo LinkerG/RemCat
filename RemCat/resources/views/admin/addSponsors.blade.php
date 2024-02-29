@@ -11,18 +11,18 @@
     @include('components.header')
     <div class="container shadow mt-5 p-5">
         <h1 class="mb-3">Añadir sponsor</h1>
-        <form action="" method="post">
+        <form action="#" method="post">
             @csrf
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingCif" placeholder="CIFFFFFFFFF">
+                <input type="text" class="form-control" id="floatingCif">
                 <label for="floatingCif">CIF</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingName" placeholder="Espetec">
+                <input type="text" class="form-control" id="floatingName">
                 <label for="floatingName">Name</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingAddress" placeholder="Calle Inventadona 23">
+                <input type="text" class="form-control" id="floatingAddress">
                 <label for="floatingAddress">Address</label>
             </div>
             <div class="mb-3">
