@@ -14,10 +14,11 @@ use App\Http\Controllers\TUserController;
 |
 */
 
-Route::get('/', function () {
-    return view('frontPage');
-});
+// Pagina inicio
+Route::get('/', function () { return view('frontPage'); });
+// Pagina login usuario
+Route::get('/login', function() { return view('login'); });
+// Pagina login admin
+Route::get('/admin', function() { return view('admin/loginAdmin'); });
+// Listar usuarios prueba
 Route::get('/users', [TUserController::class, 'index'])->name('users.index');
-Route::get('/admin', function() {
-    return view('admin/loginAdmin');
-});

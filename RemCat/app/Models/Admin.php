@@ -22,4 +22,3 @@ class Admin extends Model
     }
     
 }
-

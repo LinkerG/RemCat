@@ -1,5 +1,3 @@
-<!-- resources/views/users/index.blade.php -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +10,5 @@
             <li>{{ $user }}</li>
         @endforeach
     </ul>
-    <?php
-    
-    ?>
 </body>
 </html>
