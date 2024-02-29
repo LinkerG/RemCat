@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->id();
+            //Comentado ya que mongoDB crea el id automaticamente
+            //$table->increments("_id");
             $table->morphs('tokenable');
             $table->string('name');
             $table->string('token', 64)->unique();
