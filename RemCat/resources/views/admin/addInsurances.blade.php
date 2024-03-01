@@ -27,11 +27,11 @@
             </div>
             <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="floatingPrice" placeholder="">
-                <label for="floatingPrice">{{ trans('admin.insurance.price') }} €</label>
+                <label for="floatingPrice">{{ trans('admin.insurance.price') }} - €</label>
             </div>
-            <div class="mt-5">
-                <button class="btn btn-primary btn-lg ps-5 pe-5" type="submit">{{ trans('admin.addButton') }}</button>
-                <button class="btn btn-primary btn-lg ps-5 pe-5" type="submit">{{ trans('admin.backButton') }}</button>
+            <div class="mt-5 flex-row-reverse " style="display: flex">
+                <button class="btn btn-success btn-lg fix-size" type="submit">{{ trans('admin.addButton') }}</button>
+                <button class="btn btn-primary btn-lg fix-size me-3" type="submit">{{ trans('admin.backButton') }}</button>
             </div>
         </form>
     </div>

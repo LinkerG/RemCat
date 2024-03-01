@@ -2,6 +2,7 @@
 
 return [
     'addButton' => 'Afegir',
+    'backButton' => 'Enrere',
     'sponsor' => [
         'title' => 'Afegir un nou sponsor',
         

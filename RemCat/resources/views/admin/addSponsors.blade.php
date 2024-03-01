@@ -29,8 +29,9 @@
                 <label for="formFile" class="form-label ms-2">{{ trans('admin.sponsor.image') }}</label>
                 <input class="form-control" type="file" id="formFile">
             </div>
-            <div class="mt-5">
-                <button class="btn btn-primary btn-lg" type="submit">{{ trans('admin.addButton') }}</button>
+            <div class="mt-5 flex-row-reverse " style="display: flex">
+                <button class="btn btn-success btn-lg fix-size" type="submit">{{ trans('admin.addButton') }}</button>
+                <button class="btn btn-primary btn-lg fix-size me-3" type="submit">{{ trans('admin.backButton') }}</button>
             </div>
         </form>
     </div>
