@@ -52,4 +52,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         App::setLocale($lang);
         return view('admin/addSponsors');
     });
+
+    // Formulario de agregar aseguradoras
+    Route::get('/admin/insurances/add', function ($lang = 'es') {
+        App::setLocale($lang);
+        return view('admin/addInsurances');
+    })->name('admin.insurances.add');
+
+    // Respuesta del formulario de agregar aseguradoras
+    Route::post('/admin/insurances/add', function ($lang = 'es') {
+        App::setLocale($lang);
+        return view('admin/addInsurances');
+    });
 });
