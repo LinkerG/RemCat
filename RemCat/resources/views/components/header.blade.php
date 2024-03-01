@@ -7,9 +7,9 @@
                 </li>
                 <li class="nav-item">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary">Cas</button>
-                        <button type="button" class="btn btn-primary">Cat</button>
-                        <button type="button" class="btn btn-primary">Eng</button>
+                        <button type="button" class="btn btn-primary" id="lang-es">Es</button>
+                        <button type="button" class="btn btn-primary" id="lang-ca">Cat</button>
+                        <button type="button" class="btn btn-primary" id="lang-en">Eng</button>
                     </div>
                 </li>
             </ul>
