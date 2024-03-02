@@ -63,4 +63,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         App::setLocale($lang);
         return view('admin/addInsurances');
     });
+
+    // Formulario de agregar competiciones
+    Route::get('/admin/competitions/add', function ($lang = 'es') {
+        App::setLocale($lang);
+        return view('admin/addCompetitions');
+    })->name('admin.competitions.add');
+
+    // Respuesta del formulario de agregar competiciones
+    Route::post('/admin/competitions/add', function ($lang = 'es') {
+        App::setLocale($lang);
+        return view('admin/addCompetitions');
+    });
 });
