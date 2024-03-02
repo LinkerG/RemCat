@@ -13,6 +13,21 @@
                     </div>
                 </li>
             </ul>
+            <div class="dropdown">
+                <button type="button" class="dropdown-toggle btn centered-button" data-bs-toggle="dropdown">
+                    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+                    <lord-icon
+                        src="https://cdn.lordicon.com/kthelypq.json"
+                        trigger="click"
+                        colors="primary:#ffffff">
+                    </lord-icon>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Log in</a></li>
+                    <li><a class="dropdown-item" href="#">Register</a></li>
+                    <li><a class="dropdown-item" href="#">Admin menu</a></li>
+                  </ul>
+            </div>
         </div>
     </nav>
 </header>

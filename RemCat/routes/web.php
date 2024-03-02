@@ -16,9 +16,8 @@ use App\Http\Controllers\TUserController;
 |
 */
 
+// Definición de idioma por defecto
 Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
-    // Definición de idioma por defecto
-    
 
     // Página de inicio
     Route::get('/', function ($lang = 'es') {
