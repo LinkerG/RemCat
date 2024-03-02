@@ -3,7 +3,10 @@
         <div class="container">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="navbar-brand text-light" href="/">RemCat 🚣</a>
+                    {{-- Con el App::getLocale() conseguimos el idioma en el que esta la pagina --}}
+                    <?php $route = App::getLocale() . "/" ?>
+                    {{-- La ruta de los enlaces se ha de poner con el echo $route para conservar el idioma seleccionado en la página--}}
+                    <a class="navbar-brand text-light" href="<?php echo $route . "/" ?>">RemCat 🚣</a>
                 </li>
                 <li class="nav-item">
                     <div class="btn-group">
@@ -14,18 +17,21 @@
                 </li>
             </ul>
             <div class="dropdown">
-                <button type="button" class="dropdown-toggle btn centered-button" data-bs-toggle="dropdown">
+                <button type="button" id="header-dropdown-button" class="dropdown-toggle btn centered-button" data-bs-toggle="dropdown">
+                    {{-- Icono animado source: https://lordicon.com/icons/system/regular/8-account --}}
                     <script src="https://cdn.lordicon.com/lordicon.js"></script>
                     <lord-icon
+                        id="header-dropdown-icon"
                         src="https://cdn.lordicon.com/kthelypq.json"
                         trigger="click"
                         colors="primary:#ffffff">
                     </lord-icon>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Log in</a></li>
-                    <li><a class="dropdown-item" href="#">Register</a></li>
-                    <li><a class="dropdown-item" href="#">Admin menu</a></li>
+                    
+                    <li><a class="dropdown-item" href="<?php echo $route . "login" ?>">Login</a></li>
+                    <li><a class="dropdown-item" href="<?php echo $route . "register" ?>">Register</a></li>
+                    <li><a class="dropdown-item" href="#"> - </a></li>
                   </ul>
             </div>
         </div>
