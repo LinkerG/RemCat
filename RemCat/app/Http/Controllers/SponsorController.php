@@ -17,8 +17,9 @@ class SponsorController extends Controller
         // Aquí puedes procesar la lógica para agregar un nuevo sponsor
         echo "Datos enviados por el formulario";
         echo "<br>";
-        $nombre = $request->input('name');
-        echo $nombre;
+        $cif = $request->input('cif');
+        $name = $request->input('name');
+        echo $name;
 
         //return view("admin/addSponsors");
     }
