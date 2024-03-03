@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 // Controladores 
 use App\Http\Controllers\TUserController;
+use App\Http\Controllers\SponsorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,16 +41,22 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
     // Listar usuarios de prueba
     Route::get('/users', [TUserController::class, 'index'])->name('users.index');
 
-    // Formulario de agregar patrocinadores
+    // Formulario de agregar sponsors
     Route::get('/admin/sponsors/add', function ($lang = 'es') {
+        // ALEX BORRA ESTO CUANDO LO LEAS
+        // Antes de que te de un ictus, esta es la unica forma que he encontrado para 
+        // llamar a un controlador conservando el idioma asi que o encuentras otra
+        // manera o lo hacemos asi, le preguntare a la olga
+        $sponsorController = new SponsorController();
         App::setLocale($lang);
-        return view('admin/addSponsors');
+
+        return $sponsorController->showAddForm();
     })->name('admin.sponsors.add');
 
-    // Respuesta del formulario de agregar patrocinadores
+    // Respuesta del formulario de agregar sponsors
     Route::post('/admin/sponsors/add', function ($lang = 'es') {
         App::setLocale($lang);
-        return view('admin/addSponsors');
+        //return view('admin/addSponsors');
     });
 
     // Formulario de agregar aseguradoras
