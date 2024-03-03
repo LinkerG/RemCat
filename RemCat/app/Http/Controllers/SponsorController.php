@@ -25,7 +25,7 @@ class SponsorController extends Controller
             File::makeDirectory($uploadPath, 0777, true, true);
         }
 
-        
+        // TODO: Esto no funciona
         if ($request->hasFile('image-logo')) {
             $image = $request->file('image-logo');
 
@@ -45,7 +45,13 @@ class SponsorController extends Controller
         if(!Sponsor::where("cif", $cif)->exists()){
             $sponsor->save();
         } else {
-            echo "existe";
+            // Esto es temporal
+            echo "
+            <div class='alert alert-danger alert-dismissible fade show'>
+                <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
+                <strong>Error!</strong> Ya existe un sponsor con ese CIF.
+            </div>
+            ";
         }
         
         return view("admin/addSponsors");

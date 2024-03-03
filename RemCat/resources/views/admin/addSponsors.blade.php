@@ -14,7 +14,7 @@
         <form action="/{{ config('app.locale') }}/admin/sponsors/add" method="POST" class="mt-1">
             @csrf
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="cif" name="cif" placeholder="" value="{{old('cif')}}">
+                <input type="text" class="form-control" id="cif" name="cif" placeholder="" value="{{old('cif')}}" required>
                 <label for="cif">CIF</label>
             </div>
             <div class="form-floating mb-3">
