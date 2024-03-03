@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 // Controladores 
 use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
@@ -54,9 +55,11 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
     })->name('admin.sponsors.add');
 
     // Respuesta del formulario de agregar sponsors
-    Route::post('/admin/sponsors/add', function ($lang = 'es') {
+    Route::post('/admin/sponsors/add', function (Request $request, $lang = 'es') {
+        $sponsorController = new SponsorController();
         App::setLocale($lang);
-        //return view('admin/addSponsors');
+        
+        return $sponsorController->add($request);
     });
 
     // Formulario de agregar aseguradoras

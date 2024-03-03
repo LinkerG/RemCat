@@ -14,13 +14,12 @@ class SponsorController extends Controller
 
     public function add(Request $request)
     {
-        var_export($request);
-        $lang = $request->getLocale();
-        \App::setLocale($lang);
-
         // Aquí puedes procesar la lógica para agregar un nuevo sponsor
+        echo "Datos enviados por el formulario";
+        echo "<br>";
+        $nombre = $request->input('name');
+        echo $nombre;
 
-        return redirect()->route('admin.sponsors.add')
-            ->with('success', __('Sponsor added successfully.'));
+        //return view("admin/addSponsors");
     }
 }
