@@ -12,6 +12,8 @@
     <div class="container container-small shadow mt-4 mr-5 ml-5 p-5">
         <h1 class="mb-3" style="text-align: center">{{ trans('admin.competition.title') }}</h1>
         nombre, embarcacion fecha ubicacion fecha OPEN? imagenMapa precioSponsor sponsorArray
+        {{--  TODO: Añadir el atributo NAME a los inputs  --}}
+        {{--  Si no no se puede hacer el manejo del POST  --}}
         <form action="#" method="post" class="mt-1">
             @csrf
             <div class="form-floating mb-3">
