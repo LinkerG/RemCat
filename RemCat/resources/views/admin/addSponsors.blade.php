@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add sponsors</title>
     @include('components.links')
+    <script src="{{asset('js/formValidator.js')}}"></script>
 </head>
 <body>
     @include('components.header')
@@ -30,8 +31,8 @@
                 <input class="form-control" type="file" id="image-logo" name="image-logo">
             </div>
             <div class="mt-5 flex-row-reverse " style="display: flex">
-                <button class="btn btn-success btn-lg fix-size" type="submit">{{ trans('admin.addButton') }}</button>
-                <button class="btn btn-primary btn-lg fix-size me-3" type="submit">{{ trans('admin.backButton') }}</button>
+                <button class="btn btn-success btn-lg fix-size" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
+                <button class="btn btn-primary btn-lg fix-size me-3" type="button">{{ trans('admin.backButton') }}</button>
             </div>
         </form>
     </div>
