@@ -59,7 +59,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         $sponsorController = new SponsorController();
         App::setLocale($lang);
         
-        return $sponsorController->add($request);
+        return $sponsorController->store($request);
     });
 
     // Formulario de agregar aseguradoras

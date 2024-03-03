@@ -26,8 +26,8 @@
                 <label for="address">{{ trans('admin.form.address') }}</label>
             </div>
             <div class="mb-3">
-                <label for="image" class="form-label ms-2">{{ trans('admin.sponsor.image') }}</label>
-                <input class="form-control" type="file" id="image" name="image">
+                <label for="image-logo" class="form-label ms-2">{{ trans('admin.sponsor.image') }}</label>
+                <input class="form-control" type="file" id="image-logo" name="image-logo">
             </div>
             <div class="mt-5 flex-row-reverse " style="display: flex">
                 <button class="btn btn-success btn-lg fix-size" type="submit">{{ trans('admin.addButton') }}</button>
