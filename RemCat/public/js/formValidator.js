@@ -9,13 +9,33 @@ window.addEventListener("load", function(){
             const input = inputs[i];
             switch (input.name) {
                 case "cif":
-                    if(!validateCif(input.value)) errors.push("cif");
+                    if(!validateCif(input.value)) {
+                        console.log(input.value);
+                        errors.push("cif");
+                        //input.classList.add("formInvalid")
+                        //input.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                    } else {
+                        //input.classList.remove("formInvalid")
+                        //input.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                    }
                     break;
-                case "name" | "address":
-                    if(!validateNonEmptyText(input.value)) errors.push("name")
+                case "name":
+                case "address":
+                    console.log(input.value);
+                    if(!validateNonEmptyText(input.value)) {
+                        errors.push("empty");
+                        //input.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                    } else {
+                        //input.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                    }
                     break;
                 case "email":
-                    if(!validateEmail(input.value)) errors.push("email")
+                    if(!validateEmail(input.value)) {
+                        errors.push("email");
+                        //input.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                    } else {
+                        //input.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                    }
                     break;
                 case "password":
                     //añadir
@@ -24,7 +44,9 @@ window.addEventListener("load", function(){
                     break;
             }
         }
+        console.log(errors);
         if(errors.length === 0) form.submit();
+        else form.classList.add("was-validated")
     });
 })
 

@@ -42,6 +42,7 @@ class SponsorController extends Controller
         $sponsor->address = $address;
         $sponsor->logo = $fileName;
 
+        $error = [];
         if(!Sponsor::where("cif", $cif)->exists()){
             $sponsor->save();
         } else {
@@ -52,8 +53,10 @@ class SponsorController extends Controller
                 <strong>Error!</strong> Ya existe un sponsor con ese CIF.
             </div>
             ";
+            $error[] = "alreadyExists";
         }
         
-        return view("admin/addSponsors");
+        // Para redirigir con el idioma hay que hacerlo asi
+        return redirect()->route('admin.sponsors.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
 }
