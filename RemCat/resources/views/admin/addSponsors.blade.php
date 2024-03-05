@@ -10,8 +10,7 @@
 </head>
 <body>
     @include('components.header')
-    <?php $a = 'admin.sponsor.title'?>
-    @if($errors->any())
+    @if(!$errors->isEmpty())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)

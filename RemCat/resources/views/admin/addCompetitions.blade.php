@@ -11,6 +11,15 @@
 </head>
 <body>
     @include('components.header')
+    @if(!$errors->isEmpty())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container shadow mt-4 mr-5 ml-5 p-5">
         <h1 class="mb-3" style="text-align: center">{{ trans('admin.competition.title') }}</h1>
         <form action="#" method="post" class="mt-1">
