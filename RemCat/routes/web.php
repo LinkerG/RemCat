@@ -8,7 +8,7 @@ use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\CompetitionController;
-
+use App\Http\Controllers\AdminController;
 
 // RUTAS DE LA WEB
 
@@ -33,15 +33,18 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         return view('admin/loginAdmin');
     })->name('admin.login');
 
+    Route::post('/admin', function (Request $request, $lang = 'es') {
+        $adminController = new AdminController();
+        App::setLocale($lang);
+
+        return $adminController->procesarFormulario($request);
+    });
+
     // Listar usuarios de prueba
     Route::get('/users', [TUserController::class, 'index'])->name('users.index');
 
     // Formulario de agregar sponsors
     Route::get('/admin/sponsors/add', function ($lang = 'es') {
-        // ALEX BORRA ESTO CUANDO LO LEAS
-        // Antes de que te de un ictus, esta es la unica forma que he encontrado para 
-        // llamar a un controlador conservando el idioma asi que o encuentras otra
-        // manera o lo hacemos asi, le preguntare a la olga
         $sponsorController = new SponsorController();
         App::setLocale($lang);
 

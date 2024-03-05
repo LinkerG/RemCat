@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 class Admin extends Model
 {
     protected $connection = 'mongodb';
-    protected $collection = 'admins';
+    protected $collection = 'Admins';
 
     protected $fillable = [
         'email', 'password',

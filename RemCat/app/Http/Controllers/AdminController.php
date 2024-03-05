@@ -1,4 +1,6 @@
 <?php
+namespace App\Http\Controllers;
+
 use App\Models\Admin;
 use Illuminate\Http\Request;
 
@@ -9,12 +11,13 @@ class AdminController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        if (Admin::verificarCredenciales($email, $password)) {
+        if (Admin::verifyAdmin($email, $password)) {
             // Credenciales válidas
-            return response()->json(['mensaje' => 'Credenciales válidas'], 200);
+            return redirect()->route('admin.login', ['lang' => app()->getLocale()])->with('success', 'Login successful');
         } else {
             // Credenciales inválidas
-            return response()->json(['mensaje' => 'Credenciales inválidas'], 401);
+            return redirect()->route('admin.login', ['lang' => app()->getLocale()])->with('Error', 'Error');
         }
     }
+    
 }
