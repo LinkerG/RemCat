@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\File;
 
 class SponsorController extends Controller
 {
-    public function showAddForm()
-    {
+    public function showAddForm(){
         return view('admin/addSponsors');
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $cif = $request->input('cif');
         $name = $request->input('name');
         $address = $request->input("address");
@@ -52,5 +50,10 @@ class SponsorController extends Controller
         
         // Para redirigir con el idioma hay que hacerlo asi
         return redirect()->route('admin.sponsors.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
+    }
+
+    public function fetchAllSponsors(){
+        $sponsors = Sponsor::all();
+        return response()->json($sponsors);
     }
 }

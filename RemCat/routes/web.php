@@ -8,16 +8,8 @@ use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\InsuranceController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
+// RUTAS DE LA WEB
 
 // Definición de idioma por defecto
 Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
@@ -91,3 +83,9 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         return view('admin/addCompetitions');
     });
 });
+
+
+// ENDPOINTS      ---   Sobre todo para recuperar JSON desde JavaScript
+
+// Fetch sponsors
+Route::get('/api/sponsors/fetchAll', [SponsorController::class, 'fetchAllSponsors']);
