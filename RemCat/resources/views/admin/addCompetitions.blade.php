@@ -6,37 +6,99 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add insurance</title>
     @include('components.links')
+    <script src="{{asset('js/formValidator.js')}}"></script>
+    <script src="{{asset('js/sponsorSelectorPopup.js')}}"></script>
 </head>
 <body>
     @include('components.header')
-    <div class="container container-small shadow mt-4 mr-5 ml-5 p-5">
+    <div class="container shadow mt-4 mr-5 ml-5 p-5">
         <h1 class="mb-3" style="text-align: center">{{ trans('admin.competition.title') }}</h1>
-        nombre, embarcacion fecha ubicacion fecha OPEN? imagenMapa precioSponsor sponsorArray
-        {{--  TODO: Añadir el atributo NAME a los inputs  --}}
-        {{--  Si no no se puede hacer el manejo del POST  --}}
         <form action="#" method="post" class="mt-1">
             @csrf
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingCif" placeholder="">
-                <label for="floatingCif">CIF</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingName" placeholder="">
-                <label for="floatingName">{{ trans('admin.form.name') }}</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingAddress" placeholder="">
-                <label for="floatingAddress">{{ trans('admin.form.address') }}</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="floatingPrice" placeholder="">
-                <label for="floatingPrice">{{ trans('admin.insurance.price') }} - €</label>
+            <div class="row">
+                <div class="col-sm-6">
+                    {{-- Columna 1 ROW 1--}}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="" value="{{old('name')}}" required>
+                        <label for="name">{{ trans('admin.form.name') }}</label>
+                        <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
+                    </div>
+                    {{-- Columna 1 ROW 2--}}
+                    <div class="form-floating">
+                        <select class="form-select" id="boatType" name="boatType">
+                            <option>Llaüt {{ trans('text.mediterraneo') }}</option>
+                            <option>Batel</option>
+                            <option>Llagut català</option>
+                        </select>
+                        <label for="boatType" class="form-label">{{ trans('admin.competition.boatType') }}</label>
+                    </div>
+                    {{-- Columna 1 ROW 3--}}
+                    <div class="mb-3">
+                        <label for="competition-date" class="form-label ms-2 mt-2">{{ trans('admin.form.date') }}</label>
+                        <input class="form-control" type="date" id="competition-date" name="competition-date">
+                    </div>
+                    {{-- Columna 1 ROW 3--}}
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="price" name="price" placeholder="" value="{{old('price')}}">
+                        <label for="price">{{ trans('admin.competition.price') }} - €</label>
+                        <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    {{-- Columna 2 ROW 1--}}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="" value="{{old('address')}}" required>
+                        <label for="address">{{ trans('admin.competition.location') }}</label>
+                        <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
+                    </div>
+                    {{-- Columna 2 ROW 2--}}
+                    <div class="input-group input-group-lg  mb-3">
+                        <div class="input-group-text">
+                            <input type="checkbox">
+                        </div>
+                        <input type="text" class="form-control" value="{{ trans('admin.competition.isOpen') }} (esto hay que centrarlo)" disabled >
+                    </div>
+                    {{-- Columna 2 ROW 3--}}
+                    <div class="mb-3">
+                        <label for="image-map" class="form-label ms-2 mt-2">{{ trans('admin.competition.image') }}</label>
+                        <input class="form-control" type="file" id="image-map" name="image-map">
+                    </div>
+                    {{-- Columna 2 ROW 4--}}
+                    <div class="mb-3 d-grid">
+                        <button class="btn btn-secondary btn-lg btn-block" id="addSponsorsToList" type="button"> {{ trans('admin.competition.addSponsorList') }} </button>
+                    </div>
+                </div>
             </div>
             <div class="mt-5 flex-row-reverse " style="display: flex">
-                <button class="btn btn-success btn-lg fix-size" type="submit">{{ trans('admin.addButton') }}</button>
-                <button class="btn btn-primary btn-lg fix-size me-3" type="submit">{{ trans('admin.backButton') }}</button>
+                <button class="btn btn-success btn-lg fix-size" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
+                <button class="btn btn-primary btn-lg fix-size me-3" type="button">{{ trans('admin.backButton') }}</button>
             </div>
+            <input type="hidden" name="sponsors-list" id="sponsors-list" style="display: none;">
         </form>
     </div>
 </body>
 </html>
+{{--
+    <ul class="list-group">
+        <li class="list-group-item">
+            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+            First checkbox
+        </li>
+        <li class="list-group-item">
+            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+            Second checkbox
+        </li>
+        <li class="list-group-item">
+            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+            Third checkbox
+        </li>
+        <li class="list-group-item">
+            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+            Fourth checkbox
+        </li>
+        <li class="list-group-item">
+            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+            Fifth checkbox
+        </li>
+    </ul>
+    --}}
