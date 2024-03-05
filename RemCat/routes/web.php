@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\CompetitionController;
 
 
 // RUTAS DE LA WEB
@@ -78,9 +79,11 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
     })->name('admin.competitions.add');
 
     // Respuesta del formulario de agregar competiciones
-    Route::post('/admin/competitions/add', function ($lang = 'es') {
+    Route::post('/admin/competitions/add', function (Request $request, $lang = 'es') {
+        $competitionController = new CompetitionController();
         App::setLocale($lang);
-        return view('admin/addCompetitions');
+        
+        return $competitionController->store($request);
     });
 });
 

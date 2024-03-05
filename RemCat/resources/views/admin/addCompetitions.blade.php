@@ -26,9 +26,9 @@
                     {{-- Columna 1 ROW 2--}}
                     <div class="form-floating">
                         <select class="form-select" id="boatType" name="boatType">
-                            <option>Llaüt {{ trans('text.mediterraneo') }}</option>
-                            <option>Batel</option>
-                            <option>Llagut català</option>
+                            <option value="llaut_med">Llaüt {{ trans('text.mediterraneo') }}</option>
+                            <option value="batel">Batel</option>
+                            <option value="llagut_cat">Llagut català</option>
                         </select>
                         <label for="boatType" class="form-label">{{ trans('admin.competition.boatType') }}</label>
                     </div>
@@ -54,7 +54,7 @@
                     {{-- Columna 2 ROW 2--}}
                     <div class="input-group input-group-lg  mb-3">
                         <div class="input-group-text">
-                            <input type="checkbox">
+                            <input type="checkbox" name="isOpen">
                         </div>
                         <input type="text" class="form-control" value="{{ trans('admin.competition.isOpen') }} (esto hay que centrarlo)" disabled >
                     </div>
