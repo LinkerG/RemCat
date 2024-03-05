@@ -17,6 +17,7 @@ class CompetitionController extends Controller
         $location = $request->input("address");
         $boatType = $request->input("boatType");
         $isOpen = $request->has("isOpen") ? true : false;
+        $date = $request->input("competition-date");
         $price = $request->input("price");
         $sponsorsList = $request->input("sponsors-list");
         
@@ -41,12 +42,15 @@ class CompetitionController extends Controller
         $competition->location = $location;
         $competition->boatType = $boatType;
         $competition->isOpen = $isOpen;
+        $competition->date = $date;
         $competition->sponsor_price = $price;
         $competition->sponsors_list = $sponsorsList;
         $competition->image_map = $fileName;
 
         $error = [];
-        $competition->save();
+        if (!Competition::where("name", $name)->where("boatType", $boatType)->where("date", $date)->exists()) {
+            $competition->save();
+        }
         
         // Para redirigir con el idioma hay que hacerlo asi
         return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));

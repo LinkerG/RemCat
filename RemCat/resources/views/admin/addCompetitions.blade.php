@@ -75,7 +75,7 @@
                 <button class="btn btn-success btn-lg fix-size" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
                 <button class="btn btn-primary btn-lg fix-size me-3" type="button">{{ trans('admin.backButton') }}</button>
             </div>
-            <input type="hidden" name="sponsors-list" id="sponsors-list" style="display: none;">
+            <input type="hidden" name="sponsors-list" id="sponsors-list" style="display: none;" value="[]">
         </form>
     </div>
     <div class="modal fade" id="sponsorList">
