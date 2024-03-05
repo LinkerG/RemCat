@@ -13,7 +13,7 @@ class AdminController extends Controller
 
         if (Admin::verifyAdmin($email, $password)) {
             // Credenciales válidas
-            return redirect()->route('admin.login', ['lang' => app()->getLocale()])->with('success', 'Login successful');
+            return redirect()->route('admin.dashboard', ['lang' => app()->getLocale()])->with('success', 'Login successful');
         } else {
             // Credenciales inválidas
             return redirect()->route('admin.login', ['lang' => app()->getLocale()])->with('Error', 'Error');

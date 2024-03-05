@@ -32,13 +32,18 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         App::setLocale($lang);
         return view('admin/loginAdmin');
     })->name('admin.login');
-
     Route::post('/admin', function (Request $request, $lang = 'es') {
         $adminController = new AdminController();
         App::setLocale($lang);
 
         return $adminController->procesarFormulario($request);
     });
+    
+    Route::get('/dashboard', function ($lang = 'es') {
+        App::setLocale($lang);
+        
+        return view('admin/adminStart');
+    })->name('admin.dashboard');
 
     // Listar usuarios de prueba
     Route::get('/users', [TUserController::class, 'index'])->name('users.index');
