@@ -42,6 +42,7 @@ class SponsorController extends Controller
         // TODO:
         //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
         //    solo se comprueba que el cif no este dupli
+        //  - Hay que mirar que el cif tampoco exista en insurance
         $error = [];
         if(!Sponsor::where("cif", $cif)->exists()){
             $sponsor->save();

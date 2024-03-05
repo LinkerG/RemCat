@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // Controladores 
 use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\InsuranceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,14 +65,18 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
 
     // Formulario de agregar aseguradoras
     Route::get('/admin/insurances/add', function ($lang = 'es') {
+        $insuranceController = new InsuranceController();
         App::setLocale($lang);
-        return view('admin/addInsurances');
+
+        return $insuranceController->showAddForm();
     })->name('admin.insurances.add');
 
     // Respuesta del formulario de agregar aseguradoras
-    Route::post('/admin/insurances/add', function ($lang = 'es') {
+    Route::post('/admin/insurances/add', function (Request $request, $lang = 'es') {
+        $insuranceController = new InsuranceController();
         App::setLocale($lang);
-        return view('admin/addInsurances');
+        
+        return $insuranceController->store($request);
     });
 
     // Formulario de agregar competiciones
