@@ -4,7 +4,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     {{-- Con el App::getLocale() conseguimos el idioma en el que esta la pagina --}}
-                    <?php $route = App::getLocale() . "/" ?>
+                    <?php $route = "/" . App::getLocale() . "/" ?>
                     {{-- La ruta de los enlaces se ha de poner con el echo $route para conservar el idioma seleccionado en la página--}}
                     <a class="navbar-brand text-light" href="<?php echo $route . "/" ?>">RemCat 🚣</a>
                 </li>
@@ -31,7 +31,9 @@
                     
                     <li><a class="dropdown-item" href="<?php echo $route . "login" ?>">Login</a></li>
                     <li><a class="dropdown-item" href="<?php echo $route . "register" ?>">Register</a></li>
-                    <li><a class="dropdown-item" href="#"> - </a></li>
+                    <li><a class="dropdown-item" href="<?php echo $route . "admin/sponsors/add" ?>"> Añadir sponsor </a></li>
+                    <li><a class="dropdown-item" href="<?php echo $route . "admin/insurances/add" ?>"> Añadir aseguradora </a></li>
+                    <li><a class="dropdown-item" href="<?php echo $route . "admin/competitions/add" ?>"> Añadir competicion </a></li>
                   </ul>
             </div>
         </div>
