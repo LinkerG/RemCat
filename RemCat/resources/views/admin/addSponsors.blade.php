@@ -32,12 +32,12 @@
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="name" name="name" placeholder="" value="{{old('name')}}" required>
                 <label for="name">{{ trans('admin.form.name') }}</label>
-                <div class="invalid-feedback ms-2">Por favor rellena este campo</div>
+                <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="address" name="address" placeholder="" value="{{old('address')}}" required>
                 <label for="address">{{ trans('admin.form.address') }}</label>
-                <div class="invalid-feedback ms-2">Por favor rellena este campo</div>
+                <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
             </div>
             <div class="mb-3">
                 <label for="image-logo" class="form-label ms-2">{{ trans('admin.sponsor.image') }}</label>

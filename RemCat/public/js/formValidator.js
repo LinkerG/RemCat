@@ -41,6 +41,16 @@ window.addEventListener("load", function(){
                         input.parentElement.querySelector(".invalid-feedback").style.display = "none"
                     }
                     break;
+                case "price":
+                    if(!validatePositiveNumberDecimal(input.value)) {
+                        errors.push("price");
+                        input.classList.add("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                    } else {
+                        input.classList.remove("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                    }
+                    break;
                 case "password":
                     //añadir
                     break;
@@ -102,4 +112,10 @@ function validateEmail(email) {
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     return emailRegex.test(email);
+}
+
+function validatePositiveNumberDecimal(number) {
+    let numberRegex = /^[0-9]+(?:\.[0-9]+)?$/;
+
+    return(numberRegex.test(number));
 }
