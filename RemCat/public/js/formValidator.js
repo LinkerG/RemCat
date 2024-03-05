@@ -12,11 +12,11 @@ window.addEventListener("load", function(){
                     if(!validateCif(input.value)) {
                         console.log(input.value);
                         errors.push("cif");
-                        //input.classList.add("formInvalid")
-                        //input.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                        input.classList.add("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "block"
                     } else {
-                        //input.classList.remove("formInvalid")
-                        //input.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                        input.classList.remove("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "none"
                     }
                     break;
                 case "name":
@@ -24,17 +24,21 @@ window.addEventListener("load", function(){
                     console.log(input.value);
                     if(!validateNonEmptyText(input.value)) {
                         errors.push("empty");
-                        //input.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                        input.classList.add("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "block"
                     } else {
-                        //input.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                        input.classList.remove("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "none"
                     }
                     break;
                 case "email":
                     if(!validateEmail(input.value)) {
                         errors.push("email");
-                        //input.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                        input.classList.add("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "block"
                     } else {
-                        //input.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                        input.classList.remove("formInvalid")
+                        input.parentElement.querySelector(".invalid-feedback").style.display = "none"
                     }
                     break;
                 case "password":
