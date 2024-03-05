@@ -65,7 +65,9 @@
                     </div>
                     {{-- Columna 2 ROW 4--}}
                     <div class="mb-3 d-grid">
-                        <button class="btn btn-secondary btn-lg btn-block" id="addSponsorsToList" type="button"> {{ trans('admin.competition.addSponsorList') }} </button>
+                        <button class="btn btn-secondary btn-lg btn-block" id="openAddSponsors" type="button" data-bs-toggle="modal" data-bs-target="#sponsorList">
+                            {{ trans('admin.competition.addSponsorList') }}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -76,29 +78,22 @@
             <input type="hidden" name="sponsors-list" id="sponsors-list" style="display: none;">
         </form>
     </div>
+    <div class="modal fade" id="sponsorList">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ trans('admin.competition.sponsorList') }}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="spinner-border"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="addSponsorsToList"> {{ trans('admin.addButton') }} </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-{{--
-    <ul class="list-group">
-        <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-            First checkbox
-        </li>
-        <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-            Second checkbox
-        </li>
-        <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-            Third checkbox
-        </li>
-        <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-            Fourth checkbox
-        </li>
-        <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-            Fifth checkbox
-        </li>
-    </ul>
-    --}}
