@@ -15,7 +15,6 @@ class SponsorController extends Controller
 
     public function store(Request $request)
     {
-        // Aquí puedes procesar la lógica para agregar un nuevo sponsor
         $cif = $request->input('cif');
         $name = $request->input('name');
         $address = $request->input("address");
@@ -32,7 +31,6 @@ class SponsorController extends Controller
             $fileName = 'sponsor_' . $cif . '.' . $image->getClientOriginalExtension();
             // Mueve el archivo a la carpeta uploads/sponsors
             $image->move($uploadPath, $fileName);
-            // Aquí puedes hacer más cosas si es necesario
 
         } else $fileName = "sponsor_default.png";
 
@@ -41,18 +39,13 @@ class SponsorController extends Controller
         $sponsor->name = $name;
         $sponsor->address = $address;
         $sponsor->logo = $fileName;
-
+        // TODO:
+        //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
+        //    solo se comprueba que el cif no este dupli
         $error = [];
         if(!Sponsor::where("cif", $cif)->exists()){
             $sponsor->save();
         } else {
-            // Esto es temporal
-            echo "
-            <div class='alert alert-danger alert-dismissible fade show'>
-                <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
-                <strong>Error!</strong> Ya existe un sponsor con ese CIF.
-            </div>
-            ";
             $error[] = "alreadyExists";
         }
         
