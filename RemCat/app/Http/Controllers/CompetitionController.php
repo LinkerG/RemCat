@@ -21,7 +21,7 @@ class CompetitionController extends Controller
         
         $dateStr = $request->input("competition-date");
         $dateNotFormatted = DateTime::createFromFormat('Y-m-d', $dateStr);
-        $date = $dateNotFormatted->format('d-m-y');
+        $date = $dateNotFormatted->format('d-m-Y');
         
         $price = $request->input("price");
         $sponsorsList = $request->input("sponsors-list");
