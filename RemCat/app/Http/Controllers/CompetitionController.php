@@ -36,8 +36,20 @@ class CompetitionController extends Controller
 
         } else $fileName = "map_default.png";
 
+        // Para calcular el año
+        $currentYear = date('Y');
+        $currentDate = date('Y-m-d');
+
+        if (date('m', strtotime($currentDate)) < 9){
+            $seasonName = (intval(substr($currentYear, -2)) - 1) . "_" . intval(substr($currentYear, -2)) . "_competitions";
+        } else {
+            $seasonName = intval(substr($currentYear, -2)) . "_" . (intval(substr($currentYear, -2)) + 1) . "_competitions";
+        }
+        // se puede setear la variable de arriba para forzar temporadas anteriores o futuras
+        // $seasonName = "24_25_competitions";
+        
         $competition = new Competition;
-        $competition->setCollection("23_24_competitions");
+        $competition->setCollection($seasonName);
         $competition->name = $name;
         $competition->location = $location;
         $competition->boatType = $boatType;
