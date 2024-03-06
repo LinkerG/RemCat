@@ -39,4 +39,17 @@ class InsuranceController extends Controller
         // Para redirigir con el idioma hay que hacerlo asi
         return redirect()->route('admin.insurances.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
+
+    public function viewAll(){
+        $insurances = Insurance::all();
+
+        return view("admin/viewInsurances", compact("insurances"));
+    }
+
+    public function showEditForm($_id) {
+        $insurance = Insurance::where("_id", $_id)->first(); // Utiliza 'first()' para obtener el modelo, no solo la consulta
+        
+        return view("admin/editInsurances", ['insurance' => $insurance]);
+    }
+    
 }
