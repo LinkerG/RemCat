@@ -63,6 +63,8 @@ class CompetitionController extends Controller
         $competition->sponsor_price = $price;
         $competition->sponsors_list = $sponsorsList;
         $competition->image_map = $fileName;
+        $competition->isCancelled = false;
+        $competition->isActive = true;
 
         $error = [];
         if (!Competition::where("name", $name)->where("boatType", $boatType)->where("date", $date)->exists()) {

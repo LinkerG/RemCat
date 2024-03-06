@@ -24,6 +24,7 @@ class InsuranceController extends Controller
         $insurance->name = $name;
         $insurance->address = $address;
         $insurance->price = $price;
+        $insurance->isActive = true;
         // TODO:
         //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
         //    solo se comprueba que el cif no este dupli

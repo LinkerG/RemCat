@@ -37,6 +37,7 @@ class SponsorController extends Controller
         $sponsor->name = $name;
         $sponsor->address = $address;
         $sponsor->logo = $fileName;
+        $sponsor->isActive = true;
         // TODO:
         //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
         //    solo se comprueba que el cif no este dupli
