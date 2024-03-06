@@ -80,6 +80,19 @@ class SponsorController extends Controller
         return redirect()->route('admin.sponsors', ['lang' => app()->getLocale()])->with('succes', 'true');
     }
 
+    public function changeIsActive(Request $request){
+        $_id = $request->input("_id");
+        $newStatus = $request->input("newStatus");
+
+        $updatedData = [
+            'isActive' => $newStatus
+        ];
+
+        $sponsor = Sponsor::where('_id', $_id)->update($updatedData);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
+
     // ENDPOINTS
     public function fetchAllSponsors(){
         $sponsors = Sponsor::all();

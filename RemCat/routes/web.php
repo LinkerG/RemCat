@@ -178,4 +178,10 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
 
 // Fetch sponsors
 Route::get('/api/sponsors/fetchAll', [SponsorController::class, 'fetchAllSponsors']);
+// Fetch años en los que hay competiciones
 Route::get('api/competitons/fetchYears', [CompetitionController::class, 'fetchYears']);
+
+// Cambiar entre activo y no activo
+Route::post("api/sponsors/changeIsActive", [SponsorController::class, 'changeIsActive']);
+//Route::post("api/insurances/changeIsActive", [InsuranceController::class, 'changeIsActive']);
+//Route::post("api/competitions/changeIsActive", [CompetitionController::class, 'changeStatus']);

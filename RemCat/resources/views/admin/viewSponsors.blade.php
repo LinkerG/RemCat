@@ -6,20 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Insurances</title>
     @include('components.links')
+    <script src="{{asset('js/toggleActive.js')}}"></script>
     <?php $route = "/" . App::getLocale() . "/" ?>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     @include("components.header")
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
     <h1>Listado de sponsors</h1>
-    <table class="table table-striped">
+    <table class="table table-striped" data-model="sponsors">
         <thead>
             <tr>
                 <th>CIF</th>
                 <th>Name</th>
                 <th>Address</th>
                 <th>Image</th>
-                <th>Status</th>
+                <th>Active</th>
                 <th>Edit</th>
             </tr>
         </thead>
@@ -30,7 +32,19 @@
                     <td>{{$sponsor->name}}</td>
                     <td>{{$sponsor->address}}</td>
                     <td>{{$sponsor->logo}}</td>
-                    <td>{{$sponsor->isActive}}</td>
+                    @if($sponsor->isActive)
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-active" type="checkbox" id="{{$sponsor->_id}}_toggle" value="yes" checked>
+                        </div>
+                    </td>
+                    @else
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-active" type="checkbox" id="{{$sponsor->_id}}_toggle" value="yes">
+                        </div>
+                    </td>
+                    @endif
                     <td><a href="{{ $route }}admin/sponsors/edit/{{$sponsor->_id}}">Editar</a></td>
                 </tr>
             @endforeach
