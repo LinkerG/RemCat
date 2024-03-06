@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Competition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class CompetitionController extends Controller
 {
@@ -17,27 +18,43 @@ class CompetitionController extends Controller
         $location = $request->input("address");
         $boatType = $request->input("boatType");
         $isOpen = $request->has("isOpen") ? true : false;
-        $date = $request->input("competition-date");
+        
+        $dateStr = $request->input("competition-date");
+        $dateNotFormatted = DateTime::createFromFormat('Y-m-d', $dateStr);
+        $date = $dateNotFormatted->format('d-m-y');
+        
         $price = $request->input("price");
         $sponsorsList = $request->input("sponsors-list");
         
-        $uploadPath = public_path('uploads/sponsors');
+        // Para calcular el año
+        $currentYear = date('Y');
+        $currentDate = date('Y-m-d');
+        
+        if (date('m', strtotime($currentDate)) < 9){
+            $seasonName = (intval(substr($currentYear, -2)) - 1) . "_" . intval(substr($currentYear, -2)) . "_competitions";
+        } else {
+            $seasonName = intval(substr($currentYear, -2)) . "_" . (intval(substr($currentYear, -2)) + 1) . "_competitions";
+        }
+        // se puede setear la variable de arriba para forzar temporadas anteriores o futuras
+        // $seasonName = "24_25_competitions";
+        
+        $uploadPath = public_path('uploads/' . $seasonName);
         if (!File::isDirectory($uploadPath)) {
             File::makeDirectory($uploadPath, 0777, true, true);
         }
-
+        
         // TODO: Esto no funciona
         if ($request->hasFile('image-map')) {
             $image = $request->file('image-map');
 
-            $fileName = 'sponsor_' . $cif . '.' . $image->getClientOriginalExtension();
+            $fileName =  $date . '_' . $seasonName . '.' . $image->getClientOriginalExtension();
             // Mueve el archivo a la carpeta uploads/sponsors
             $image->move($uploadPath, $fileName);
 
         } else $fileName = "map_default.png";
-
+        
         $competition = new Competition;
-        $competition->setCollection("23_24_competitions");
+        $competition->setCollection($seasonName);
         $competition->name = $name;
         $competition->location = $location;
         $competition->boatType = $boatType;
@@ -54,5 +71,20 @@ class CompetitionController extends Controller
         
         // Para redirigir con el idioma hay que hacerlo asi
         return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
+    }
+
+    public function fetchYears(){
+        $collections = [];
+
+        $mongoCollections = DB::connection('mongodb')->listCollections();
+
+        foreach ($mongoCollections as $collection) {
+            if (preg_match("/^\d{2}_\d{2}_competitions$/", $collection->getName())) {
+                $collections[] = $collection->getName();
+            }
+        }
+
+        return response()->json($collections);
+    
     }
 }
