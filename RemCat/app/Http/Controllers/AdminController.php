@@ -7,16 +7,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function procesarFormulario(Request $request)
+    public function checkLogin(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-        if (Auth::attempt($credentials)) {
-            // Credenciales válidas
-            return redirect()->route('admin.dashboard', ['lang' => app()->getLocale()])->with('success', 'Login successful');
+        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
+            return redirect()->route('admin.dashboard');
         } else {
-            // Credenciales inválidas
-            return redirect()->route('admin.login', ['lang' => app()->getLocale()])->withErrors(['email' => 'Incorrect']);
+
         }
     }
     

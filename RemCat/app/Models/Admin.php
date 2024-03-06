@@ -1,25 +1,45 @@
 <?php
+
 namespace App\Models;
 
-use MongoDB\Laravel\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Admin extends Model implements Authenticatable
+class Admin extends Authenticatable
 {
-    use AuthenticatableTrait;
+    use HasApiTokens, HasFactory, Notifiable;
+    protected $guard = 'admin';
 
-    protected $connection = 'mongodb';
-    protected $collection = 'Admins';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
-    protected $fillable = ['email', 'password'];
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    public static function verifyAdmin($email,$password) {
-        $admin = self::where('email', $email)->firstOrFail();
-        if ($admin && Hash::check($password, $admin->password)) {
-            return true; 
-        }
-        return false; 
-    }
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ]; 
 }
