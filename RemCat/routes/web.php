@@ -85,21 +85,22 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         $insuranceController = new InsuranceController();
         App::setLocale($lang);
         return $insuranceController->viewAll();
-    });
+    })->name('admin.insurances');
 
     // Editar una aseguradora
     Route::get('/admin/insurances/edit/{_id}', function ($lang = 'es', $_id) {
         $insuranceController = new InsuranceController();
         App::setLocale($lang);
+
         return $insuranceController->showEditForm($_id);
-    });
+    })->name('admin.insurances.edit');
 
     // Respuesta a editar una aseguradora
-    Route::post('/admin/insurances/edit/{_id}', function ($lang = 'es', $_id) {
+    Route::post('/admin/insurances/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
         $insuranceController = new InsuranceController();
         App::setLocale($lang);
-        echo "hola $_id";
-        //return $insuranceController->showEditForm($_id);
+        
+        return $insuranceController->update($request, $_id);
     });
 
     // Formulario de agregar competiciones

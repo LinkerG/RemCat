@@ -51,5 +51,21 @@ class InsuranceController extends Controller
         
         return view("admin/editInsurances", ['insurance' => $insurance]);
     }
+
+    public function update(Request $request, $_id) {
+        $name = $request->input('name');
+        $address = $request->input("address");
+        $price = $request->input("price");
+
+        $updatedData = [
+            'name' => $name,
+            'address' => $address,
+            'price' => $price
+        ];
+
+        $insurance = Insurance::where('_id', $_id)->update($updatedData);
+
+        return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->with('succes', 'true');
+    }
     
 }

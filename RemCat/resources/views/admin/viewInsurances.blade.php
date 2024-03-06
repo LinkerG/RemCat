@@ -10,6 +10,7 @@
 </head>
 <body>
     @include("components.header")
+    <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
     <h1>Listado de aseguradoras</h1>
     <table class="table table-striped">
         <thead>
