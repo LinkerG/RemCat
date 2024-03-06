@@ -1,17 +1,19 @@
 <?php
 namespace App\Models;
 
-use Mongodb\Laravel\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Illuminate\Support\Facades\Hash;
 
-class Admin extends Model
+class Admin extends Model implements Authenticatable
 {
+    use AuthenticatableTrait;
+
     protected $connection = 'mongodb';
     protected $collection = 'Admins';
 
-    protected $fillable = [
-        'email', 'password',
-    ];
+    protected $fillable = ['email', 'password'];
 
     public static function verifyAdmin($email,$password) {
         $admin = self::where('email', $email)->firstOrFail();
@@ -20,5 +22,4 @@ class Admin extends Model
         }
         return false; 
     }
-    
 }
