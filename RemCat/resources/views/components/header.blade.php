@@ -6,7 +6,7 @@
                     {{-- Con el App::getLocale() conseguimos el idioma en el que esta la pagina --}}
                     <?php $route = "/" . App::getLocale() . "/" ?>
                     {{-- La ruta de los enlaces se ha de poner con el echo $route para conservar el idioma seleccionado en la página--}}
-                    <a class="navbar-brand text-light" href="<?php echo $route . "/" ?>">RemCat 🚣</a>
+                    <a class="navbar-brand text-light" href="<?php echo $route; ?>">RemCat 🚣</a>
                 </li>
                 <li class="nav-item">
                     <div class="btn-group">
