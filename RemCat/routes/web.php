@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use App\Helpers\CalcSeason;
 // Controladores 
 use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
@@ -138,6 +139,37 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         App::setLocale($lang);
         
         return $competitionController->store($request);
+    });
+
+    // Calcular el año predeterminado
+    $defaultYear = \App\Helpers\CalcSeason::calculate();
+
+    // Ver competiciones de x año con el actual por defecto
+    Route::get('/admin/competitions/{year?}', function ($lang = 'es', $year = null) use ($defaultYear) {
+        if ($year === null) {
+            $year = $defaultYear;
+        }
+
+        $competitionController = new CompetitionController();
+        App::setLocale($lang);
+        return $competitionController->viewAll($year);
+    })->name('admin.competitions');
+
+
+    // Editar una competicion
+    Route::get('/admin/competitions/edit/{_id}', function ($lang = 'es', $_id) {
+        $competitionController = new CompetitionController();
+        App::setLocale($lang);
+
+        return $competitionController->showEditForm($_id);
+    })->name('admin.competitions.edit');
+
+    // Respuesta a editar una competicion
+    Route::post('/admin/competitions/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
+        $competitionController = new CompetitionController();
+        App::setLocale($lang);
+        
+        return $competitionController->update($request, $_id);
     });
 });
 

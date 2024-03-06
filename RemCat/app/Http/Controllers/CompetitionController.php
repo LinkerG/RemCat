@@ -6,6 +6,7 @@ use App\Models\Competition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\CalcSeason;
 
 class CompetitionController extends Controller
 {
@@ -26,15 +27,7 @@ class CompetitionController extends Controller
         $price = $request->input("price");
         $sponsorsList = $request->input("sponsors-list");
         
-        // Para calcular el año
-        $currentYear = date('Y');
-        $currentDate = date('Y-m-d');
-        
-        if (date('m', strtotime($currentDate)) < 9){
-            $seasonName = (intval(substr($currentYear, -2)) - 1) . "_" . intval(substr($currentYear, -2)) . "_competitions";
-        } else {
-            $seasonName = intval(substr($currentYear, -2)) . "_" . (intval(substr($currentYear, -2)) + 1) . "_competitions";
-        }
+        $seasonName = CalcSeason::calculate() . "_competitions";
         // se puede setear la variable de arriba para forzar temporadas anteriores o futuras
         // $seasonName = "24_25_competitions";
         
@@ -75,6 +68,36 @@ class CompetitionController extends Controller
         return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
 
+    public function viewAll($year){
+        $seasonName = $year . "_competitions";
+        $competitions = (new Competition())->setCollection($seasonName)->get();
+
+        return view("admin/viewCompetitions", compact("competitions"));
+    }
+
+    public function showEditForm($_id) {
+        $competition = Competition::where("_id", $_id)->first(); // Utiliza 'first()' para obtener el modelo, no solo la consulta
+        
+        return view("admin/editCompetitions", ['competition' => $competition]);
+    }
+
+    public function update(Request $request, $_id) {
+        $name = $request->input('name');
+        $address = $request->input("address");
+        $price = $request->input("price");
+
+        $updatedData = [
+            'name' => $name,
+            'address' => $address,
+            'price' => $price
+        ];
+
+        $insurance = Insurance::where('_id', $_id)->update($updatedData);
+
+        return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->with('succes', 'true');
+    }
+
+    // ENDPOINTS
     public function fetchYears(){
         $collections = [];
 
