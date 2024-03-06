@@ -100,3 +100,4 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
 
 // Fetch sponsors
 Route::get('/api/sponsors/fetchAll', [SponsorController::class, 'fetchAllSponsors']);
+Route::get('api/competitons/fetchYears', [CompetitionController::class, 'fetchYears']);
