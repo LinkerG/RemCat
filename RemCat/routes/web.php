@@ -64,6 +64,29 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         return $sponsorController->store($request);
     })->name('admin.sponsor.store');
 
+    // Ver todos los sponsors
+    Route::get('/admin/sponsors', function ($lang = 'es') {
+        $sponsorController = new SponsorController();
+        App::setLocale($lang);
+        return $sponsorController->viewAll();
+    })->name('admin.sponsors');
+
+    // Editar un sponsor
+    Route::get('/admin/sponsors/edit/{_id}', function ($lang = 'es', $_id) {
+        $sponsorController = new SponsorController();
+        App::setLocale($lang);
+
+        return $sponsorController->showEditForm($_id);
+    })->name('admin.sponsors.edit');
+
+    // Respuesta a editar un sponsor
+    Route::post('/admin/sponsors/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
+        $sponsorController = new SponsorController();
+        App::setLocale($lang);
+        
+        return $sponsorController->update($request, $_id);
+    });
+
     // Formulario de agregar aseguradoras
     Route::get('/admin/insurances/add', function ($lang = 'es') {
         $insuranceController = new InsuranceController();
