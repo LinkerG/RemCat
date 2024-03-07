@@ -112,6 +112,40 @@ class CompetitionController extends Controller
         return redirect()->route('admin.competitions', ['lang' => app()->getLocale()])->with('succes', 'true');
     }
 
+    public function changeIsActive(Request $request){
+        $_id = $request->input("_id");
+        $year = $request->input("year");
+        $seasonName = $year . "_competitions";
+        $newStatus = $request->input("newStatus");
+        if($newStatus === "true") $newStatus = true;
+        else $newStatus = false;
+
+        $updatedData = [
+            'isActive' => $newStatus
+        ];
+
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
+
+    public function changeIsCancelled(Request $request){
+        $_id = $request->input("_id");
+        $year = $request->input("year");
+        $seasonName = $year . "_competitions";
+        $newStatus = $request->input("newStatus");
+        if($newStatus === "true") $newStatus = true;
+        else $newStatus = false;
+
+        $updatedData = [
+            'isCancelled' => $newStatus
+        ];
+
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
+
     // ENDPOINTS
     public function fetchYears(){
         $collections = [];
@@ -127,4 +161,6 @@ class CompetitionController extends Controller
         return response()->json($collections);
     
     }
+
+    
 }

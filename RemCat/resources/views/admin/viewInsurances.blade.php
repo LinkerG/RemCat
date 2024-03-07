@@ -7,12 +7,14 @@
     <title>Insurances</title>
     @include('components.links')
     <?php $route = "/" . App::getLocale() . "/" ?>
+    <script src="{{asset('js/toggleActive.js')}}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     @include("components.header")
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
     <h1>Listado de aseguradoras</h1>
-    <table class="table table-striped">
+    <table class="table table-striped" data-model="insurances">
         <thead>
             <tr>
                 <th>CIF</th>
@@ -30,7 +32,19 @@
                     <td>{{$insurance->name}}</td>
                     <td>{{$insurance->address}}</td>
                     <td>{{$insurance->price}}</td>
-                    <td>{{$insurance->isActive}}</td>
+                    @if($insurance->isActive)
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-active" type="checkbox" id="{{$insurance->_id}}_toggle" value="yes" checked>
+                        </div>
+                    </td>
+                    @else
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-active" type="checkbox" id="{{$insurance->_id}}_toggle" value="yes">
+                        </div>
+                    </td>
+                    @endif
                     <td><a href="{{ $route }}admin/insurances/edit/{{$insurance->_id}}">Editar</a></td>
                 </tr>
             @endforeach

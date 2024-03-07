@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Insurances</title>
     @include('components.links')
-    <script src="{{asset('js/toggleActive.js')}}"></script>
     <?php $route = "/" . App::getLocale() . "/" ?>
+    <script src="{{asset('js/toggleActive.js')}}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>

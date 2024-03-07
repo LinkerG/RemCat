@@ -83,6 +83,8 @@ class SponsorController extends Controller
     public function changeIsActive(Request $request){
         $_id = $request->input("_id");
         $newStatus = $request->input("newStatus");
+        if($newStatus === "true") $newStatus = true;
+        else $newStatus = false;
 
         $updatedData = [
             'isActive' => $newStatus

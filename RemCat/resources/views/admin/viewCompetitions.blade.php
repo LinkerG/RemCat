@@ -7,12 +7,15 @@
     <title>Insurances</title>
     @include('components.links')
     <?php $route = "/" . App::getLocale() . "/" ?>
+    <script src="{{asset('js/toggleActive.js')}}"></script>
+    <script src="{{asset('js/toggleCancelled.js')}}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     @include("components.header")
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
     <h1>Listado de sponsors</h1>
-    <table class="table table-striped">
+    <table class="table table-striped" data-model="competitions" data-year="{{$year}}">
         <thead>
             <tr>
                 <th>Name</th>

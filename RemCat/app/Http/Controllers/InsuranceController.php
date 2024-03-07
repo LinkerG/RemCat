@@ -67,5 +67,20 @@ class InsuranceController extends Controller
 
         return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->with('succes', 'true');
     }
+
+    public function changeIsActive(Request $request){
+        $_id = $request->input("_id");
+        $newStatus = $request->input("newStatus");
+        if($newStatus === "true") $newStatus = true;
+        else $newStatus = false;
+
+        $updatedData = [
+            'isActive' => $newStatus
+        ];
+
+        $insurance = Insurance::where('_id', $_id)->update($updatedData);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
     
 }

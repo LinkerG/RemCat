@@ -189,5 +189,6 @@ Route::get('api/competitons/fetchYears', [CompetitionController::class, 'fetchYe
 
 // Cambiar entre activo y no activo
 Route::post("api/sponsors/changeIsActive", [SponsorController::class, 'changeIsActive']);
-//Route::post("api/insurances/changeIsActive", [InsuranceController::class, 'changeIsActive']);
-//Route::post("api/competitions/changeIsActive", [CompetitionController::class, 'changeStatus']);
+Route::post("api/insurances/changeIsActive", [InsuranceController::class, 'changeIsActive']);
+Route::post("api/competitions/changeIsActive", [CompetitionController::class, 'changeIsActive']);
+Route::post("api/competitions/changeIsCancelled", [CompetitionController::class, 'changeIsCancelled']);
