@@ -39,4 +39,48 @@ class InsuranceController extends Controller
         // Para redirigir con el idioma hay que hacerlo asi
         return redirect()->route('admin.insurances.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
+
+    public function viewAll(){
+        $insurances = Insurance::all();
+
+        return view("admin/viewInsurances", compact("insurances"));
+    }
+
+    public function showEditForm($_id) {
+        $insurance = Insurance::where("_id", $_id)->first(); // Utiliza 'first()' para obtener el modelo, no solo la consulta
+        
+        return view("admin/editInsurances", ['insurance' => $insurance]);
+    }
+
+    public function update(Request $request, $_id) {
+        $name = $request->input('name');
+        $address = $request->input("address");
+        $price = $request->input("price");
+
+        $updatedData = [
+            'name' => $name,
+            'address' => $address,
+            'price' => $price
+        ];
+
+        $insurance = Insurance::where('_id', $_id)->update($updatedData);
+
+        return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->with('succes', 'true');
+    }
+
+    public function changeIsActive(Request $request){
+        $_id = $request->input("_id");
+        $newStatus = $request->input("newStatus");
+        if($newStatus === "true") $newStatus = true;
+        else $newStatus = false;
+
+        $updatedData = [
+            'isActive' => $newStatus
+        ];
+
+        $insurance = Insurance::where('_id', $_id)->update($updatedData);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
+    
 }

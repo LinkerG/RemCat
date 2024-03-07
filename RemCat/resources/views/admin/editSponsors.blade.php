@@ -24,17 +24,17 @@
         <form action="#" method="POST" class="mt-1">
             @csrf
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="cif" name="cif" placeholder="" value="{{old('cif')}}" required>
+                <input type="text" class="form-control" id="cif" name="cif" placeholder="" value="{{$sponsor->cif}}" readonly required>
                 <label for="cif">CIF</label>
                 <div class="invalid-feedback ms-2">CIf no valido</div>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="name" name="name" placeholder="" value="{{old('name')}}" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="" value="{{$sponsor->name}}" required>
                 <label for="name">{{ trans('admin.form.name') }}</label>
                 <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="address" name="address" placeholder="" value="{{old('address')}}" required>
+                <input type="text" class="form-control" id="address" name="address" placeholder="" value="{{$sponsor->address}}" required>
                 <label for="address">{{ trans('admin.form.address') }}</label>
                 <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
             </div>

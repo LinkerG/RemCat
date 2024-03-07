@@ -6,6 +6,8 @@ use App\Models\Competition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\CalcSeason;
+use DateTime;
 
 class CompetitionController extends Controller
 {
@@ -26,15 +28,7 @@ class CompetitionController extends Controller
         $price = $request->input("price");
         $sponsorsList = $request->input("sponsors-list");
         
-        // Para calcular el año
-        $currentYear = date('Y');
-        $currentDate = date('Y-m-d');
-        
-        if (date('m', strtotime($currentDate)) < 9){
-            $seasonName = (intval(substr($currentYear, -2)) - 1) . "_" . intval(substr($currentYear, -2)) . "_competitions";
-        } else {
-            $seasonName = intval(substr($currentYear, -2)) . "_" . (intval(substr($currentYear, -2)) + 1) . "_competitions";
-        }
+        $seasonName = CalcSeason::calculate() . "_competitions";
         // se puede setear la variable de arriba para forzar temporadas anteriores o futuras
         // $seasonName = "24_25_competitions";
         
@@ -75,6 +69,84 @@ class CompetitionController extends Controller
         return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
 
+    public function viewAll($year){
+        $seasonName = $year . "_competitions";
+        $competitions = (new Competition())->setCollection($seasonName)->get();
+    
+        return view("admin/viewCompetitions", compact("competitions", "year"));
+    }    
+
+    public function showEditForm($year, $_id) {
+        $seasonName = $year . "_competitions";
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->first();
+        
+        return view("admin/editCompetitions", ['competition' => $competition]);
+    }
+
+    public function update(Request $request, $year, $_id) {
+        $seasonName = $year . "_competitions";
+
+        $name = $request->input('name');
+        $location = $request->input("address");
+        $boatType = $request->input("boatType");
+        $isOpen = $request->has("isOpen") ? true : false;
+        
+        $dateStr = $request->input("competition-date");
+        $dateNotFormatted = DateTime::createFromFormat('Y-m-d', $dateStr);
+        $date = $dateNotFormatted->format('d-m-Y');
+        
+        $price = $request->input("price");
+        $sponsorsList = $request->input("sponsors-list");
+
+        $updatedData = [
+            'name' => $name,
+            'location' => $location,
+            'boatType' => $boatType,
+            'isOpen' => $isOpen,
+            'date' => $date,
+            'sponsor_price' => $price,
+            'sponsors_list' => $sponsorsList
+        ];
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+
+        return redirect()->route('admin.competitions', ['lang' => app()->getLocale()])->with('succes', 'true');
+    }
+
+    public function changeIsActive(Request $request){
+        $_id = $request->input("_id");
+        $year = $request->input("year");
+        $seasonName = $year . "_competitions";
+        $newStatus = $request->input("newStatus");
+        if($newStatus === "true") $newStatus = true;
+        else $newStatus = false;
+
+        $updatedData = [
+            'isActive' => $newStatus
+        ];
+
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
+
+    public function changeIsCancelled(Request $request){
+        $_id = $request->input("_id");
+        $year = $request->input("year");
+        $seasonName = $year . "_competitions";
+        $newStatus = $request->input("newStatus");
+        if($newStatus === "true") $newStatus = true;
+        else $newStatus = false;
+
+        $updatedData = [
+            'isCancelled' => $newStatus
+        ];
+
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
+
+    // ENDPOINTS
     public function fetchYears(){
         $collections = [];
 
@@ -89,4 +161,6 @@ class CompetitionController extends Controller
         return response()->json($collections);
     
     }
+
+    
 }
