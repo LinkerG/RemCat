@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\CalcSeason;
+use DateTime;
 
 class CompetitionController extends Controller
 {
@@ -71,30 +72,44 @@ class CompetitionController extends Controller
     public function viewAll($year){
         $seasonName = $year . "_competitions";
         $competitions = (new Competition())->setCollection($seasonName)->get();
+    
+        return view("admin/viewCompetitions", compact("competitions", "year"));
+    }    
 
-        return view("admin/viewCompetitions", compact("competitions"));
-    }
-
-    public function showEditForm($_id) {
-        $competition = Competition::where("_id", $_id)->first(); // Utiliza 'first()' para obtener el modelo, no solo la consulta
+    public function showEditForm($year, $_id) {
+        $seasonName = $year . "_competitions";
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->first();
         
         return view("admin/editCompetitions", ['competition' => $competition]);
     }
 
-    public function update(Request $request, $_id) {
+    public function update(Request $request, $year, $_id) {
+        $seasonName = $year . "_competitions";
+
         $name = $request->input('name');
-        $address = $request->input("address");
+        $location = $request->input("address");
+        $boatType = $request->input("boatType");
+        $isOpen = $request->has("isOpen") ? true : false;
+        
+        $dateStr = $request->input("competition-date");
+        $dateNotFormatted = DateTime::createFromFormat('Y-m-d', $dateStr);
+        $date = $dateNotFormatted->format('d-m-Y');
+        
         $price = $request->input("price");
+        $sponsorsList = $request->input("sponsors-list");
 
         $updatedData = [
             'name' => $name,
-            'address' => $address,
-            'price' => $price
+            'location' => $location,
+            'boatType' => $boatType,
+            'isOpen' => $isOpen,
+            'date' => $date,
+            'sponsor_price' => $price,
+            'sponsors_list' => $sponsorsList
         ];
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
 
-        $insurance = Insurance::where('_id', $_id)->update($updatedData);
-
-        return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->with('succes', 'true');
+        return redirect()->route('admin.competitions', ['lang' => app()->getLocale()])->with('succes', 'true');
     }
 
     // ENDPOINTS

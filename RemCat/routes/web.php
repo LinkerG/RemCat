@@ -157,19 +157,25 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
 
 
     // Editar una competicion
-    Route::get('/admin/competitions/edit/{_id}', function ($lang = 'es', $_id) {
+    Route::get('/admin/competitions/edit/{year?}/{_id}', function ($lang = 'es', $year = null, $_id) use ($defaultYear) {
+        if ($year === null) {
+            $year = $defaultYear;
+        }
+
         $competitionController = new CompetitionController();
         App::setLocale($lang);
-
-        return $competitionController->showEditForm($_id);
+        return $competitionController->showEditForm($year, $_id);
     })->name('admin.competitions.edit');
 
     // Respuesta a editar una competicion
-    Route::post('/admin/competitions/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
+    Route::post('/admin/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id) use ($defaultYear) {
+        if ($year === null) {
+            $year = $defaultYear;
+        }
+
         $competitionController = new CompetitionController();
         App::setLocale($lang);
-        
-        return $competitionController->update($request, $_id);
+        return $competitionController->update($request, $year, $_id);
     });
 });
 
