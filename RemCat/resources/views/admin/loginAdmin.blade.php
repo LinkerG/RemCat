@@ -6,12 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include("components.links")
     <title>Admin</title>
+    <?php $route = "/" . App::getLocale() . "/" ?>
 </head>
 <body>
   @include("components.header")
     {{--  TODO: Añadir el atributo NAME a los inputs  --}}
     {{--  Si no no se puede hacer el manejo del POST  --}}
-    <form action="#" method="post" enctype="multipart/form-data">
+    <form action="{{$route}}adminauth" method="post" enctype="multipart/form-data">
       @csrf
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>

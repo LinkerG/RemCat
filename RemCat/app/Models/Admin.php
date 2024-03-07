@@ -18,7 +18,7 @@ class Admin extends Model implements Authenticatable
     public static function verifyAdmin($email,$password) {
         $admin = self::where('email', $email)->firstOrFail();
         if ($admin && Hash::check($password, $admin->password)) {
-            return true; 
+            return $admin; 
         }
         return false; 
     }
