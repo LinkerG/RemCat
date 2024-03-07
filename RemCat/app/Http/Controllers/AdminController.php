@@ -16,7 +16,7 @@ class AdminController extends Controller
 
         $email = request()->input('email');
         $password = request()->input('password');
-        //$user = Admin::verifyAdmin($email,$password);
+        
         $user = Admin::where('email', $email)->first();
         if ($user && Auth::guard('admin')->attempt(['email' => $email, 'password' => $password])) {
             session(['adminAuth' => true]);
