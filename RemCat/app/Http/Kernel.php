@@ -28,6 +28,9 @@ class Kernel extends HttpKernel
      *
      * @var array<string, array<int, class-string|string>>
      */
+    protected $routeMiddleware = [
+        'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class
+    ];
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -42,9 +45,6 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
-        'admin.auth' => [
-            \App\Http\Middleware\AdminAuthenticate::class,
         ],
     ];
 

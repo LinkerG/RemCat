@@ -7,26 +7,25 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function auth(Request $request) {
+    public function auth() {
 
-        /*request()->validate([
+        request()->validate([
             'email' => 'required|email',
             'password' => 'required',
-        ]);*/
+        ]);
 
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        $user = Admin::verifyAdmin($email,$password);
-
+        $email = request()->input('email');
+        $password = request()->input('password');
+        //$user = Admin::verifyAdmin($email,$password);
+        $user = Admin::where('email', $email)->first();
         if ($user && Auth::guard('admin')->attempt(['email' => $email, 'password' => $password])) {
             session(['adminAuth' => true]);
             session(['userName' => $user->email]);
-            
-            return redirect()->route('admin.dashboard');
+
+            return redirect()->route('admin.dashboard', ['lang' => app()->getLocale()]);
         } else {
             // Las credenciales son incorrectas o el usuario no existe
-            return redirect()->route('admin.login')->with('error', 'Incorrect');
+            return redirect()->route('admin.login', ['lang' => app()->getLocale()]);
         }
     }
     

@@ -26,6 +26,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         App::setLocale($lang);
         return view('login');
     })->name('login');
+    
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('/admin/dashboard', function($lang = 'es') {
             App::setLocale($lang);
@@ -39,19 +40,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         return view('admin/loginAdmin');
     })->name('admin.login');
 
-    Route::post('/adminauth', function (Request $request, $lang = 'es') {
+    Route::post('/admin', function ($lang = 'es') {
         $adminController = new AdminController();
-        App::setLocale($lang);
+        App::setLocale($lang);  
 
-        return $adminController->auth($request);
+        return $adminController->auth();
     })->name('admin.login.post');
     
-    Route::get('/dashboard', function ($lang = 'es') {
-        App::setLocale($lang);
-        
-        return view('admin/adminStart');
-    })->name('admin.dashboard');
-
     // Listar usuarios de prueba
     Route::get('/users', [TUserController::class, 'index'])->name('users.index');
 

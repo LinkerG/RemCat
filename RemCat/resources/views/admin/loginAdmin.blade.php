@@ -12,7 +12,7 @@
   @include("components.header")
     {{--  TODO: Añadir el atributo NAME a los inputs  --}}
     {{--  Si no no se puede hacer el manejo del POST  --}}
-    <form action="{{$route}}adminauth" method="post" enctype="multipart/form-data">
+    <form action="{{$route}}admin" method="post" enctype="multipart/form-data">
       @csrf
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>

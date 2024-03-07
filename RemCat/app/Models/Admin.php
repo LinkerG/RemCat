@@ -11,15 +11,8 @@ class Admin extends Model implements Authenticatable
     use AuthenticatableTrait;
 
     protected $connection = 'mongodb';
-    protected $collection = 'Admins';
+    protected $collection = 'admins';
 
     protected $fillable = ['email', 'password'];
 
-    public static function verifyAdmin($email,$password) {
-        $admin = self::where('email', $email)->firstOrFail();
-        if ($admin && Hash::check($password, $admin->password)) {
-            return $admin; 
-        }
-        return false; 
-    }
 }
