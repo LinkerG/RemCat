@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        MongoDB\Laravel\Auth\PasswordResetServiceProvider::class,
         /*
          * Application Service Providers...
          */
