@@ -28,5 +28,13 @@ class AdminController extends Controller
             return redirect()->route('admin.login', ['lang' => app()->getLocale()]);
         }
     }
+
+    public function logout() {
+        Auth::guard('admin')->logout();
+
+        session()->flush();
+
+        return redirect()->route('admin.login', ['lang' => app()->getLocale()]);
+    }
     
 }

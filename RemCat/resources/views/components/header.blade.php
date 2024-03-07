@@ -28,13 +28,13 @@
                     </lord-icon>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="<?php echo $route . "login" ?>">Login</a></li>
-                    <li><a class="dropdown-item" href="<?php echo $route . "register" ?>">Register</a></li>
-                    <li><a class="dropdown-item" href="<?php echo $route . "admin/sponsors/add" ?>"> Añadir sponsor </a></li>
-                    <li><a class="dropdown-item" href="<?php echo $route . "admin/insurances/add" ?>"> Añadir aseguradora </a></li>
-                    <li><a class="dropdown-item" href="<?php echo $route . "admin/competitions/add" ?>"> Añadir competicion </a></li>
+                    <li><a class="dropdown-item" href="{{$route}}login">Login</a></li>
+                    <li><a class="dropdown-item" href="{{$route}}register">Register</a></li>
+                    <li><a class="dropdown-item" href="{{$route}}admin/sponsors/add"> Añadir sponsor </a></li>
+                    <li><a class="dropdown-item" href="{{$route}}admin/insurances/add"> Añadir aseguradora </a></li>
+                    <li><a class="dropdown-item" href="{{$route}}admin/competitions/add"> Añadir competicion </a></li>
                     <li><hr class="dropdown-divider"></hr></li>
-                    <li><a class="dropdown-item" href="#"> Logout (no va) </a></li>
+                    <li><a class="dropdown-item" href="{{$route}}admin/logout">Log out</a></li>
                   </ul>
             </div>
         </div>

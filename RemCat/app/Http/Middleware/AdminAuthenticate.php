@@ -13,6 +13,6 @@ class AdminAuthenticate
             return $next($request);
         }
 
-        return redirect()->route('admin.login'); // Redirige al formulario de inicio de sesión del administrador
+        return redirect()->route('admin.login', ['lang' => app()->getLocale()]);
     }
 }

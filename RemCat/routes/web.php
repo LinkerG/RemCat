@@ -34,6 +34,12 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
 
             return view('/admin/dashboard');
         })->name('admin.dashboard');
+        Route::get('/admin/logout', function($lang = 'es') {
+            App::setLocale($lang);
+            $adminController = new AdminController();
+
+            return $adminController->logout();
+        });
     });
     // Página de inicio de sesión de administrador
     Route::get('/admin', function ($lang = 'es') {
