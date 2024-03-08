@@ -28,8 +28,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
         return view('login');
     })->name('login');
     
-    //           ADMIN
-
+    //------------------ADMIN------------------//
     Route::prefix('/admin')->group(function() {
         //Login de admin
         Route::get('', function ($lang = 'es') {
@@ -59,37 +58,34 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
     
                 return $adminController->logout();
             });
-            //                   Sponsors
-            //Añadir sponsors
+
+            //------------------SPONSORS------------------//
+            // ADD
             Route::get('/sponsors/add', function ($lang = 'es') {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
         
                 return $sponsorController->showAddForm();
             })->name('admin.sponsors.add');
-            // Respuesta del formulario de agregar sponsors
             Route::post('/sponsors/add', function (Request $request, $lang = 'es') {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
                 
                 return $sponsorController->store($request);
             })->name('admin.sponsor.store');
-            // Ver todos los sponsors
+            // VIEW
             Route::get('/sponsors', function ($lang = 'es') {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
                 return $sponsorController->viewAll();
             })->name('admin.sponsors');
-        
-            // Editar un sponsor
+            // EDIT
             Route::get('/sponsors/edit/{_id}', function ($lang = 'es', $_id) {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
         
                 return $sponsorController->showEditForm($_id);
             })->name('admin.sponsors.edit');
-        
-            // Respuesta a editar un sponsor
             Route::post('/sponsors/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
@@ -97,40 +93,33 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
                 return $sponsorController->update($request, $_id);
             });
 
-            //               Aseguradoras 
-
-            // Formulario de agregar aseguradoras
+            //------------------INSURANCES------------------//
+            // ADD
             Route::get('/insurances/add', function ($lang = 'es') {
                 $insuranceController = new InsuranceController();
                 App::setLocale($lang);
 
                 return $insuranceController->showAddForm();
             })->name('admin.insurances.add');
-
-            // Respuesta del formulario de agregar aseguradoras
             Route::post('/insurances/add', function (Request $request, $lang = 'es') {
                 $insuranceController = new InsuranceController();
                 App::setLocale($lang);
                 
                 return $insuranceController->store($request);
             });
-
-            // Ver todas las aseguradoras
+            // VIEW
             Route::get('/insurances', function ($lang = 'es') {
                 $insuranceController = new InsuranceController();
                 App::setLocale($lang);
                 return $insuranceController->viewAll();
             })->name('admin.insurances');
-
-            // Editar una aseguradora
+            // EDIT
             Route::get('/insurances/edit/{_id}', function ($lang = 'es', $_id) {
                 $insuranceController = new InsuranceController();
                 App::setLocale($lang);
 
                 return $insuranceController->showEditForm($_id);
             })->name('admin.insurances.edit');
-
-            // Respuesta a editar una aseguradora
             Route::post('/insurances/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
                 $insuranceController = new InsuranceController();
                 App::setLocale($lang);
@@ -138,26 +127,20 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
                 return $insuranceController->update($request, $_id);
             });
 
-            //             Competiciones
-
-            // Formulario de agregar competiciones
+            //------------------COMPETITIONS------------------//
+            $defaultYear = \App\Helpers\CalcSeason::calculate();
+            // ADD
             Route::get('/competitions/add', function ($lang = 'es') {
                 App::setLocale($lang);
                 return view('admin/addCompetitions');
             })->name('admin.competitions.add');
-
-            // Respuesta del formulario de agregar competiciones
             Route::post('/competitions/add', function (Request $request, $lang = 'es') {
                 $competitionController = new CompetitionController();
                 App::setLocale($lang);
                 
                 return $competitionController->store($request);
-            });
-
-            // Calcular el año predeterminado
-            $defaultYear = \App\Helpers\CalcSeason::calculate();
-
-            // Ver competiciones de x año con el actual por defecto
+            });            
+            // VIEW
             Route::get('/competitions/{year?}', function ($lang = 'es', $year = null) use ($defaultYear) {
                 if ($year === null) {
                     $year = $defaultYear;
@@ -167,9 +150,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
                 App::setLocale($lang);
                 return $competitionController->viewAll($year);
             })->name('admin.competitions');
-
-
-            // Editar una competicion
+            // EDIT
             Route::get('/competitions/edit/{year?}/{_id}', function ($lang = 'es', $year = null, $_id) use ($defaultYear) {
                 if ($year === null) {
                     $year = $defaultYear;
@@ -179,8 +160,6 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
                 App::setLocale($lang);
                 return $competitionController->showEditForm($year, $_id);
             })->name('admin.competitions.edit');
-
-            // Respuesta a editar una competicion
             Route::post('/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id) use ($defaultYear) {
                 if ($year === null) {
                     $year = $defaultYear;
@@ -191,7 +170,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
             });
         });
     }); 
-    // Aqui acaba el prefix del admin
+    //-----------------ADMIN-END-----------------//
     Route::prefix('/team')->group(function () {
 
     });
