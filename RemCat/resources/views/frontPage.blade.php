@@ -18,6 +18,11 @@
             </div>
         </div>
     </div>
+    <section>
+        @foreach($competitions as $competition)
+                <article>{{ $competition->name }}</article>
+        @endforeach
+    </section>
     @include("components.footer")
 </body>
 </html>

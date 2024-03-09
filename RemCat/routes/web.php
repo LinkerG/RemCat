@@ -11,15 +11,20 @@ use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\AdminController;
 
-// RUTAS DE LA WEB
+$defaultYear = CalcSeason::calculate();
 
+// RUTAS DE LA WEB
 // Definición de idioma por defecto
-Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
+Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($defaultYear) {
+    
 
     // Página de inicio
     Route::get('/', function ($lang = 'es') {
+        $year = CalcSeason::calculate();
+        $competitionController = new CompetitionController();
+
         App::setLocale($lang);
-        return view('frontPage');
+        return $competitionController->showFrontPage($year);
     })->name('home');
 
     // Página de inicio de sesión de usuario
@@ -29,7 +34,8 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
     })->name('login');
     
     //------------------ADMIN------------------//
-    Route::prefix('/admin')->group(function() {
+    $defaultYear = CalcSeason::calculate();
+    Route::prefix('/admin')->group(function() use ($defaultYear){
         //Login de admin
         Route::get('', function ($lang = 'es') {
             App::setLocale($lang);
@@ -128,7 +134,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
             });
 
             //------------------COMPETITIONS------------------//
-            $defaultYear = \App\Helpers\CalcSeason::calculate();
+            $defaultYear = CalcSeason::calculate();
             // ADD
             Route::get('/competitions/add', function ($lang = 'es') {
                 App::setLocale($lang);
@@ -151,7 +157,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
                 return $competitionController->viewAll($year);
             })->name('admin.competitions');
             // EDIT
-            Route::get('/competitions/edit/{year?}/{_id}', function ($lang = 'es', $year = null, $_id) use ($defaultYear) {
+            Route::get('/competitions/edit/{year?}/{_id}', function ($lang = 'es', $year = null, $_id) {
                 if ($year === null) {
                     $year = $defaultYear;
                 }
@@ -160,7 +166,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
                 App::setLocale($lang);
                 return $competitionController->showEditForm($year, $_id);
             })->name('admin.competitions.edit');
-            Route::post('/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id) use ($defaultYear) {
+            Route::post('/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id) {
                 if ($year === null) {
                     $year = $defaultYear;
                 }
@@ -175,7 +181,3 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () {
 
     });
 });
-
-
-// ENDPOINTS      ---   Sobre todo para recuperar JSON desde JavaScript
-
