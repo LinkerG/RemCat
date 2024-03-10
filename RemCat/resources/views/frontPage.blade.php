@@ -18,10 +18,17 @@
             </div>
         </div>
     </div>
-    <section>
-        @foreach($competitions as $competition)
-                <article>{{ $competition->name }}</article>
-        @endforeach
+    <section class="container">
+        @if(($competitions))
+            @foreach($competitions as $competition)
+                <article>
+                    <h2>{{$competition->name}}</h2>
+                    <h3>{{$competition->location}}</h3>
+                </article>
+            @endforeach
+        @else
+            <h1>No hay</h1>
+        @endif
     </section>
     @include("components.footer")
 </body>
