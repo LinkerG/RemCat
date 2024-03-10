@@ -19,16 +19,54 @@
         </div>
     </div>
     <section class="container">
-        @if(($competitions))
-            @foreach($competitions as $competition)
-                <article>
-                    <h2>{{$competition->name}}</h2>
-                    <h3>{{$competition->location}}</h3>
-                </article>
-            @endforeach
-        @else
-            <h1>No hay</h1>
-        @endif
+        <div class="d-inline-flex flex-row flex-nowrap overflow-auto ">
+            @if(($competitions))
+                @foreach($competitions as $competition)
+                    <article class="flex-shrink-0 me-2">
+                        <div class="">
+                            <h4 class="">{{$competition->name}}</h4>
+                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
+                            <a href="#" class="">Card link</a>
+                            <a href="#" class="">Another link</a>
+                        </div>
+                    </article>
+                    <article class="flex-shrink-0 me-2">
+                        <div class="">
+                            <h4 class="">{{$competition->name}}</h4>
+                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
+                            <a href="#" class="">Card link</a>
+                            <a href="#" class="">Another link</a>
+                        </div>
+                    </article>
+                    <article class="flex-shrink-0 me-2">
+                        <div class="">
+                            <h4 class="">{{$competition->name}}</h4>
+                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
+                            <a href="#" class="">Card link</a>
+                            <a href="#" class="">Another link</a>
+                        </div>
+                    </article>
+                    <article class="flex-shrink-0 me-2">
+                        <div class="">
+                            <h4 class="">{{$competition->name}}</h4>
+                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
+                            <a href="#" class="">Card link</a>
+                            <a href="#" class="">Another link</a>
+                        </div>
+                    </article>
+                    <article class="flex-shrink-0 me-2">
+                        <div class="">
+                            <h4 class="">{{$competition->name}}</h4>
+                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
+                            <a href="#" class="">Card link</a>
+                            <a href="#" class="">Another link</a>
+                        </div>
+                    </article>
+                @endforeach
+            @else
+                <h1>No hay</h1>
+            @endif
+        </div>
     </section>
     @include("components.footer")
 </body>
