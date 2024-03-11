@@ -159,7 +159,7 @@ class CompetitionController extends Controller
     public function showFrontPage($year) {
         $seasonName = $year . "_competitions";
         $currentDate = Carbon::now()->toDateString();
-        $competitions = (new Competition())->setCollection($seasonName)->where('date', '>=', $currentDate)->where('isActive', true)->get();
+        $competitions = (new Competition())->setCollection($seasonName)->where('date', '>=', $currentDate)->where('isActive', true)->take(4)->get();
 
         return view("frontPage", compact("competitions", "year"));
     }
@@ -183,5 +183,5 @@ class CompetitionController extends Controller
     }
 
     //------------------ENDPOINTS-END------------------//
-    
+
 }

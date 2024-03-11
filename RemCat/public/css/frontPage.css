@@ -107,6 +107,11 @@ span {
     border: 1px solid black;
 }
 
+.competitionSection{
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (max-width: 700px) {
     .competitionItem {
         width: 98svw
@@ -123,6 +128,7 @@ span {
 
     .competitionSection{
         padding: 0;
+        display: block;
     }
 }
 

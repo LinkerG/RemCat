@@ -18,6 +18,9 @@
             </div>
         </div>
     </div>
+    <div class="container ms-4 mt-3 mb-5">
+        <h2>{{ trans("text.nextCompetition") }}</h2>
+    </div>
     <section class="container-fluid overflow-auto competitionSection mt-4 mb-4">
         <div class="d-inline-flex flex-row flex-nowrap overflow-auto competitionContainer">
             @if(($competitions))
