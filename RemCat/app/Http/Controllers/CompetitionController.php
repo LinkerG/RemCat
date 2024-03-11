@@ -79,8 +79,19 @@ class CompetitionController extends Controller
     public function viewAll($year){
         $seasonName = $year . "_competitions";
         $competitions = (new Competition())->setCollection($seasonName)->get();
+        $years = [];
     
-        return view("admin/viewCompetitions", compact("competitions", "year"));
+        $mongoCollections = DB::connection('mongodb')->listCollections();
+    
+        foreach ($mongoCollections as $collection) {
+            if (preg_match("/^\d{2}_\d{2}_competitions$/", $collection->getName())) {
+                $collectionName = $collection->getName();
+                $years[] = strstr($collectionName, '_competitions', true);
+            }
+        }
+        
+        
+        return view("admin/viewCompetitions", compact("competitions", "year", "years"));
     }    
 
     public function showEditForm($year, $_id) {

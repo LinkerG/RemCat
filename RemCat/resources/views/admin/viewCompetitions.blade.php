@@ -14,7 +14,19 @@
 <body>
     @include("components.header")
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
-    <h1>Listado de sponsors</h1>
+    <div class="container d-flex">
+        <h1 class="me-4">Listado de competiciones</h1>
+        <div class="input-group mt-3 mb-3">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+              Select year
+            </button>
+            <ul class="dropdown-menu">
+                @foreach ($years as $yearOption)
+                        <li><a href="{{$route}}admin/competitions/{{$yearOption}}"> {{str_replace('_', '-', $yearOption);}} </a></li>
+                @endforeach
+            </ul>
+          </div>
+    </div>
     <table class="table table-striped" data-model="competitions" data-year="{{$year}}">
         <thead>
             <tr>
