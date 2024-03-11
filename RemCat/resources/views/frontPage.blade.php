@@ -18,43 +18,11 @@
             </div>
         </div>
     </div>
-    <section class="container">
-        <div class="d-inline-flex flex-row flex-nowrap overflow-auto ">
+    <section class="container-fluid overflow-auto competitionSection mt-4 mb-4">
+        <div class="d-inline-flex flex-row flex-nowrap overflow-auto competitionContainer">
             @if(($competitions))
                 @foreach($competitions as $competition)
-                    <article class="flex-shrink-0 me-2">
-                        <div class="">
-                            <h4 class="">{{$competition->name}}</h4>
-                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
-                            <a href="#" class="">Card link</a>
-                            <a href="#" class="">Another link</a>
-                        </div>
-                    </article>
-                    <article class="flex-shrink-0 me-2">
-                        <div class="">
-                            <h4 class="">{{$competition->name}}</h4>
-                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
-                            <a href="#" class="">Card link</a>
-                            <a href="#" class="">Another link</a>
-                        </div>
-                    </article>
-                    <article class="flex-shrink-0 me-2">
-                        <div class="">
-                            <h4 class="">{{$competition->name}}</h4>
-                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
-                            <a href="#" class="">Card link</a>
-                            <a href="#" class="">Another link</a>
-                        </div>
-                    </article>
-                    <article class="flex-shrink-0 me-2">
-                        <div class="">
-                            <h4 class="">{{$competition->name}}</h4>
-                            <p class="">{{$competition->location}} - {{$competition->date}}</p>
-                            <a href="#" class="">Card link</a>
-                            <a href="#" class="">Another link</a>
-                        </div>
-                    </article>
-                    <article class="flex-shrink-0 me-2">
+                    <article class="flex-shrink-0 competitionItem">
                         <div class="">
                             <h4 class="">{{$competition->name}}</h4>
                             <p class="">{{$competition->location}} - {{$competition->date}}</p>

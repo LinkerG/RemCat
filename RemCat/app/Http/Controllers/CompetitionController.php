@@ -166,7 +166,7 @@ class CompetitionController extends Controller
 
     //------------------VIEW-CALLS-END------------------//
 
-    // ENDPOINTS
+    //------------------ENDPOINTS------------------//
     public function fetchYears(){
         $collections = [];
 
@@ -182,5 +182,6 @@ class CompetitionController extends Controller
     
     }
 
+    //------------------ENDPOINTS-END------------------//
     
 }

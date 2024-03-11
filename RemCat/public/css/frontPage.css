@@ -87,3 +87,49 @@ span {
     }
     
 }
+.competitionContainer{
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;  
+    margin: 0 1.5rem 0 1.5rem;
+}
+
+.competitionItem{
+    display: grid;
+    place-items: center;
+    width: 325px;
+    height: 450px;
+}
+
+.competitionItem div{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+@media (max-width: 700px) {
+    .competitionItem {
+        width: 98svw
+    }
+    
+    .competitionItem div {
+        width: 80%;
+        height: 100%;
+    }
+
+    .competitionContainer {
+        margin: 0 !important;
+    }
+
+    .competitionSection{
+        padding: 0;
+    }
+}
+
+
+@media (min-width: 992px) {
+    
+} 
+@media (min-width: 1200px) {
+    
+}
