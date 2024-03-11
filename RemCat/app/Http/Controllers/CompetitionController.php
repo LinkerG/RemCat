@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\CalcSeason;
 use DateTime;
+use Carbon\Carbon;
+
 
 class CompetitionController extends Controller
 {
+    //------------------CRUD------------------//
     public function showAddForm(){
         return view('admin/addSponsors');
     }
@@ -21,10 +24,11 @@ class CompetitionController extends Controller
         $boatType = $request->input("boatType");
         $isOpen = $request->has("isOpen") ? true : false;
         
+        // Se modifica la creación del objeto DateTime para el formato correcto
         $dateStr = $request->input("competition-date");
-        $dateNotFormatted = DateTime::createFromFormat('Y-m-d', $dateStr);
-        $date = $dateNotFormatted->format('d-m-Y');
-        
+        $date = DateTime::createFromFormat('Y-m-d', $dateStr);
+        $dateMongo = Carbon::parse($date)->toDateString();
+    
         $price = $request->input("price");
         $sponsorsList = $request->input("sponsors-list");
         
@@ -40,11 +44,11 @@ class CompetitionController extends Controller
         // TODO: Esto no funciona
         if ($request->hasFile('image-map')) {
             $image = $request->file('image-map');
-
-            $fileName =  $date . '_' . $seasonName . '.' . $image->getClientOriginalExtension();
+    
+            $fileName =  $date->format('d-m-Y') . '_' . $seasonName . '.' . $image->getClientOriginalExtension();
             // Mueve el archivo a la carpeta uploads/sponsors
             $image->move($uploadPath, $fileName);
-
+    
         } else $fileName = "map_default.png";
         
         $competition = new Competition;
@@ -53,21 +57,24 @@ class CompetitionController extends Controller
         $competition->location = $location;
         $competition->boatType = $boatType;
         $competition->isOpen = $isOpen;
-        $competition->date = $date;
+        $competition->date = $dateMongo;
         $competition->sponsor_price = $price;
         $competition->sponsors_list = $sponsorsList;
         $competition->image_map = $fileName;
         $competition->isCancelled = false;
         $competition->isActive = true;
-
+    
         $error = [];
-        if (!Competition::where("name", $name)->where("boatType", $boatType)->where("date", $date)->exists()) {
+        if (!$competitionComparator = (new Competition())->setCollection($seasonName)->where("name", $name)->where("boatType", $boatType)->where("date", $dateMongo)->exists()) {
             $competition->save();
+        } else{
+
         }
         
         // Para redirigir con el idioma hay que hacerlo asi
         return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
+    
 
     public function viewAll($year){
         $seasonName = $year . "_competitions";
@@ -146,7 +153,20 @@ class CompetitionController extends Controller
         return response()->json(['message' => 'Estado cambiado correctamente']);
     }
 
-    // ENDPOINTS
+    //------------------CRUD-END------------------//
+
+    //------------------VIEW-CALLS------------------//
+    public function showFrontPage($year) {
+        $seasonName = $year . "_competitions";
+        $currentDate = Carbon::now()->toDateString();
+        $competitions = (new Competition())->setCollection($seasonName)->where('date', '>=', $currentDate)->where('isActive', true)->take(4)->get();
+
+        return view("frontPage", compact("competitions", "year"));
+    }
+
+    //------------------VIEW-CALLS-END------------------//
+
+    //------------------ENDPOINTS------------------//
     public function fetchYears(){
         $collections = [];
 
@@ -162,5 +182,6 @@ class CompetitionController extends Controller
     
     }
 
-    
+    //------------------ENDPOINTS-END------------------//
+
 }
