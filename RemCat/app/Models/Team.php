@@ -8,5 +8,5 @@ use MongoDB\Laravel\Eloquent\Model;
 class Team extends Model
 {
     protected $connection = "mongodb";
-    protected $collection = "Teams";
+    protected $collection = "teams";
 }
