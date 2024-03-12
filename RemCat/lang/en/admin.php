@@ -3,6 +3,7 @@
 return [
     'addButton' => 'Add',
     'backButton' => 'Back',
+    'password' => 'Password',
     'sponsor' => [
         'title' => 'Add a new sponsor',
         'image' => 'Sponsor logo image'

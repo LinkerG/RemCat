@@ -3,6 +3,7 @@
 return [
     'addButton' => 'Afegir',
     'backButton' => 'Enrere',
+    'password' => 'Contrasenya',
     'sponsor' => [
         'title' => 'Afegir un nou sponsor',
         

@@ -3,6 +3,7 @@
 return [
     'addButton' => 'Añadir',
     'backButton' => 'Volver',
+    'password' => 'Contraseña',
     'form' => [
         'name' => 'Nombre',
         'date' => 'Fecha',
