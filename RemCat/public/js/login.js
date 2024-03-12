@@ -61,12 +61,12 @@ const signupHtml = `
     </div>
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="name" name="name" placeholder="" value="" required>
-        <label for="name">`+currentDictionary['fullName']+`</label>
+        <label for="name" id="nameLabel">`+currentDictionary['fullName']+`</label>
         <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
     </div>
     <div class="input-group input-group-lg  mb-3">
         <div class="input-group-text">
-            <input type="checkbox" name="isTeam">
+            <input type="checkbox" name="isTeam" id="isTeamCheck">
         </div>
         <input type="text" class="form-control" value="`+currentDictionary['isTeam']+`" disabled >
     </div>
@@ -83,6 +83,17 @@ const signupHtml = `
 function formEvent(){
     let form = document.getElementsByTagName("form")[0];
     let switchButton = document.getElementById("switch-button");
+    let isTeamCheck = document.getElementById("isTeamCheck");
+    if(isTeamCheck) {
+        isTeamCheck.addEventListener("change", function(){
+            let nameLabel = document.getElementById("nameLabel")
+            if (isTeamCheck.checked) {
+                nameLabel.innerHTML = currentDictionary['teamName'];
+            } else {
+                nameLabel.innerHTML = currentDictionary['fullName'];
+            }
+        });
+    }
     switchButton.addEventListener("click", function(){
         let action = form.action;
         let loginLabel = document.getElementsByClassName("loginLabel")[0];

@@ -3,7 +3,6 @@
 return [
     'addButton' => 'Add',
     'backButton' => 'Back',
-    'password' => 'Password',
     'sponsor' => [
         'title' => 'Add a new sponsor',
         'image' => 'Sponsor logo image'
@@ -15,6 +14,7 @@ return [
     'form' => [
         'name' => 'Name',
         'address' => 'Address',
-        'image' => 'Sponsor logo image'
+        'image' => 'Sponsor logo image',
+        'password' => 'Password',
     ],
 ];
