@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    @include('components.links')
+    <link rel="stylesheet" href="{{ asset('css/adminSideBarCustom.css')}}">
+    <script src="{{ asset('js/adminSideBar.js')}}"></script>
+    @include('components.adminLinks')
 </head>
 <body>
-    @include('components.header')
+    @include('components.sideBarAdmin')
     <h1>holaaaaa</h1>
 </body>
 </html>

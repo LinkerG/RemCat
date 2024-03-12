@@ -37,7 +37,6 @@ services:
       - mongodb:mongodb
     networks:
       - mainNet
-
   mongo-cli:
     image: mongo-express:1.0.2-20
     ports:

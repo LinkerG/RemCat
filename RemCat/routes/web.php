@@ -16,8 +16,6 @@ $defaultYear = CalcSeason::calculate();
 // RUTAS DE LA WEB
 // Definición de idioma por defecto
 Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($defaultYear) {
-    
-
     // Página de inicio
     Route::get('/', function ($lang = 'es') {
         $year = CalcSeason::calculate();
@@ -51,19 +49,21 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         })->name('admin.login.post');
 
         //Middleware para el admin si esta logeado correctamente
-        Route::middleware(['admin.auth'])->group(function () {
+        Route::middleware(['admin.auth'])->group(function ($lang = 'es') {
             //Pagina inicial admin
             Route::get('/dashboard', function($lang = 'es') {
                 App::setLocale($lang);
     
                 return view('admin/dashboard');
             })->name('admin.dashboard');
+          
+            //Logout
             Route::get('/logout', function($lang = 'es') {
                 App::setLocale($lang);
                 $adminController = new AdminController();
     
                 return $adminController->logout();
-            });
+            })->name('admin.logout');
 
             //------------------SPONSORS------------------//
             // ADD
@@ -157,7 +157,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 return $competitionController->viewAll($year);
             })->name('admin.competitions');
             // EDIT
-            Route::get('/competitions/edit/{year?}/{_id}', function ($lang = 'es', $year = null, $_id) {
+            Route::get('/competitions/edit/{year?}/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear) {
                 if ($year === null) {
                     $year = $defaultYear;
                 }
@@ -166,7 +166,8 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 App::setLocale($lang);
                 return $competitionController->showEditForm($year, $_id);
             })->name('admin.competitions.edit');
-            Route::post('/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id) {
+
+            Route::post('/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id)  use ($defaultYear)  {
                 if ($year === null) {
                     $year = $defaultYear;
                 }
