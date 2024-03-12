@@ -12,7 +12,7 @@ class TUserController extends Controller
         
         
         
-        $users = (new TUser())->setCollection('Users')->get();
+        $users = (new TUser())->setCollection('users')->get();
         
         return view("index", compact("users"));
         
