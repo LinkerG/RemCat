@@ -11,10 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sponsors', function (Blueprint $table) {
-            //Comentado ya que mongoDB crea el id automaticamente
-            //$table->increments("_id");
-            $table->timestamps();
+        Schema::create('Sponsors', function (Blueprint $table) {
             $table->string("name");
             $table->string("cif");
             $table->string("logo_image");
