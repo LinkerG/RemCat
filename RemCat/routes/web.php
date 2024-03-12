@@ -56,6 +56,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
     
                 return view('admin/dashboard');
             })->name('admin.dashboard');
+          
             //Logout
             Route::get('/logout', function($lang = 'es') {
                 App::setLocale($lang);
@@ -165,6 +166,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 App::setLocale($lang);
                 return $competitionController->showEditForm($year, $_id);
             })->name('admin.competitions.edit');
+
             Route::post('/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id)  use ($defaultYear)  {
                 if ($year === null) {
                     $year = $defaultYear;
