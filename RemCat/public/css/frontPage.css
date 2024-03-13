@@ -122,6 +122,10 @@ span {
     padding: 2%;
 }
 
+.competitionItem .itemInside .competitionInfo .competitionLocation{
+    
+}
+
 .competitionSection{
     display: flex;
     justify-content: space-between;
