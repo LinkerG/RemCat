@@ -1,8 +1,43 @@
 let tokenInput;
 window.addEventListener("load", function(){
     tokenInput = document.querySelector('input[name="_token"]');
-    console.log(tokenInput);
-    formEvent();
+    //formEvent();
+    emailInput = document.getElementById("email");
+    loginButton = document.getElementById("login-submit-button");
+
+    loginButton.addEventListener("click", function(){
+        if(validateEmail(emailInput.value)){
+            emailInput.classList.remove("formInvalid")
+            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
+
+            let formData = new FormData();
+            formData.append('email', emailInput.value);
+            // Obtener el token CSRF del meta tag en el documento
+            let token = document.head.querySelector('meta[name="csrf-token"]').content;
+            // Agregar el token CSRF a los datos del formulario
+            formData.append('_token', token);
+
+            fetch("/api/matchEmail", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Hubo un problema al realizar la solicitud.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        } else {
+            emailInput.classList.add("formInvalid")
+            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
+        }
+    })
 });
 
 const lang = document.querySelector("html").getAttribute("lang");
@@ -117,3 +152,8 @@ function formEvent(){
     })
 }
 
+function validateEmail(email) {
+    var regex = /^(?=.*\S).+@.+\..+$/;
+
+    return regex.test(email);
+}
