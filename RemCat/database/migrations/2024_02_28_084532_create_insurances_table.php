@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('insurances', function (Blueprint $table) {
-            //Comentado ya que mongoDB crea el id automaticamente
-            //$table->increments("_id");
+        Schema::create('Insurances', function (Blueprint $table) {
             $table->string("cif");
             $table->string("name");
             $table->string("address");
             $table->number("price");
-            $table->timestamps();
         });
     }
 

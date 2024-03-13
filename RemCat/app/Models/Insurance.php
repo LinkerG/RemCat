@@ -8,5 +8,5 @@ use MongoDB\Laravel\Eloquent\Model;
 class Insurance extends Model
 {
     protected $connection = "mongodb";
-    protected $collection = "insurances";
+    protected $collection = "Insurances";
 }
