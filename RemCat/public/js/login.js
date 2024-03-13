@@ -2,7 +2,7 @@ let tokenInput;
 window.addEventListener("load", function(){
     tokenInput = document.querySelector('input[name="_token"]');
     //formEvent();
-    emailEvent();
+    loginEvent();
 });
 
 const lang = document.querySelector("html").getAttribute("lang");
@@ -80,20 +80,10 @@ const signupHtml = `
     <button type="button" id="switch-button" class="btn btn-primary">Log in</button>
 `;
 
-function emailEvent(){
+function loginEvent(){
     emailInput = document.getElementById("email");
     loginButton = document.getElementById("login-submit-button");
-    let isTeamCheck = document.getElementById("isTeamCheck");
-    if(isTeamCheck) {
-        isTeamCheck.addEventListener("change", function(){
-            let nameLabel = document.getElementById("nameLabel")
-            if (isTeamCheck.checked) {
-                nameLabel.innerHTML = currentDictionary['teamName'];
-            } else {
-                nameLabel.innerHTML = currentDictionary['fullName'];
-            }
-        });
-    }
+    
     loginButton.addEventListener("click", function(){
         if(validateEmail(emailInput.value)){
             emailInput.classList.remove("formInvalid")
@@ -118,7 +108,14 @@ function emailEvent(){
             })
             .then(response => {
                 if(response.exists){
-                    loginButton.innerHTML = "Log in"
+                    let passwordInput = document.getElementById("password");
+                    if(validateNonEmptyText(passwordInput.value)){
+                        passwordInput.classList.remove("formInvalid")
+                        passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
+                    } else {
+                        passwordInput.classList.add("formInvalid")
+                        passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
+                    }
                 } else {
                     console.log("Preguntar si lleva a registro");
                     let parent = loginButton.parentElement;
@@ -142,6 +139,20 @@ function emailEvent(){
     })
 }
 
+function signupEvent(){
+    let isTeamCheck = document.getElementById("isTeamCheck");
+    if(isTeamCheck) {
+        isTeamCheck.addEventListener("change", function(){
+            let nameLabel = document.getElementById("nameLabel")
+            if (isTeamCheck.checked) {
+                nameLabel.innerHTML = currentDictionary['teamName'];
+            } else {
+                nameLabel.innerHTML = currentDictionary['fullName'];
+            }
+        });
+    }
+}
+
 function yesnoButtonEvents(){
     let noButton = document.getElementById("no-signup");
     let yesButton = document.getElementById("yes-signup");
@@ -150,14 +161,14 @@ function yesnoButtonEvents(){
         form.innerHTML = loginHtml;
         form.action = "/"+lang+"/login"
         form.appendChild(tokenInput);
-        emailEvent();
+        loginEvent();
     })
 
     yesButton.addEventListener("click", function(){
         form.innerHTML = signupHtml;
         form.action = "/"+lang+"/signup"
         form.appendChild(tokenInput);
-        emailEvent();
+        signupEvent();
     })
 }
 
@@ -192,4 +203,10 @@ function validateEmail(email) {
     var regex = /^(?=.*\S).+@.+\..+$/;
 
     return regex.test(email);
+}
+
+function validateNonEmptyText(string) {
+    let regex = /^[\S]+.*[\S]+$/;
+
+    return regex.test(string);
 }
