@@ -2,42 +2,7 @@ let tokenInput;
 window.addEventListener("load", function(){
     tokenInput = document.querySelector('input[name="_token"]');
     //formEvent();
-    emailInput = document.getElementById("email");
-    loginButton = document.getElementById("login-submit-button");
-
-    loginButton.addEventListener("click", function(){
-        if(validateEmail(emailInput.value)){
-            emailInput.classList.remove("formInvalid")
-            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
-
-            let formData = new FormData();
-            formData.append('email', emailInput.value);
-            // Obtener el token CSRF del meta tag en el documento
-            let token = document.head.querySelector('meta[name="csrf-token"]').content;
-            // Agregar el token CSRF a los datos del formulario
-            formData.append('_token', token);
-
-            fetch("/api/matchEmail", {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Hubo un problema al realizar la solicitud.');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error(error)
-            })
-        } else {
-            emailInput.classList.add("formInvalid")
-            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
-        }
-    })
+    emailEvent();
 });
 
 const lang = document.querySelector("html").getAttribute("lang");
@@ -70,7 +35,7 @@ const currentDictionary = dictionary[lang];
 const loginHtml = `
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="email" name="email" placeholder="" value="" required>
-        <label for="name">Email</label>
+        <label for="email">Email</label>
         <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
     </div>
     <div class="form-floating mb-3">
@@ -78,8 +43,10 @@ const loginHtml = `
         <label for="name">`+currentDictionary['password']+`</label>
         <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
     </div>
-
-    <button type="button" id="submit-button" class="btn btn-primary">Log in</button>
+    <button type="button" id="login-submit-button" class="btn btn-primary">Log in</button>
+    <hr>
+    <p class="align-center">or</p>
+    <hr>
     <button type="button" id="switch-button" class="btn btn-primary">Sign up</button>
 `;
 
@@ -113,11 +80,9 @@ const signupHtml = `
     <button type="button" id="switch-button" class="btn btn-primary">Log in</button>
 `;
 
-
-
-function formEvent(){
-    let form = document.getElementsByTagName("form")[0];
-    let switchButton = document.getElementById("switch-button");
+function emailEvent(){
+    emailInput = document.getElementById("email");
+    loginButton = document.getElementById("login-submit-button");
     let isTeamCheck = document.getElementById("isTeamCheck");
     if(isTeamCheck) {
         isTeamCheck.addEventListener("change", function(){
@@ -129,6 +94,77 @@ function formEvent(){
             }
         });
     }
+    loginButton.addEventListener("click", function(){
+        if(validateEmail(emailInput.value)){
+            emailInput.classList.remove("formInvalid")
+            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
+
+            let formData = new FormData();
+            formData.append('email', emailInput.value);
+            // Obtener el token CSRF del meta tag en el documento
+            let token = document.head.querySelector('meta[name="csrf-token"]').content;
+            // Agregar el token CSRF a los datos del formulario
+            formData.append('_token', token);
+            loginButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
+            fetch("/api/matchEmail", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Hubo un problema al realizar la solicitud.');
+                }
+                return response.json();
+            })
+            .then(response => {
+                if(response.exists){
+                    loginButton.innerHTML = "Log in"
+                } else {
+                    console.log("Preguntar si lleva a registro");
+                    let parent = loginButton.parentElement;
+                    loginButton.remove();
+                    let question = `
+                    <p>Este correo no tiene ninguna cuenta asociada, crear cuenta?</p>
+                    <button id="no-signup">No</button>
+                    <button id="yes-signup">Si</button>
+                    `
+                    parent.innerHTML += question;
+                    yesnoButtonEvents();
+                }
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        } else {
+            emailInput.classList.add("formInvalid")
+            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
+        }
+    })
+}
+
+function yesnoButtonEvents(){
+    let noButton = document.getElementById("no-signup");
+    let yesButton = document.getElementById("yes-signup");
+    let form = document.getElementsByTagName("form")[0];
+    noButton.addEventListener("click", function(){
+        form.innerHTML = loginHtml;
+        form.action = "/"+lang+"/login"
+        form.appendChild(tokenInput);
+        emailEvent();
+    })
+
+    yesButton.addEventListener("click", function(){
+        form.innerHTML = signupHtml;
+        form.action = "/"+lang+"/signup"
+        form.appendChild(tokenInput);
+        emailEvent();
+    })
+}
+
+function formEvent(){
+    let form = document.getElementsByTagName("form")[0];
+    let switchButton = document.getElementById("switch-button");
+    
     switchButton.addEventListener("click", function(){
         let action = form.action;
         let loginLabel = document.getElementsByClassName("loginLabel")[0];
