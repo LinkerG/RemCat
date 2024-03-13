@@ -6,7 +6,8 @@ return [
     'form' => [
         'name' => 'Nombre',
         'date' => 'Fecha',
-        'address' => 'Dirección'
+        'address' => 'Dirección',
+        'password' => 'Contraseña',
     ],
     'sponsor' => [
         'title' => 'Añadir un nuevo sponsor',

@@ -16,6 +16,7 @@ $defaultYear = CalcSeason::calculate();
 // RUTAS DE LA WEB
 // Definición de idioma por defecto
 Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($defaultYear) {
+
     // Página de inicio
     Route::get('/', function ($lang = 'es') {
         $year = CalcSeason::calculate();
@@ -49,14 +50,14 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         })->name('admin.login.post');
 
         //Middleware para el admin si esta logeado correctamente
-        Route::middleware(['admin.auth'])->group(function ($lang = 'es') {
+        Route::middleware(['admin.auth'])->group(function () {
             //Pagina inicial admin
             Route::get('/dashboard', function($lang = 'es') {
                 App::setLocale($lang);
     
                 return view('admin/dashboard');
             })->name('admin.dashboard');
-          
+
             //Logout
             Route::get('/logout', function($lang = 'es') {
                 App::setLocale($lang);

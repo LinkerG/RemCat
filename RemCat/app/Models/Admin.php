@@ -11,7 +11,7 @@ class Admin extends Model implements Authenticatable
     use AuthenticatableTrait;
 
     protected $connection = 'mongodb';
-    protected $collection = 'admins';
+    protected $collection = 'Admins';
 
     protected $fillable = ['email', 'password'];
 

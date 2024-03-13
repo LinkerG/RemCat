@@ -11,17 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
-            //Comentado ya que mongoDB crea el id automaticamente
-            //$table->increments("_id");
+        Schema::create('Teams', function (Blueprint $table) {
             $table->string("team_name");
-            $table->increments("federated_id");
-            $table->string("slug");
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('photo');
+            $table->increments("federated_id");
         });
     }
 

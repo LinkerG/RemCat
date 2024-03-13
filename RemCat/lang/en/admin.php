@@ -14,6 +14,7 @@ return [
     'form' => [
         'name' => 'Name',
         'address' => 'Address',
-        'image' => 'Sponsor logo image'
+        'image' => 'Sponsor logo image',
+        'password' => 'Password',
     ],
 ];

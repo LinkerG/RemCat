@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            //Comentado ya que mongoDB crea el id automaticamente
-            //$table->increments("_id");
+        Schema::create('Users', function (Blueprint $table) {
             $table->string('name');
             $table->string('surname');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->date("birthdate");
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('profilePhoto');
+            $table->date('birthDate');
         });
     }
 

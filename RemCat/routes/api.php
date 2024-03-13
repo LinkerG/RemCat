@@ -8,6 +8,7 @@ use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('sponsors/fetchAll', [SponsorController::class, 'fetchAllSponsors']);
 // Devuelve las colecciones que existen de competiciones
 Route::get('competitons/fetchYears', [CompetitionController::class, 'fetchYears']);
+// Mira si el email mandado existe
+Route::post('matchEmail', [UserController::class, 'matchEmail']);
 
 // Cambiar entre activo y no activo
 Route::post("sponsors/changeIsActive", [SponsorController::class, 'changeIsActive']);

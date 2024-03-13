@@ -14,6 +14,7 @@ return [
     ],
     'form' => [
         'name' => 'Nom',
-        'address' => 'Adreça'
+        'address' => 'Adreça',
+        'password' => 'Contrasenya',
     ]
 ];
