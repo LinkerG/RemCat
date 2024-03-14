@@ -11,6 +11,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+    @if(!$errors->isEmpty())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="wrapper loginWrapper">
         <div class="formWrapper">
             <h1 class="loginLabel">Login</h1>
