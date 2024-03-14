@@ -76,8 +76,8 @@ const signupHtml = `
         <label for="image-user" class="form-label ms-2 mt-2">`+currentDictionary['photo']+`</label>
         <input class="form-control" type="file" id="image-user" name="image-user">
     </div>
-    <button type="button" id="submit-button" class="btn btn-primary">Sign up</button>
-    <button type="button" id="switch-button" class="btn btn-primary">Log in</button>
+    <button type="button" id="switch-button" class="btn btn-primary">Back to Login</button>
+    <button type="button" id="submit-button" class="btn btn-primary">Register</button>
 `;
 
 function loginEvent(){
@@ -140,17 +140,24 @@ function loginEvent(){
 }
 
 function signupEvent(){
+    let form = document.getElementsByTagName("form")[0];
     let isTeamCheck = document.getElementById("isTeamCheck");
     if(isTeamCheck) {
         isTeamCheck.addEventListener("change", function(){
             let nameLabel = document.getElementById("nameLabel")
             if (isTeamCheck.checked) {
                 nameLabel.innerHTML = currentDictionary['teamName'];
+                form.action = "/"+lang+"/register/team"
             } else {
                 nameLabel.innerHTML = currentDictionary['fullName'];
+                form.action = "/"+lang+"/register/user"
             }
         });
     }
+    let submit_button = document.getElementById("submit-button");
+    submit_button.addEventListener("click", function(){
+        form.submit()
+    });
 }
 
 function yesnoButtonEvents(){
@@ -166,7 +173,7 @@ function yesnoButtonEvents(){
 
     yesButton.addEventListener("click", function(){
         form.innerHTML = signupHtml;
-        form.action = "/"+lang+"/signup"
+        form.action = "/"+lang+"/register/user"
         form.appendChild(tokenInput);
         signupEvent();
     })

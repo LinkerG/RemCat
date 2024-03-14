@@ -19,19 +19,65 @@
                 </div>
             </div>
         </div>
-        <div class="container ms-4 mt-3 mb-5">
-            <h2>{{ trans("text.nextCompetition") }}</h2>
-        </div>
+        @if(!$competitions->isEmpty())
+            <div class="container ms-4 mt-3 mb-5">
+                <h2>{{ trans("text.nextCompetition") }}</h2>
+            </div>
+        @endif
         <section class="container-fluid overflow-auto competitionSection mt-4 mb-4">
             <div class="d-inline-flex flex-row flex-nowrap overflow-auto competitionContainer">
                 @if(($competitions))
                     @foreach($competitions as $competition)
                         <article class="flex-shrink-0 competitionItem">
-                            <div class="">
-                                <h4 class="">{{$competition->name}}</h4>
-                                <p class="">{{$competition->location}} - {{$competition->date}}</p>
-                                <a href="#" class="">Card link</a>
-                                <a href="#" class="">Another link</a>
+                            <div class="itemInside">
+                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
+                                <div class="competitionInfo">
+                                    <h4 class="">{{$competition->name}}</h4>
+                                    <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
+                                    <p class="competitionDate"><img src="{{asset('icons/calendar-week.svg')}}" alt="date">{{$competition->date}}</p>
+                                    <a href="#" class="">Card link</a>
+                                    <a href="#" class="">Another link</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="flex-shrink-0 competitionItem">
+                            <div class="itemInside">
+                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
+                                <div class="competitionInfo">
+                                    <h4 class="">{{$competition->name}}</h4>
+                                    <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
+                                    <p class="competitionDate">{{$competition->date}}</p>
+                                    <a href="#" class="">Card link</a>
+                                    <a href="#" class="">Another link</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="flex-shrink-0 competitionItem">
+                            <div class="itemInside">
+                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
+                                <div class="competitionInfo">
+                                    <h4 class="">{{$competition->name}}</h4>
+                                    <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
+                                    <p class="competitionDate">{{$competition->date}}</p>
+                                    <a href="#" class="">Card link</a>
+                                    <a href="#" class="">Another link</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="flex-shrink-0 competitionItem">
+                            <div class="itemInside">
+                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
+                                <div class="competitionInfo">
+                                    <h4 class="">{{$competition->name}}</h4>
+                                    <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
+                                    <p class="competitionDate">{{$competition->date}}</p>
+                                    <a href="#" class="">Card link</a>
+                                    <a href="#" class="">Another link</a>
+                                </div>
                             </div>
                         </article>
                     @endforeach
