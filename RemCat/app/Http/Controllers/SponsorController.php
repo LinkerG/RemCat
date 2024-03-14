@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sponsor;
+use App\Models\Insurance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use MongoDB\BSON\ObjectID;
 
 class SponsorController extends Controller
 {
@@ -17,33 +19,24 @@ class SponsorController extends Controller
         $name = $request->input('name');
         $address = $request->input("address");
         
-        $uploadPath = public_path('uploads/sponsors');
-        if (!File::isDirectory($uploadPath)) {
-            File::makeDirectory($uploadPath, 0777, true, true);
-        }
-
-        // TODO: Esto no funciona
-        if ($request->hasFile('image-logo')) {
-            $image = $request->file('image-logo');
-
-            $fileName = 'sponsor_' . $cif . '.' . $image->getClientOriginalExtension();
-            // Mueve el archivo a la carpeta uploads/sponsors
-            $image->move($uploadPath, $fileName);
-
-        } else $fileName = "sponsor_default.png";
-
-        $sponsor = new Sponsor;
-        $sponsor->cif = $cif;
-        $sponsor->name = $name;
-        $sponsor->address = $address;
-        $sponsor->logo = $fileName;
-        $sponsor->isActive = true;
+        
         // TODO:
         //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
         //    solo se comprueba que el cif no este dupli
         //  - Hay que mirar que el cif tampoco exista en insurance
+
         $error = [];
-        if(!Sponsor::where("cif", $cif)->exists()){
+        if(!Sponsor::where("cif", $cif)->exists() && !Insurance::where("cif", $cif)->exists()){
+            $_id = new ObjectID();
+            $fileName = ImageController::storeImage(request(), "sponsors/logos", "image-logo" ,$_id);
+
+            $sponsor = new Sponsor;
+            $sponsor->_id = $_id;
+            $sponsor->cif = $cif;
+            $sponsor->name = $name;
+            $sponsor->address = $address;
+            $sponsor->image_logo = $fileName;
+            $sponsor->isActive = true;
             $sponsor->save();
         } else {
             $error[] = "alreadyExists";
