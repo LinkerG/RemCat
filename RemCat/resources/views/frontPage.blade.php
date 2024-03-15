@@ -30,7 +30,8 @@
                     @foreach($competitions as $competition)
                         <article class="flex-shrink-0 competitionItem">
                             <div class="itemInside">
-                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                {{-- TODO: No acaba de pillar la ruta del enlace simbolico --}}
+                                <?php $bannerRoute = "storage/competition-banners/" . $competition->image_banner; ?>
                                 <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
                                 <div class="competitionInfo">
                                     <h4 class="">{{$competition->name}}</h4>
@@ -43,12 +44,12 @@
                         </article>
                         <article class="flex-shrink-0 competitionItem">
                             <div class="itemInside">
-                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                <?php $bannerRoute = "/storage/competition-banners/" . $competition->image_banner; ?>
                                 <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
                                 <div class="competitionInfo">
                                     <h4 class="">{{$competition->name}}</h4>
                                     <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
-                                    <p class="competitionDate">{{$competition->date}}</p>
+                                    <p class="competitionDate"><img src="{{asset('icons/calendar-week.svg')}}" alt="date">{{$competition->date}}</p>
                                     <a href="#" class="">Card link</a>
                                     <a href="#" class="">Another link</a>
                                 </div>
@@ -56,12 +57,12 @@
                         </article>
                         <article class="flex-shrink-0 competitionItem">
                             <div class="itemInside">
-                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                <?php $bannerRoute = "/storage/competition-banners/" . $competition->image_banner; ?>
                                 <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
                                 <div class="competitionInfo">
                                     <h4 class="">{{$competition->name}}</h4>
                                     <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
-                                    <p class="competitionDate">{{$competition->date}}</p>
+                                    <p class="competitionDate"><img src="{{asset('icons/calendar-week.svg')}}" alt="date">{{$competition->date}}</p>
                                     <a href="#" class="">Card link</a>
                                     <a href="#" class="">Another link</a>
                                 </div>
@@ -69,12 +70,12 @@
                         </article>
                         <article class="flex-shrink-0 competitionItem">
                             <div class="itemInside">
-                                <?php $bannerRoute = "images/competitionBanners/" . $competition->image_banner; ?>
+                                <?php $bannerRoute = "/storage/competition-banners/" . $competition->image_banner; ?>
                                 <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
                                 <div class="competitionInfo">
                                     <h4 class="">{{$competition->name}}</h4>
                                     <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
-                                    <p class="competitionDate">{{$competition->date}}</p>
+                                    <p class="competitionDate"><img src="{{asset('icons/calendar-week.svg')}}" alt="date">{{$competition->date}}</p>
                                     <a href="#" class="">Card link</a>
                                     <a href="#" class="">Another link</a>
                                 </div>

@@ -43,8 +43,8 @@ class CompetitionController extends Controller
             $competition = new Competition;
             $competition->setCollection($seasonName);
             $_id = new ObjectID();
-            $mapImage = ImageController::storeImage(request(), $seasonName."/maps", "image-map" ,$_id, true);
-            $bannerImage = ImageController::storeImage(request(), $seasonName."/banners", "image-banner" ,$_id, true);
+            $mapImage = ImageController::storeImage(request(), "competition-maps", "image-map" ,$_id);
+            $bannerImage = ImageController::storeImage(request(), "competition-banners", "image-banner" ,$_id);
             $competition->name = $name;
             $competition->location = $location;
             $competition->boatType = $boatType;
