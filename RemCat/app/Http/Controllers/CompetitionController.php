@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\CalcSeason;
 use DateTime;
 use Carbon\Carbon;
+use MongoDB\BSON\ObjectID;
 
 
 class CompetitionController extends Controller
@@ -33,39 +34,28 @@ class CompetitionController extends Controller
         $sponsorsList = $request->input("sponsors-list");
         
         $seasonName = CalcSeason::calculate() . "_competitions";
-        // se puede setear la variable de arriba para forzar temporadas anteriores o futuras
-        // $seasonName = "24_25_competitions";
         
-        $uploadPath = public_path('uploads/' . $seasonName);
-        if (!File::isDirectory($uploadPath)) {
-            File::makeDirectory($uploadPath, 0777, true, true);
-        }
         
-        // TODO: Esto no funciona
-        if ($request->hasFile('image-map')) {
-            $image = $request->file('image-map');
-    
-            $fileName =  $date->format('d-m-Y') . '_' . $seasonName . '.' . $image->getClientOriginalExtension();
-            // Mueve el archivo a la carpeta uploads/sponsors
-            $image->move($uploadPath, $fileName);
-    
-        } else $fileName = "map_default.png";
         
-        $competition = new Competition;
-        $competition->setCollection($seasonName);
-        $competition->name = $name;
-        $competition->location = $location;
-        $competition->boatType = $boatType;
-        $competition->isOpen = $isOpen;
-        $competition->date = $dateMongo;
-        $competition->sponsor_price = $price;
-        $competition->sponsors_list = $sponsorsList;
-        $competition->image_map = $fileName;
-        $competition->isCancelled = false;
-        $competition->isActive = true;
     
         $error = [];
         if (!$competitionComparator = (new Competition())->setCollection($seasonName)->where("name", $name)->where("boatType", $boatType)->where("date", $dateMongo)->exists()) {
+            $competition = new Competition;
+            $competition->setCollection($seasonName);
+            $_id = new ObjectID();
+            $mapImage = ImageController::storeImage(request(), $seasonName."/maps", "image-map" ,$_id, true);
+            $bannerImage = ImageController::storeImage(request(), $seasonName."/banners", "image-banner" ,$_id, true);
+            $competition->name = $name;
+            $competition->location = $location;
+            $competition->boatType = $boatType;
+            $competition->isOpen = $isOpen;
+            $competition->date = $dateMongo;
+            $competition->sponsor_price = $price;
+            $competition->sponsors_list = $sponsorsList;
+            $competition->image_map = $mapImage;
+            $competition->image_banner = $bannerImage;
+            $competition->isCancelled = false;
+            $competition->isActive = true;
             $competition->save();
         } else{
 
