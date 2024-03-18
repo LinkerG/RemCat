@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Competition;
+use App\Models\Sponsor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
@@ -161,8 +162,9 @@ class CompetitionController extends Controller
         $seasonName = $year . "_competitions";
         $currentDate = Carbon::now()->toDateString();
         $competitions = (new Competition())->setCollection($seasonName)->where('date', '>=', $currentDate)->where('isActive', true)->take(4)->get();
+        $sponsors = Sponsor::where("isActive", true)->get();
 
-        return view("frontPage", compact("competitions", "year"));
+        return view("frontPage", compact("competitions", "sponsors", "year"));
     }
 
     //------------------VIEW-CALLS-END------------------//
