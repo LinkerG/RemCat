@@ -9,7 +9,6 @@
     <?php $route = "/" . App::getLocale() . "/" ?>
 </head>
 <body>
-  @include("components.header")
     {{--  TODO: Añadir el atributo NAME a los inputs  --}}
     {{--  Si no no se puede hacer el manejo del POST  --}}
     <form action="{{$route}}admin" method="post" enctype="multipart/form-data">

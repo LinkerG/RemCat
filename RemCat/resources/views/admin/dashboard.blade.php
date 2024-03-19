@@ -19,18 +19,18 @@
                     <img src="{{ $logoUrl }}" id="logo-img" class="collapsed">
                 </a>
                 <div class="nav_list"> 
-                    <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Dashboard</span> </a> 
-                    <a href="{{$route}}admin/competitions" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Regatas</span> </a> 
-                    <a href="#" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Equipos</span> </a> 
-                    <a href="{{$route}}admin/insurances" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Aseguradoras</span> </a> 
-                    <a href="{{$route}}admin/sponsors" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sponsors</span> </a> 
+                    <a href="#" class="nav_link active" data-page="dashboard" data-url={{ route('admin.dynamic-content', ['lang' => app()->getLocale(), 'page' => 'dashboard'])}}> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Dashboard</span> </a> 
+                    <a href="{{$route}}admin/competitions" class="nav_link" data-page="competitions" data-url={{ route('admin.dynamic-content', ['lang' => app()->getLocale(), 'page' => 'competitions']) }}> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Regatas</span> </a> 
+                    <a href="#" class="nav_link" data-page="teams" data-url={{ route('admin.dynamic-content', ['lang' => app()->getLocale(), 'page' => 'teams']) }}> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Equipos</span> </a> 
+                    <a href="{{$route}}admin/insurances" class="nav_link" data-page="insurances" data-url={{ route('admin.dynamic-content', ['lang' => app()->getLocale(), 'page' => 'insurances']) }}> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Aseguradoras</span> </a> 
+                    <a href="{{$route}}admin/sponsors" class="nav_link" data-page="sponsors" data-url={{ route('admin.dynamic-content', ['lang' => app()->getLocale(), 'page' => 'sponsors']) }}> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sponsors</span> </a> 
                     <a href="{{ $route}}admin/logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Salir</span> </a>
                 </div>
             </div> 
         </nav>
     </div>
     <!--Container Main start-->
-    <div class="height-100 bg-light">
+    <div id="main-content" class="height-100 bg-light">
         <h4>Main Components</h4>
     </div>
 </body>

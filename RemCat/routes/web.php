@@ -37,6 +37,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
     $defaultYear = CalcSeason::calculate();
     Route::prefix('/admin')->group(function() use ($defaultYear){
         //Login de admin
+        Route::get('/dynamic-content/{page}', function($page, $lang = 'es') {
+            App::setlocale($lang);
+            $adminController = new AdminController();
+            
+            return $adminController->dynamicContent($page);
+        })->where(['page' => 'dashboard|competitions|teams|sponsors|insurances'])->name('admin.dynamic-content');
+
         Route::get('', function ($lang = 'es') {
             App::setLocale($lang);
 
@@ -62,7 +69,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                     'logoUrl' => $logoUrl
                 ]);
             })->name('admin.dashboard');
-
+            
             //Logout
             Route::get('/logout', function($lang = 'es') {
                 App::setLocale($lang);

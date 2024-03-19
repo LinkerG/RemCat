@@ -36,5 +36,23 @@ class AdminController extends Controller
 
         return redirect()->route('admin.login', ['lang' => app()->getLocale()]);
     }
+
+    public function dynamicContent($page) {
+
+        switch ($page) {
+            case 'dashboard':
+                return view('admin/dashboard');
+            case 'competitions':
+                return view('admin/viewCompetitions');
+            case 'teams':
+                return view('admin/equipos');
+            case 'sponsors':
+                return view('admin/viewSponsors');
+            case 'insurances':
+                return view('admin/viewInsurances');
+            default:
+                abort(404);
+        }
+    }
     
 }

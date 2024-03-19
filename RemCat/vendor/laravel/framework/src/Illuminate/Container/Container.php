@@ -14,6 +14,7 @@ use ReflectionException;
 use ReflectionFunction;
 use ReflectionParameter;
 use TypeError;
+use App\Http\Controllers\AdminController;
 
 class Container implements ArrayAccess, ContainerContract
 {

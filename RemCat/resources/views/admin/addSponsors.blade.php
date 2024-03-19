@@ -9,7 +9,6 @@
     <script src="{{asset('js/formValidator.js')}}"></script>
 </head>
 <body>
-    @include('components.header')
     @if(!$errors->isEmpty())
         <div class="alert alert-danger">
             <ul>
