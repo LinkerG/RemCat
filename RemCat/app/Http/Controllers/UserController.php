@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\TeamController;
 
 class UserController extends Controller
 {
@@ -35,19 +37,44 @@ class UserController extends Controller
         return empty($errors) ? redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors)) : redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors));
         
     }
+    public function auth() {
+        request()->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
+        $email = request()->input('email');
+        $password = request()->input('password');
+
+        $user = User::where('email',$email)->first();
+        if($user && Auth::guard('user')->attempt(['email'=>$email, 'password'=>$password])) {
+            session(['userAuth' => true]);
+            session(['userName' => $user->name]);
+            session(['userFoto' => $user->foto]);
+
+            return redirect()->route('user.frontPage',['lang' => app()->getLocale()]);
+        } else {
+            return redirect()->route('login', ['lang' => app()->getLocale()]);
+        }
+    }
     //------------------CRUD-END------------------//
 
     //------------------ENDPOINTS------------------//
-    public function matchEmail(Request $request){
-        $email = $request->input('email');
+    public function matchEmail(){
+        request()->validate([
+            'email' => 'required|email',
+        ]);
         
+        $email = request()->input('email');
         $exists = false;
-        if(User::where("email", $email)->exists()) $exists = true;
-        if(!$exists){
-            if(Team::where("email", $email)->exists()) $exists = true;
+        if(User::where('email', $email)->exists()) {
+            auth();
+            $exists = true;
+        } else if(Team::where("email", $email)->exists()) {
+            $teamController = new TeamController();
+            $teamController->auth();
+            $exists = true;
         }
-        $json;
         
         return $exists ? response()->json(['exists' => true]) : response()->json(['exists' => false]);
 

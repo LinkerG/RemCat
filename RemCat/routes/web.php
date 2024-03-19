@@ -33,7 +33,12 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         App::setLocale($lang);
         return view('login');
     })->name('login');
-    
+    Route::post('/login',function($lang = 'es') {
+        App::setLocale($lang);
+        $request = new Request;
+        $userController = new UserController();
+        $userController->matchEmail();
+    });
     //------------------ADMIN------------------//
     $defaultYear = CalcSeason::calculate();
     Route::prefix('/admin')->group(function() use ($defaultYear){
@@ -184,23 +189,47 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             });
         });
     });
-
-    //-----------------REGISTER-----------------//
-    Route::post('/register/team', function (Request $request, $lang = 'es') {
-        $teamController = new TeamController();
-        App::setLocale($lang);
-                
-        return $teamController->store($request);
-    });
-    Route::post('/register/user', function (Request $request, $lang = 'es') {
-        $userController = new UserController();
-        App::setLocale($lang);
-                
-        return $userController->store($request);
-    });
-    //-----------------REGISTER-END-----------------//
-
     //-----------------ADMIN-END-----------------//
+    //-----------------TEAMS-----------------//
+    Route::prefix('/team')->group(function() use ($defaultYear) {
+        //REGISTRO DE EQUIPOS
+        Route::post('/register', function (Request $request, $lang = 'es') {
+            $teamController = new TeamController();
+            App::setLocale($lang);
+                    
+            return $teamController->store($request);
+        });
+        Route::middleware(['team.auth'])->group(function () {
+            Route::get('/frontPage', function($lang = 'es') {
+                App::setLocale($lang);
+
+                return view('teams/teamIndex');
+            })->name('team.frontPage');
+        });
+    });
+    
+    
+    //-----------------TEAMS-END--------------------//
+    //-----------------USERS---------------------//
+    Route::prefix('/user')->group(function() use ($defaultYear) {
+        Route::post('/register', function (Request $request, $lang = 'es') {
+            $userController = new UserController();
+            App::setLocale($lang);
+                    
+            return $userController->store($request);
+        });
+        Route::middleware(['user.auth'])->group(function() {
+            Route::get('/frontPage', function($lang = 'es') {
+                App::setLocale($lang);
+
+                return view('users/userIndex');
+            })->name('user.frontPage');
+        });
+    });
+    
+    //-----------------USERS-END-----------------//
+
+    
     Route::prefix('/team')->group(function () {
 
     });

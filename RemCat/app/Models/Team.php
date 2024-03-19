@@ -9,4 +9,6 @@ class Team extends Model
 {
     protected $connection = "mongodb";
     protected $collection = "Teams";
+
+    protected $fillable = ['team_name', 'email', 'password', 'foto'];
 }

@@ -9,4 +9,6 @@ class User extends Model
 {
     protected $connection = "mongodb";
     protected $collection = "Users";
+
+    protected $fillable = ['name','email', 'password','foto'];
 }
