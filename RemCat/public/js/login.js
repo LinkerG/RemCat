@@ -83,14 +83,17 @@ const signupHtml = `
 function loginEvent(){
     emailInput = document.getElementById("email");
     loginButton = document.getElementById("login-submit-button");
-    
+    let passwordInput = document.getElementById("password");
     loginButton.addEventListener("click", function(){
-        if(validateEmail(emailInput.value)){
+        if(validateEmail(emailInput.value && validateNonEmptyText(passwordInput.value))){
             emailInput.classList.remove("formInvalid")
             emailInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
+            passwordInput.classList.remove("formInvalid")
+            passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
 
             let formData = new FormData();
             formData.append('email', emailInput.value);
+            formData.append('password', passwordInput.value);
             // Obtener el token CSRF del meta tag en el documento
             let token = document.head.querySelector('meta[name="csrf-token"]').content;
             // Agregar el token CSRF a los datos del formulario
@@ -107,15 +110,8 @@ function loginEvent(){
                 return response.json();
             })
             .then(response => {
-                if(response.exists){
-                    let passwordInput = document.getElementById("password");
-                    if(validateNonEmptyText(passwordInput.value)){
-                        passwordInput.classList.remove("formInvalid")
-                        passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
-                    } else {
-                        passwordInput.classList.add("formInvalid")
-                        passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
-                    }
+                if(response.exists && response.valid){
+                    form.submit();
                 } else {
                     console.log("Preguntar si lleva a registro");
                     let parent = loginButton.parentElement;
@@ -135,6 +131,8 @@ function loginEvent(){
         } else {
             emailInput.classList.add("formInvalid")
             emailInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
+            passwordInput.classList.add("formInvalid")
+            passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
         }
     })
 }

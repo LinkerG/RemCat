@@ -60,25 +60,34 @@ class UserController extends Controller
     //------------------CRUD-END------------------//
 
     //------------------ENDPOINTS------------------//
-    public function matchEmail(){
-        request()->validate([
-            'email' => 'required|email',
-        ]);
-        
+    public function matchEmail(Request $request) {
         $email = request()->input('email');
-        $exists = false;
-        if(User::where('email', $email)->exists()) {
-            auth();
-            $exists = true;
-        } else if(Team::where("email", $email)->exists()) {
-            $teamController = new TeamController();
-            $teamController->auth();
-            $exists = true;
-        }
+        $password = request()->input("password");
         
-        return $exists ? response()->json(['exists' => true]) : response()->json(['exists' => false]);
+        $exists = false;
+        $valid = false;
+    
+        // Buscar usuario por correo electrónico
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            if (Hash::check($password, $user->password)) {
+                $valid = true;
+            }
+            $exists = true;
+        } else {
+            // Si no se encuentra usuario, buscar equipo por correo electrónico
+            $team = Team::where('email', $email)->first();
+            if ($team) {
+                if (Hash::check($password, $team->password)) {
+                    $valid = true;
+                }
+                $exists = true;
+            }
+        }
 
+        return response()->json(['exists' => $exists, 'valid' => $valid]);
     }
+    
     
     //------------------ENDPOINTS-END------------------//
 }
