@@ -111,6 +111,11 @@ function loginEvent(){
             })
             .then(response => {
                 if(response.exists && response.valid){
+                    if(response.isUser){
+                        
+                    } else {
+
+                    }
                     form.submit();
                 } else {
                     console.log("Preguntar si lleva a registro");

@@ -66,12 +66,13 @@ class UserController extends Controller
         
         $exists = false;
         $valid = false;
-    
+        $isUser = false;
         // Buscar usuario por correo electrónico
         $user = User::where('email', $email)->first();
         if ($user) {
             if (Hash::check($password, $user->password)) {
                 $valid = true;
+                $isUser = true;
             }
             $exists = true;
         } else {
@@ -85,7 +86,7 @@ class UserController extends Controller
             }
         }
 
-        return response()->json(['exists' => $exists, 'valid' => $valid]);
+        return response()->json(['exists' => $exists, 'valid' => $valid, "isUser" => $isUser]);
     }
     
     
