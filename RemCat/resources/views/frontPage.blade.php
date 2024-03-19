@@ -50,7 +50,10 @@
             <section class="container-fluid overflow-auto competitionSection mt-4 mb-4">
                 @foreach ($sponsors as $sponsor)
                     <?php $imgRoute = "storage/sponsors/logos/" . $sponsor->image_logo; ?>
-                    <img src="{{asset($imgRoute)}}" alt="logo of {{$sponsor->name}}">
+                    <figure>
+                        <img src="{{asset($imgRoute)}}" alt="logo of {{$sponsor->name}}">
+                        <figcaption>{{ $sponsor->name }}</figcaption>
+                    </figure>
                 @endforeach
             </section>
         @endif
