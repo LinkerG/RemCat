@@ -101,10 +101,29 @@ span {
     height: 450px;
 }
 
-.competitionItem div{
+.competitionItem .itemInside{
     width: 100%;
     height: 100%;
     border: 1px solid black;
+}
+
+.competitionItem .itemInside .competitionBanner{
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 4/3;
+    transition: filter 0.4s ease;
+}
+
+.competitionItem .itemInside .competitionBanner:hover{
+    filter: brightness(0.3);
+}
+
+.competitionItem .itemInside .competitionInfo{
+    padding: 2%;
+}
+
+.competitionItem .itemInside .competitionInfo .competitionLocation{
+    
 }
 
 .competitionSection{

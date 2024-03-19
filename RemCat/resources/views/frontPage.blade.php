@@ -19,27 +19,44 @@
                 </div>
             </div>
         </div>
-        <div class="container ms-4 mt-3 mb-5">
-            <h2>{{ trans("text.nextCompetition") }}</h2>
-        </div>
-        <section class="container-fluid overflow-auto competitionSection mt-4 mb-4">
-            <div class="d-inline-flex flex-row flex-nowrap overflow-auto competitionContainer">
-                @if(($competitions))
+        @if(!$competitions->isEmpty())
+            <div class="container ms-4 mt-3 mb-5">
+                <h2>{{ trans("text.nextCompetition") }}</h2>
+            </div>
+            <section class="container-fluid overflow-auto competitionSection mt-4 mb-4">
+                <div class="d-inline-flex flex-row flex-nowrap overflow-auto competitionContainer">
                     @foreach($competitions as $competition)
                         <article class="flex-shrink-0 competitionItem">
-                            <div class="">
-                                <h4 class="">{{$competition->name}}</h4>
-                                <p class="">{{$competition->location}} - {{$competition->date}}</p>
-                                <a href="#" class="">Card link</a>
-                                <a href="#" class="">Another link</a>
+                            <div class="itemInside">
+                                <?php $bannerRoute = "storage/competition-banners/" . $competition->image_banner; ?>
+                                <img class="competitionBanner" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
+                                <div class="competitionInfo">
+                                    <h4 class="">{{$competition->name}}</h4>
+                                    <p class="competitionLocation"><img src="{{asset('icons/geo-alt-fill.svg')}}" alt="location">{{$competition->location}}</p>
+                                    <p class="competitionDate"><img src="{{asset('icons/calendar-week.svg')}}" alt="date">{{$competition->date}}</p>
+                                    <a href="#" class="">Card link</a>
+                                    <a href="#" class="">Another link</a>
+                                </div>
                             </div>
                         </article>
                     @endforeach
-                @else
-                    <h1>No hay</h1>
-                @endif
+                </div>
+            </section>
+        @endif
+        @if(!$sponsors->isEmpty())
+            <div class="container ms-4 mt-3 mb-5">
+                <h2>{{ trans("text.ourSponsors") }}</h2>
             </div>
-        </section>
+            <section class="container-fluid overflow-auto competitionSection mt-4 mb-4">
+                @foreach ($sponsors as $sponsor)
+                    <?php $imgRoute = "storage/sponsors/logos/" . $sponsor->image_logo; ?>
+                    <figure>
+                        <img src="{{asset($imgRoute)}}" alt="logo of {{$sponsor->name}}">
+                        <figcaption>{{ $sponsor->name }}</figcaption>
+                    </figure>
+                @endforeach
+            </section>
+        @endif
     </div>
     @include("components.footer")
 </body>

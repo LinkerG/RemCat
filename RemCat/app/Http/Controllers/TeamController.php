@@ -6,11 +6,12 @@ use App\Models\User;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-class UserController extends Controller
+class TeamController extends Controller
 {
     //------------------CRUD------------------//
     public function store(Request $request){
@@ -20,14 +21,14 @@ class UserController extends Controller
         $passwordEncrypted = Hash::make($password);
         //TODO : Imagen
 
-        $user = new User;
-        $user->user_name = $name;
-        $user->email = $email;
-        $user->password = $passwordEncrypted;
+        $team = new Team;
+        $team->team_name = $name;
+        $team->email = $email;
+        $team->password = $passwordEncrypted;
 
         $errors = [];
         if((!Team::where("email", $email)->exists()) && (!User::where("email", $email)->exists())){
-            $user->save();
+            $team->save();
         } else {
             $error[] = "alreadyExists";
         }
@@ -39,19 +40,5 @@ class UserController extends Controller
     //------------------CRUD-END------------------//
 
     //------------------ENDPOINTS------------------//
-    public function matchEmail(Request $request){
-        $email = $request->input('email');
-        
-        $exists = false;
-        if(User::where("email", $email)->exists()) $exists = true;
-        if(!$exists){
-            if(Team::where("email", $email)->exists()) $exists = true;
-        }
-        $json;
-        
-        return $exists ? response()->json(['exists' => true]) : response()->json(['exists' => false]);
-
-    }
-    
     //------------------ENDPOINTS-END------------------//
 }

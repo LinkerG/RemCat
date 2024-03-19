@@ -21,7 +21,7 @@
     @endif
     <div class="container container-small shadow mt-4 mr-5 ml-5 p-5">
         <h1 class="mb-3" style="text-align: center">{{ trans('admin.insurance.title') }}</h1>
-        <form action="#" method="POST" class="mt-1">
+        <form action="#" method="POST" class="mt-1" enctype="multipart/form-data">
             @csrf
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="cif" name="cif" placeholder="" value="{{$insurance->cif}}" required readonly>

@@ -7,6 +7,7 @@
     <title>Add sponsors</title>
     @include('components.links')
     <script src="{{asset('js/formValidator.js')}}"></script>
+    <script src="{{asset('js/imagePreview.js')}}"></script>
 </head>
 <body>
     @include('components.header')
@@ -21,7 +22,7 @@
     @endif
     <div class="container container-small shadow mt-4 mr-5 ml-5 p-5">
         <h1 class="mb-3" style="text-align: center">{{ trans('admin.sponsor.title') }}</h1>
-        <form action="#" method="POST" class="mt-1">
+        <form action="#" method="POST" class="mt-1" enctype="multipart/form-data">
             @csrf
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="cif" name="cif" placeholder="" value="{{old('cif')}}" required>
@@ -41,6 +42,7 @@
             <div class="mb-3">
                 <label for="image-logo" class="form-label ms-2">{{ trans('admin.sponsor.image') }}</label>
                 <input class="form-control" type="file" id="image-logo" name="image-logo">
+                <img src="" alt="preview of logo" id="preview-logo">
             </div>
             <div class="mt-5 flex-row-reverse " style="display: flex">
                 <button class="btn btn-success btn-lg fix-size" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>

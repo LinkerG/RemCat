@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Helpers\CalcSeason;
 use Illuminate\Support\Facades\URL;
 // Controladores 
-use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\UserController;
 
 $defaultYear = CalcSeason::calculate();
 
@@ -182,7 +183,23 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 return $competitionController->update($request, $year, $_id);
             });
         });
-    }); 
+    });
+
+    //-----------------REGISTER-----------------//
+    Route::post('/register/team', function (Request $request, $lang = 'es') {
+        $teamController = new TeamController();
+        App::setLocale($lang);
+                
+        return $teamController->store($request);
+    });
+    Route::post('/register/user', function (Request $request, $lang = 'es') {
+        $userController = new UserController();
+        App::setLocale($lang);
+                
+        return $userController->store($request);
+    });
+    //-----------------REGISTER-END-----------------//
+
     //-----------------ADMIN-END-----------------//
     Route::prefix('/team')->group(function () {
 
