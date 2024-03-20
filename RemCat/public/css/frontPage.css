@@ -5,7 +5,7 @@
     align-items: center;
     background-image: url(../images/banner.png);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: right;
     background-size: cover;
     z-index: 0;
     min-height: 90svh;
