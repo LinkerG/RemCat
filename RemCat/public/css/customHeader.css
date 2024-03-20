@@ -1,3 +1,15 @@
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    transition: top 1s ease;
+}
+
+header.hidden {
+    top: -100px; /* Oculta el encabezado moviéndolo fuera de la vista */
+  }
+
 .header-gradient{
     background: rgb(234,104,46);
     background: linear-gradient(90deg, rgba(234,104,46,1) 0%, rgba(252,200,1,1) 10%, rgba(252,200,1,1) 70%, rgba(234,104,46,1) 100%);
