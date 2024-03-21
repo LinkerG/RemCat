@@ -81,11 +81,12 @@ const signupHtml = `
 `;
 
 function loginEvent(){
+    let form = document.getElementsByTagName("form")[0];
     emailInput = document.getElementById("email");
     loginButton = document.getElementById("login-submit-button");
     let passwordInput = document.getElementById("password");
     loginButton.addEventListener("click", function(){
-        if(validateEmail(emailInput.value && validateNonEmptyText(passwordInput.value))){
+        if(validateEmail(emailInput.value) && validateNonEmptyText(passwordInput.value)){
             emailInput.classList.remove("formInvalid")
             emailInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
             passwordInput.classList.remove("formInvalid")
@@ -112,9 +113,9 @@ function loginEvent(){
             .then(response => {
                 if(response.exists && response.valid){
                     if(response.isUser){
-                        
+                        form.action = "/" + lang + "/userLogin";
                     } else {
-
+                        form.action = "/" + lang + "/teamLogin";
                     }
                     form.submit();
                 } else {

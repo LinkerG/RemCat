@@ -28,16 +28,23 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         return $competitionController->showFrontPage($year);
     })->name('home');
 
-    // Página de inicio de sesión de usuario
+    // Página de inicio de sesión de usuario y equipos
     Route::get('/login', function ($lang = 'es') {
         App::setLocale($lang);
         return view('login');
     })->name('login');
-    Route::post('/login',function($lang = 'es') {
+    //POST PARA USUARIOS
+    Route::post('/userLogin',function($lang = 'es') {
         App::setLocale($lang);
-        $request = new Request;
         $userController = new UserController();
-        $userController->matchEmail();
+        return $userController->auth();
+    });
+    //POST PARA EQUIPO
+    Route::post('/teamLogin',function($lang = 'es') {
+        App::setLocale($lang);
+
+        $teamController = new TeamController();
+        return $teamController->auth();
     });
     //------------------ADMIN------------------//
     $defaultYear = CalcSeason::calculate();
@@ -190,6 +197,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         });
     });
     //-----------------ADMIN-END-----------------//
+
     //-----------------TEAMS-----------------//
     Route::prefix('/team')->group(function() use ($defaultYear) {
         //REGISTRO DE EQUIPOS
@@ -199,7 +207,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                     
             return $teamController->store($request);
         });
+        //MIDDLEWARE PARA EQUIPOS
         Route::middleware(['team.auth'])->group(function () {
+            //Logout
+            Route::get('/logout', function($lang = 'es') {
+                App::setLocale($lang);
+                $teamController = new TeamController();
+    
+                return $teamController->logout();
+            })->name('team.logout');
+
             Route::get('/frontPage', function($lang = 'es') {
                 App::setLocale($lang);
 
@@ -207,9 +224,8 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             })->name('team.frontPage');
         });
     });
-    
-    
     //-----------------TEAMS-END--------------------//
+
     //-----------------USERS---------------------//
     Route::prefix('/user')->group(function() use ($defaultYear) {
         Route::post('/register', function (Request $request, $lang = 'es') {
@@ -218,7 +234,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                     
             return $userController->store($request);
         });
+        //MIDDLEWARE PARA USUARIOS
         Route::middleware(['user.auth'])->group(function() {
+            //LOGOUT
+            Route::get('/logout', function($lang = 'es') {
+                App::setLocale($lang);
+                $userController = new UserController();
+    
+                return $userController->logout();
+            })->name('user.logout');
+
             Route::get('/frontPage', function($lang = 'es') {
                 App::setLocale($lang);
 
@@ -226,11 +251,5 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             })->name('user.frontPage');
         });
     });
-    
     //-----------------USERS-END-----------------//
-
-    
-    Route::prefix('/team')->group(function () {
-
-    });
 });

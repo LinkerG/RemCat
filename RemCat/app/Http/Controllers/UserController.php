@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\TeamController;
 
 class UserController extends Controller
 {
@@ -33,10 +32,9 @@ class UserController extends Controller
         } else {
             $error[] = "alreadyExists";
         }
-
-        return empty($errors) ? redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors)) : redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors));
-        
+        return empty($errors) ? redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors)) : redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors));    
     }
+
     public function auth() {
         request()->validate([
             'email' => 'required|email',
@@ -52,13 +50,20 @@ class UserController extends Controller
             session(['userName' => $user->name]);
             session(['userFoto' => $user->foto]);
 
-            return redirect()->route('user.frontPage',['lang' => app()->getLocale()]);
+            return redirect()->route('home',['lang' => app()->getLocale()]);
         } else {
             return redirect()->route('login', ['lang' => app()->getLocale()]);
         }
     }
-    //------------------CRUD-END------------------//
+    public function logout() {
+        Auth::guard('user')->logout();
 
+        session()->flush();
+
+        return redirect()->route('home', ['lang' => app()->getLocale()]);
+    }
+    //------------------CRUD-END------------------//
+    
     //------------------ENDPOINTS------------------//
     public function matchEmail(Request $request) {
         $email = request()->input('email');
@@ -67,9 +72,11 @@ class UserController extends Controller
         $exists = false;
         $valid = false;
         $isUser = false;
+        $emailExists = false;
         // Buscar usuario por correo electrónico
         $user = User::where('email', $email)->first();
         if ($user) {
+            $emailExists = true;
             if (Hash::check($password, $user->password)) {
                 $valid = true;
                 $isUser = true;

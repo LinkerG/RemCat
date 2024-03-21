@@ -50,10 +50,17 @@ class TeamController extends Controller
             session(['teamName' => $team->team_name]);
             session(['teamFoto' => $team->foto]);
 
-            return redirect()->route('team.frontPage',['lang' => app()->getLocale()]);
+            return redirect()->route('home',['lang' => app()->getLocale()]);
         } else {
             return redirect()->route('login', ['lang' => app()->getLocale()]);
         }
+    }
+    public function logout() {
+        Auth::guard('team')->logout();
+
+        session()->flush();
+
+        return redirect()->route('home', ['lang' => app()->getLocale()]);
     }
 
     //------------------CRUD-END------------------//
