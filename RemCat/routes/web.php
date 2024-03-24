@@ -199,4 +199,14 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
     Route::prefix('/team')->group(function () {
 
     });
+
+    Route::get('/competitions/{year?}/join/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear) {
+        if ($year === null) {
+            $year = $defaultYear;
+        }
+
+        $competitionController = new CompetitionController();
+        App::setLocale($lang);
+        return $competitionController->showJoinForm($year, $_id);
+    })->name('joinCompetition');        
 });

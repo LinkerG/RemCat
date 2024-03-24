@@ -167,6 +167,13 @@ class CompetitionController extends Controller
         return view("frontPage", compact("competitions", "sponsors", "year"));
     }
 
+    public function showJoinForm($year, $_id) {
+        $seasonName = $year . "_competitions";
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->first();
+        
+        return view("joinCompetition", compact("competition", "year"));
+    }
+
     //------------------VIEW-CALLS-END------------------//
 
     //------------------ENDPOINTS------------------//
