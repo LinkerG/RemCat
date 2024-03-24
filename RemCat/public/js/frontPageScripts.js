@@ -1,10 +1,8 @@
 window.addEventListener("load", function(){
-    scrollOnCompetition();
-
+    //scrollOnCompetition();
     document.getElementsByTagName("header")[0].classList.add("hidden");
+    document.getElementsByTagName("header")[0].style.position = "fixed";
     headerOnScroll();
-    
-    heroSectionScroll();
 });
 
 function scrollOnCompetition(){
