@@ -160,7 +160,7 @@ class CompetitionController extends Controller
             $competitionResult->competition_id = $competition_id;
             $competitionResult->team_name = $teamName;
             $competitionResult->category = $category;
-            $competitionResult->teamMembers = $teamMembers;
+            $competitionResult->team_members = $teamMembers;
             $competitionResult->insurance = $insurance;
             $competitionResult->distance = "";
             $competitionResult->time = "";
