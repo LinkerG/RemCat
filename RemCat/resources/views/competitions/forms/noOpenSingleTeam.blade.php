@@ -49,35 +49,23 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
-                            <input type="text" class="form-control" id="participante2" placeholder="1 Estribor" name="teamMembers[]">
-                        </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <input type="text" class="form-control" id="participante3" placeholder="1 Babor" name="teamMembers[]">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12">
                             <input type="text" class="form-control" id="participante4" placeholder="2 Estribor" name="teamMembers[]">
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control" id="participante5" placeholder="2 Babor" name="teamMembers[]">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
-                            <input type="text" class="form-control" id="participante6" placeholder="3 Estribor" name="teamMembers[]">
-                        </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <input type="text" class="form-control" id="participante7" placeholder="3 Babor" name="teamMembers[]">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12">
                             <input type="text" class="form-control" id="participante8" placeholder="4 Estribor" name="teamMembers[]">
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control" id="participante9" placeholder="4 Babor" name="teamMembers[]">
                         </div>
                     </div>
                     <div class="row">
@@ -87,24 +75,48 @@
                     </div>
                     @break
                 @case("batel")
-                    <div class="row">
-                        <div class="col-12">Timonel</div>
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" class="form-control" id="participante1" placeholder="Timonel" name="teamMembers[]">
                     </div>
-                    <div class="row">
-                        <div class="col-6">1e</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante2" placeholder="1 Estribor" name="teamMembers[]">
                     </div>
-                    <div class="row">
-                        <div class="col-6">2e</div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante3" placeholder="1 Babor" name="teamMembers[]">
                     </div>
-                    <div class="row">
-                        <div class="col-6">3e</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante4" placeholder="2 Estribor" name="teamMembers[]">
                     </div>
-                    <div class="row">
-                        <div class="col-6">4e</div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante5" placeholder="2 Babor" name="teamMembers[]">
                     </div>
-                    <div class="row">
-                        <div class="col-12">Suplentes</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante6" placeholder="3 Estribor" name="teamMembers[]">
                     </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante7" placeholder="3 Babor" name="teamMembers[]">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante8" placeholder="4 Estribor" name="teamMembers[]">
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="participante9" placeholder="4 Babor" name="teamMembers[]">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" class="form-control" id="participante10" placeholder="Suplentes" name="substitutes">
+                    </div>
+                </div>
                     @break
                 @default
                     @break
