@@ -4,18 +4,24 @@
     background-repeat: no-repeat;
     background-position: right;
     background-size: cover;
-    z-index: 0;
     min-height: 100svh;
     max-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .parallax-img-1{
     background-image: url(../images/banner1.png);
-    background-position-x: 20%;
+    background-position: right;
 }
 
 .parallax-img-2{
     background-image: url(../images/banner2.png);
+}
+
+.inside-parallax-container{
+    height: 100svh;
 }
 
 .dark-overlay::before{
@@ -25,6 +31,19 @@
     background-color: hsla(0, 0%, 0%, 0.5);
     z-index: 1;
     position: absolute;
+}
+
+.banner-logo{
+    width: 100%;
+}
+
+.logo-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20svh;
+    position: relative;
+    z-index: 4;
 }
 
 .container-fluid.over-hero{
