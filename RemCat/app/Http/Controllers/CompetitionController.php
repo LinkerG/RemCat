@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Competition;
 use App\Models\Sponsor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\CalcSeason;
 use DateTime;
@@ -36,11 +35,15 @@ class CompetitionController extends Controller
         
         $seasonName = CalcSeason::calculate() . "_competitions";
         
-        
-        
-    
         $error = [];
-        if (!$competitionComparator = (new Competition())->setCollection($seasonName)->where("name", $name)->where("boatType", $boatType)->where("date", $dateMongo)->exists()) {
+        if (!$competitionComparator = (
+            new Competition())
+            ->setCollection($seasonName)
+            ->where("name", $name)
+            ->where("boatType", $boatType)
+            ->where("date", $dateMongo)
+            ->exists()
+        ) {
             $competition = new Competition;
             $competition->setCollection($seasonName);
             $_id = new ObjectID();
@@ -87,7 +90,10 @@ class CompetitionController extends Controller
 
     public function showEditForm($year, $_id) {
         $seasonName = $year . "_competitions";
-        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->first();
+        $competition = (new Competition())
+        ->setCollection($seasonName)
+        ->where("_id", $_id)
+        ->get();
         
         return view("admin/editCompetitions", ['competition' => $competition]);
     }
@@ -116,9 +122,50 @@ class CompetitionController extends Controller
             'sponsor_price' => $price,
             'sponsors_list' => $sponsorsList
         ];
-        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+        $competition = (new Competition())
+        ->setCollection($seasonName)
+        ->where("_id", $_id)
+        ->update($updatedData);
 
         return redirect()->route('admin.competitions', ['lang' => app()->getLocale()])->with('succes', 'true');
+    }
+
+    public function joinCompetition(Request $request){
+        //dd($request->all());
+        $route = request()->path();
+        $routeArray = explode('/', $route);
+        $year = $routeArray[2];
+
+        $competition_id = $routeArray[4];
+        $category = $request->input("category1") . $request->input("category2");
+        $teamName = $request->input("teamName");
+        $teamMembersArray = $request->input("teamMembers");
+        $substitutes = $request->input("substitutes");
+        $substitutesTrimmed = preg_replace('/\s+/', '', $substitutes);
+        $substitutesArray = explode(",", $substitutesTrimmed);
+        $teamMembers = array_merge($teamMembersArray, $substitutesArray);
+        $insurance = $request->input("insurance") ? $request->input("insurance") : null;
+        $collectionName = $year . "_competitions_results";
+        
+        if (!$competitionComparator = (
+            new Competition())
+            ->setCollection($collectionName)
+            ->where("competition_id", $competition_id)
+            ->where("category", $category)
+            ->where("team_name", $teamName)
+            ->exists()
+        ) {
+            $competitionResult = new Competition;
+            $competitionResult->setCollection($collectionName);
+            $competitionResult->competition_id = $competition_id;
+            $competitionResult->team_name = $teamName;
+            $competitionResult->category = $category;
+            $competitionResult->teamMembers = $teamMembers;
+            $competitionResult->insurance = $insurance;
+            $competitionResult->distance = "";
+            $competitionResult->time = "";
+            $competitionResult->save();
+        }
     }
 
     public function changeIsActive(Request $request){
@@ -133,7 +180,10 @@ class CompetitionController extends Controller
             'isActive' => $newStatus
         ];
 
-        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+        $competition = (new Competition())
+        ->setCollection($seasonName)
+        ->where("_id", $_id)
+        ->update($updatedData);
 
         return response()->json(['message' => 'Estado cambiado correctamente']);
     }
@@ -150,7 +200,10 @@ class CompetitionController extends Controller
             'isCancelled' => $newStatus
         ];
 
-        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->update($updatedData);
+        $competition = (new Competition())
+        ->setCollection($seasonName)
+        ->where("_id", $_id)
+        ->update($updatedData);
 
         return response()->json(['message' => 'Estado cambiado correctamente']);
     }
@@ -158,6 +211,7 @@ class CompetitionController extends Controller
     //------------------CRUD-END------------------//
 
     //------------------VIEW-CALLS------------------//
+    // Pagina principal
     public function showFrontPage($year) {
         $seasonName = $year . "_competitions";
         $currentDate = Carbon::now()->toDateString();
@@ -165,6 +219,14 @@ class CompetitionController extends Controller
         $sponsors = Sponsor::where("isActive", true)->get();
 
         return view("frontPage", compact("competitions", "sponsors", "year"));
+    }
+
+    // Apuntarse a competicion
+    public function showJoinForm($year, $_id) {
+        $seasonName = $year . "_competitions";
+        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->first();
+        
+        return view("competitions/joinCompetitionSingleTeam", compact("competition", "year"));
     }
 
     //------------------VIEW-CALLS-END------------------//

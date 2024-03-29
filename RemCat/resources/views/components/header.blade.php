@@ -1,4 +1,4 @@
-<header class="container-fluid bg-primary p-2">
+<header class="container-fluid bg-primary p-2 d-flex flex-column pb-0 px-0">
     <nav class="navbar navbar-expand-sm bg-primary">
         <div class="container">
             <ul class="navbar-nav">
@@ -39,5 +39,5 @@
             </div>
         </div>
     </nav>
+    <div class="container-fluid p-2 header-gradient"></div>
 </header>
-<div class="container-fluid p-2 header-gradient"></div>

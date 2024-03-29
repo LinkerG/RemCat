@@ -7,3 +7,4 @@ window.addEventListener("load", function(){
         icon.playerInstance.playFromBeginning();
     })
 });
+

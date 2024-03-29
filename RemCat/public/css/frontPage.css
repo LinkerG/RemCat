@@ -1,32 +1,63 @@
-.banner-container{
+.hero-section-parallax{
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url(../images/banner.png);
+    background-attachment: fixed;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: right;
     background-size: cover;
-    z-index: 0;
+    min-height: 100svh;
+    max-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.banner-container::before{
+
+.parallax-img-1{
+    background-image: url(../images/banner1.png);
+    background-position: right;
+}
+
+.parallax-img-2{
+    background-image: url(../images/banner2.png);
+}
+
+.inside-parallax-container{
+    height: 100svh;
+}
+
+.dark-overlay::before{
     content: "";
     width: 100%;
-    height: 300px;
+    height: 100svh;
     background-color: hsla(0, 0%, 0%, 0.5);
+    z-index: 1;
     position: absolute;
 }
 
 .banner-logo{
-    height: 80%;
-    object-fit: contain;
-    
+    width: 100%;
 }
 
-.textWrapper{
-    margin-right: auto;
-    margin-left: auto;
+.logo-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20svh;
+    position: relative;
+    z-index: 4;
 }
+
+.container-fluid.over-hero{
+    height: 100svh;
+    z-index: 2;
+}
+
+.over-hero-wrapper{
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+    height: 100svh;
+}
+
 p.selfWrittingText{
     color: white;
     text-transform: capitalize;
@@ -36,7 +67,7 @@ p.selfWrittingText{
 
 span {
     color: white;
-    border-right: .05em solid;
+    border-right: .03em solid;
     animation: caratteri 1s steps(1) infinite;
 }
   
@@ -46,26 +77,18 @@ span {
     }
 }
 
-.container.over-banner{
-    
-    height: 300px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    z-index: 3;
-    
-}
 
 @media (width < 768px){
     .banner-logo{
         width: 100%;
     }
-    .banner-container{
+    .hero-section{
         max-width: 100%;
     }
-    .container.over-banner{
+    .container.over-hero{
         flex-direction: row;
         margin: 0;
+        margin-top: 1rem;
         padding: 0;
     }
     .textWrapper{
@@ -102,20 +125,81 @@ span {
 }
 
 .competitionItem .itemInside{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     height: 100%;
     border: 1px solid black;
+    border-radius: 1em;
+    padding: 0.5em;
+    background-color: white;
 }
 
 .competitionItem .itemInside .competitionBanner{
+    width: 100%;
+    position: relative;
+    aspect-ratio: 4/3;
+}
+
+.competitionItem .itemInside .competitionBanner .overImage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.competitionItem .itemInside .competitionBanner .overImage .competitionDate{
+    padding: 0.5em;
+    margin-left: auto;
+    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.567);
+    border-top-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.competitionItem .itemInside .competitionBanner .overImage .competitionDate img{
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+.competitionItem .itemInside .competitionBanner .overImage .competitionDate p{
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.competitionItem .itemInside .competitionBanner .overImage .competitionLocation{
+    padding: 0.5em;
+    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.567);
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
+
+.competitionItem .itemInside .competitionBanner .overImage .competitionLocation img{
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+.competitionItem .itemInside .competitionBanner .overImage .competitionLocation p{
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.competitionItem .itemInside .competitionBanner .bg-image{
     object-fit: cover;
     width: 100%;
     aspect-ratio: 4/3;
     transition: filter 0.4s ease;
-}
-
-.competitionItem .itemInside .competitionBanner:hover{
-    filter: brightness(0.3);
+    border-radius: 0.5em;
 }
 
 .competitionItem .itemInside .competitionInfo{
@@ -126,9 +210,22 @@ span {
     
 }
 
-.competitionSection{
-    display: flex;
-    justify-content: space-between;
+.competition-section{
+    scroll-snap-type: x mandatory; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+}
+.competition-section article{
+    display: inline-block;
+    scroll-snap-align: center;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    width: 45%;
+    min-height: 60svh;
+    height: 60svh;
+    max-height: 60svh;
 }
 
 @media (max-width: 700px) {
@@ -145,7 +242,7 @@ span {
         margin: 0 !important;
     }
 
-    .competitionSection{
+    .competition-section{
         padding: 0;
         display: block;
     }
