@@ -13,23 +13,41 @@
     <div class="wrapper">
         @include("components.header")
         <div class="container-fluid hero-section-parallax parallax-img-1 dark-overlay">  
-            <div class="container inside-parallax-container row">
-                <div class="col-4 logo-wrapper">
+            <div class="container-fluid inside-parallax-container row">
+                <div class="col-4 logo-wrapper ms-5">
                     <img src="{{asset('images/logo-white.png')}}" alt="rem cat logo" class="banner-logo">
                     <div class="textWrapper">
                         <p class="selfWrittingText h1">Companyerisme</p>
                     </div>
                 </div>
+                <div class="scroll-down-wrapper col-6">
+                    <button id="scroll-to-competitions">IR ABAJO</button>
+                </div>
             </div>
         </div>
-        <div style="background-color:rgb(255, 255, 255);font-size:36px" class="parallax-serparator container-fluid ">
-            <h2>{{ trans("text.beforeCompetitions") }}</h2>
-        </div>
+        @if(!$competitions->isEmpty())
         <div class="container-fluid hero-section-parallax parallax-img-2 dark-overlay">
-            <div class="container inside-parallax-container">
-                
-            </div>
+            <section class="container-fluid competitionContainer competition-section inside-parallax-container" id="competition-section">
+                @foreach($competitions as $competition)
+                <article class="flex-shrink-0 competitionItem">
+                    <div class="itemInside">
+                        <?php $bannerRoute = "storage/competition-banners/" . $competition->image_banner; ?>
+                        <div class="competitionBanner">
+                            <img class="bg-image" src="{{asset($bannerRoute)}}" alt="{{$competition->name}} banner">
+                            <div class="overImage">
+                                <div class="competitionLocation"><img class="me-1" src="{{asset('icons/geo-alt-fill.svg')}}" alt="location"><p>{{$competition->location}}</p></div>
+                                <div class="competitionDate"><img class="me-2" src="{{asset('icons/calendar-week.svg')}}" alt="date"><p>{{$competition->date}}</p></div>
+                            </div>
+                        </div>
+                        <div class="competitionInfo">
+                            <h4 class="">{{$competition->name}}</h4>
+                        </div>
+                    </div>
+                </article>
+                @endforeach
+            </section>
         </div>
+        @endif
         <div style="background-color:rgb(255, 255, 255);font-size:36px" class="parallax-serparator container-fluid ">
             <h2>{{ trans("text.ourSponsors") }}</h2>
             <section class="container-fluid overflow-auto  mt-4 mb-4">

@@ -22,6 +22,7 @@
 
 .inside-parallax-container{
     height: 100svh;
+    z-index: 4;
 }
 
 .dark-overlay::before{
@@ -41,7 +42,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20svh;
+    margin-top: 15svh;
     position: relative;
     z-index: 4;
 }
@@ -110,9 +111,11 @@ span {
     }
     
 }
+
 .competitionContainer{
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: space-between;
     gap: 2rem;  
     margin: 0 1.5rem 0 1.5rem;
 }
@@ -120,19 +123,18 @@ span {
 .competitionItem{
     display: grid;
     place-items: center;
-    width: 325px;
-    height: 450px;
+    width: 20vw;
+    height: 70vh
 }
 
 .competitionItem .itemInside{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: 100%;
     border: 1px solid black;
     border-radius: 1em;
     padding: 0.5em;
+    height: 100%;
     background-color: white;
 }
 
@@ -206,10 +208,6 @@ span {
     padding: 2%;
 }
 
-.competitionItem .itemInside .competitionInfo .competitionLocation{
-    
-}
-
 .competition-section{
     scroll-snap-type: x mandatory; 
     overflow-x: auto;
@@ -217,41 +215,29 @@ span {
     white-space: nowrap;
     scroll-behavior: smooth;
 }
-.competition-section article{
-    display: inline-block;
-    scroll-snap-align: center;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
-    width: 45%;
-    min-height: 60svh;
-    height: 60svh;
-    max-height: 60svh;
+
+
+
+
+
+@media (width < 1300px) {
+    .competitionItem{
+        display: grid;
+        place-items: center;
+        width: 40vw;
+        height: 70vh
+    }
 }
+
+@media (width < 992px) {
+    .competitionItem{
+        display: grid;
+        place-items: center;
+        width: 70vw;
+        height: 70vh
+    }
+} 
 
 @media (max-width: 700px) {
-    .competitionItem {
-        width: 98svw
-    }
-    
-    .competitionItem div {
-        width: 80%;
-        height: 100%;
-    }
 
-    .competitionContainer {
-        margin: 0 !important;
-    }
-
-    .competition-section{
-        padding: 0;
-        display: block;
-    }
-}
-
-
-@media (min-width: 992px) {
-    
-} 
-@media (min-width: 1200px) {
-    
 }

@@ -18,11 +18,10 @@ function headerOnScroll(){
     let header = document.getElementsByTagName("header")[0];
     window.addEventListener("scroll", function() {
         let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    
-        if (currentScroll > lastScrollTop && currentScroll > header.offsetHeight) {
+        if (currentScroll > lastScrollTop && currentScroll > 0) {
             // Hacer scroll hacia abajo y no está en la parte superior de la página
             header.classList.remove("hidden");
-        } else {
+        } else if (currentScroll <= 0){
             // Hacer scroll hacia arriba o está en la parte superior de la página
             header.classList.add("hidden");
         }
