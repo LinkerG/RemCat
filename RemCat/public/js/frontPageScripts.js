@@ -3,6 +3,7 @@ window.addEventListener("load", function(){
     document.getElementsByTagName("header")[0].classList.add("hidden");
     document.getElementsByTagName("header")[0].style.position = "fixed";
     headerOnScroll();
+    buttonEvents();
 });
 
 function scrollOnCompetition(){
@@ -28,4 +29,14 @@ function headerOnScroll(){
     
         lastScrollTop = currentScroll;
     });
+}
+
+function buttonEvents() {
+    const lang = document.querySelector("html").getAttribute("lang");
+
+    // Ver todas las competiciones
+    document.getElementById("viewAllCompetitionsButton").addEventListener("click", function(){
+        location.href = "/" + lang + "/competitions";
+    })
+    
 }
