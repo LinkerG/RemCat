@@ -215,7 +215,11 @@ class CompetitionController extends Controller
     public function showFrontPage($year) {
         $seasonName = $year . "_competitions";
         $currentDate = Carbon::now()->toDateString();
-        $competitions = (new Competition())->setCollection($seasonName)->where('date', '>=', $currentDate)->where('isActive', true)->take(4)->get();
+        $competitions = (new Competition())
+        ->setCollection($seasonName)
+        ->where('date', '>=', $currentDate)
+        ->where('isActive', true)
+        ->take(4)->get();
         $sponsors = Sponsor::where("isActive", true)->get();
 
         return view("frontPage", compact("competitions", "sponsors", "year"));
@@ -224,9 +228,22 @@ class CompetitionController extends Controller
     // Apuntarse a competicion
     public function showJoinForm($year, $_id) {
         $seasonName = $year . "_competitions";
-        $competition = (new Competition())->setCollection($seasonName)->where("_id", $_id)->first();
+        $competition = (new Competition())
+        ->setCollection($seasonName)
+        ->where("_id", $_id)
+        ->first();
         
         return view("competitions/joinCompetitionSingleTeam", compact("competition", "year"));
+    }
+
+    // Ver todas las competiciones de un año
+    public function showAllCompetitions($year) {
+        $seasonName = $year . "_competitions";
+        $competitions = (new Competition())->setCollection($seasonName)
+        ->where('isActive', true)
+        ->take(4)->get();
+
+        return view("competitions/viewCompetitions", compact("competitions", "year"));
     }
 
     //------------------VIEW-CALLS-END------------------//
