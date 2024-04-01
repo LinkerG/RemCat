@@ -1,5 +1,5 @@
 .wrapper{
-    min-height: 90svh;
+    min-height: calc(100svh - 219px);
 }
 
 @media (min-width: 768px) {

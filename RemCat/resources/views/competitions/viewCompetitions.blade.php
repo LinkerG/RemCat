@@ -8,8 +8,16 @@
     @include('components.links')
 </head>
 <body>
-    @include('components.header')
-    Hola
-    @include('components.fixedFooter')
+    <div class="wrapper">
+        @include('components.header')
+        <section class=" ">
+            @foreach ($competitions as $competition)
+                <article>
+                    <h2>{{ $competition->name }}</h2>
+                </article>
+            @endforeach
+        </section>
+    </div>
+    @include('components.footer')
 </body>
 </html>
