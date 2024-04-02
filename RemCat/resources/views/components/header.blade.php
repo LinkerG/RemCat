@@ -28,13 +28,21 @@
                     </lord-icon>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{$route}}login">Login</a></li>
-                    <li><a class="dropdown-item" href="{{$route}}register">Register</a></li>
+                    @if(!session('adminAuth') && !session('teamAuth') && !session('userAuth'))
+                        <li><a class="dropdown-item" href="{{$route}}login">Login</a></li>
+                        <li><a class="dropdown-item" href="{{$route}}register">Register</a></li>
+                    @endif
                     <li><a class="dropdown-item" href="{{$route}}admin/sponsors/add"> Añadir sponsor </a></li>
                     <li><a class="dropdown-item" href="{{$route}}admin/insurances/add"> Añadir aseguradora </a></li>
                     <li><a class="dropdown-item" href="{{$route}}admin/competitions/add"> Añadir competicion </a></li>
                     <li><hr class="dropdown-divider"></hr></li>
-                    <li><a class="dropdown-item" href="{{$route}}admin/logout">Log out</a></li>
+                    @if(session('adminAuth'))
+                        <li><a class="dropdown-item" href="{{$route}}admin/logout">Log out</a></li>
+                    @elseif(session('userAuth'))
+                        <li><a class="dropdown-item" href="{{$route}}user/logout">Log out</a></li>
+                    @elseif(session('teamAuth'))
+                        <li><a class="dropdown-item" href="{{$route}}team/logout">Log out</a></li>
+                    @endif
                   </ul>
             </div>
         </div>

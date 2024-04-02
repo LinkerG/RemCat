@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('css/adminSideBarCustom.css')}}">
-    <script src="{{ asset('js/adminSideBar.js')}}"></script>
     @include('components.adminLinks')
 </head>
 <body id="body-pd">
@@ -16,15 +14,19 @@
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
-            <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">Admin</span> </a>
+            <div> 
+                <a href="#" class="nav_logo"> 
+                    <img src="{{ $logoUrl }}" id="logo-img" class="collapsed">
+                </a>
                 <div class="nav_list"> 
                     <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Dashboard</span> </a> 
-                    <a href="#" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Regatas</span> </a> 
+                    <a href="{{$route}}admin/competitions" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Regatas</span> </a> 
                     <a href="#" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Equipos</span> </a> 
-                    <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Aseguradoras</span> </a> 
-                    <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sponsors</span> </a> 
+                    <a href="{{$route}}admin/insurances" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Aseguradoras</span> </a> 
+                    <a href="{{$route}}admin/sponsors" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sponsors</span> </a> 
+                    <a href="{{ $route}}admin/logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Salir</span> </a>
                 </div>
-            </div> <a href="{{ $route}}admin/logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Salir</span> </a>
+            </div> 
         </nav>
     </div>
     <!--Container Main start-->
@@ -32,6 +34,12 @@
         <h4>Main Components</h4>
     </div>
 </body>
+@php 
+    $imageUrl = asset('images/');
+@endphp
+<script>
+    const imageUrl = "{{ $imageUrl }}"
+</script>
 </html>
 
 

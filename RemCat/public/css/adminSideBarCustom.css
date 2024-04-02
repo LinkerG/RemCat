@@ -87,7 +87,6 @@ a {
 }
 
 /* Estilos del logotipo y enlaces en la barra de navegación */
-.nav_logo,
 .nav_link {
   display: grid;
   grid-template-columns: max-content max-content;
@@ -97,7 +96,24 @@ a {
 }
 
 .nav_logo {
-  margin-bottom: 2rem;
+  height: 20%;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  column-gap: 1rem;
+  padding: .5rem 0 .5rem 1.05rem;
+}
+#logo-img {
+  transition: height 0.5s ease, width 0.5s ease;
+}
+
+#logo-img.expanded {
+  height: 70%;
+  width: 40%;
+}
+#logo-img.collapsed {
+  height: 30%;
+  width: 42%;
 }
 
 .nav_logo-icon {
