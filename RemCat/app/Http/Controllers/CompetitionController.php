@@ -235,6 +235,15 @@ class CompetitionController extends Controller
         
         return view("competitions/joinCompetitionSingleTeam", compact("competition", "year"));
     }
+    public function showJoinFormMultiple($year, $_id) {
+        $seasonName = $year . "_competitions";
+        $competition = (new Competition())
+        ->setCollection($seasonName)
+        ->where("_id", $_id)
+        ->first();
+        
+        return view("competitions/joinCompetitionMultipleTeam", compact("competition", "year"));
+    }
 
     // Ver todas las competiciones de un año
     public function showAllCompetitions($year) {
