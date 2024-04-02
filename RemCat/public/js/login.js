@@ -111,14 +111,7 @@ function loginEvent(){
                 return response.json();
             })
             .then(response => {
-                if(response.exists && response.valid){
-                    if(response.isUser){
-                        form.action = "/" + lang + "/userLogin";
-                    } else {
-                        form.action = "/" + lang + "/teamLogin";
-                    }
-                    form.submit();
-                } else {
+                if(response.exists == false) {
                     console.log("Preguntar si lleva a registro");
                     let parent = loginButton.parentElement;
                     loginButton.remove();
@@ -129,6 +122,13 @@ function loginEvent(){
                     `
                     parent.innerHTML += question;
                     yesnoButtonEvents();
+                } else if(response.exists && response.valid){
+                    if(response.isUser){
+                        form.action = "/" + lang + "/userLogin";
+                    } else {
+                        form.action = "/" + lang + "/teamLogin";
+                    }
+                    form.submit();
                 }
             })
             .catch(error => {

@@ -72,11 +72,9 @@ class UserController extends Controller
         $exists = false;
         $valid = false;
         $isUser = false;
-        $emailExists = false;
         // Buscar usuario por correo electrónico
         $user = User::where('email', $email)->first();
         if ($user) {
-            $emailExists = true;
             if (Hash::check($password, $user->password)) {
                 $valid = true;
                 $isUser = true;
