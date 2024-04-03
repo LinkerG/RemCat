@@ -59,7 +59,8 @@ function sendData(token, competition_id, teamName, category1, category2, teamMem
     formData.append('substitutes', substitutes);
     if(_id) formData.append('_id', _id);
 
-
+    let text = document.getElementById("save-team").innerHTML;
+    document.getElementById("save-team").innerHTML = `<span class="spinner-border spinner-border-sm"></span>`; 
     fetch('/api/competitions/join', {
         method: 'POST',
         body: formData
@@ -69,6 +70,7 @@ function sendData(token, competition_id, teamName, category1, category2, teamMem
         if(data.ok){
             if(data.edit == false){
                 generateNewRegistrationComponent(data._id.$oid, category1+category2, true);
+                document.getElementById("save-team").innerHTML = text; 
             }
         }
     })
@@ -100,6 +102,9 @@ function getAllTeamRegistrationsForCompetition(){
     })
     .then(response => response.json())
     .then(data => {
+        
+        let spinner = document.getElementById("data-container").querySelector(".spinner-border");
+        spinner.remove();
         data.forEach(registration => {
             generateNewRegistrationComponent(registration._id, registration.category, false)
         });

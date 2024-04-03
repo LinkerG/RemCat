@@ -11,7 +11,7 @@
                 <div class="invalid-feedback ms-2">Nombre no valido</div>
             </div>
             <div class="container data-container" id="data-container">
-
+                <div class="spinner-border"></div>
             </div>
         </div>
         <div class="col-8 boat-layout ">
