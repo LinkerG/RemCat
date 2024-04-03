@@ -38,3 +38,6 @@ Route::post("insurances/changeIsActive", [InsuranceController::class, 'changeIsA
 Route::post("competitions/changeIsActive", [CompetitionController::class, 'changeIsActive']);
 // Cambia una competicion entre cancelada t/f
 Route::post("competitions/changeIsCancelled", [CompetitionController::class, 'changeIsCancelled']);
+// Join competition
+Route::post("competitions/join", [CompetitionController::class, 'joinCompetitionApi']);
+Route::post("competitions/getCompetitionsFromTeam", [CompetitionController::class, 'getCompetitionsFromTeam']);

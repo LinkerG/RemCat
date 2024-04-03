@@ -6,18 +6,19 @@
                 <!--
                     TODO: Poner el team name en readonly en este formulario
                 -->
-                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="asdasd" required>
+                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="Club de Rem Badalona" required>
                 <label for="teamName">Team name</label>
                 <div class="invalid-feedback ms-2">Nombre no valido</div>
             </div>
             <div class="container data-container" id="data-container">
+
             </div>
         </div>
-        <div class="col-8 boat-layout">
+        <div class="col-8 boat-layout ">
             <div class="row">
                 <h2>Categoria</h2>
                 <div class="mb-3">
-                    <select class="form-select" name="category1">
+                    <select class="form-select" name="category1" id="category1">
                         <option selected disabled>Selecciona categoria</option>
                         @if ($competition->boatType == "batel")
                             <option value="A">Alevin</option>
@@ -125,8 +126,10 @@
                 @default
                     @break
             @endswitch
-            <div class="row mt-4">
-                <button type="button" id="save-team" value="Enviar">Guardar equipo</button>
+            <div class="row mt-4 mb-3">
+                <div class="col-12">
+                    <button class="btn btn-primary w-100 btn-block" type="button" id="save-team" value="Enviar">Guardar equipo</button>
+                </div>
             </div>
         </div>
 
