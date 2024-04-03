@@ -70,3 +70,18 @@ button.fix-size{
     width: 100%;
     margin-top: auto;
 }
+
+.data-container{
+    border-radius: var(--bs-border-radius);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    height: 80%;
+}
+
+.alert-container{
+    width: 100vw;
+    height: 100svh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}

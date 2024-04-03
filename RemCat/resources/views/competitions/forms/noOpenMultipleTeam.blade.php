@@ -6,40 +6,45 @@
                 <!--
                     TODO: Poner el team name en readonly en este formulario
                 -->
-                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="asdasd" required>
+                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="Club de Rem Badalona" required>
                 <label for="teamName">Team name</label>
                 <div class="invalid-feedback ms-2">Nombre no valido</div>
             </div>
-            <h2>Categoria</h2>
-            <div class="mb-3">
-                <select class="form-select" name="category1">
-                    <option selected disabled>Selecciona categoria</option>
-                    @if ($competition->boatType == "batel")
-                        <option value="A">Alevin</option>
-                    @endif
-                    <option value="I">Infantil</option>
-                    <option value="C">Cadete</option>
-                    <option value="J">Juvenil</option>
-                    <option value="S">Sénior</option>
-                    <option value="V">Veterano</option>
-                </select>
-            </div>
-            <div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="category2" id="M" value="M">
-                    <label class="form-check-label" for="M">
-                        Masculino
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="category2" id="F" value="F">
-                    <label class="form-check-label" for="F">
-                        Femenino
-                    </label>
-                </div>
+            <div class="container data-container" id="data-container">
+                <div class="spinner-border"></div>
             </div>
         </div>
-        <div class="col-8 boat-layout">
+        <div class="col-8 boat-layout ">
+            <div class="row">
+                <h2>Categoria</h2>
+                <div class="mb-3">
+                    <select class="form-select" name="category1" id="category1">
+                        <option selected disabled>Selecciona categoria</option>
+                        @if ($competition->boatType == "batel")
+                            <option value="A">Alevin</option>
+                        @endif
+                        <option value="I">Infantil</option>
+                        <option value="C">Cadete</option>
+                        <option value="J">Juvenil</option>
+                        <option value="S">Sénior</option>
+                        <option value="V">Veterano</option>
+                    </select>
+                </div>
+                <div class="d-flex mb-2">
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="radio" name="category2" id="M" value="M">
+                        <label class="form-check-label" for="M">
+                            Masculino
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="category2" id="F" value="F">
+                        <label class="form-check-label" for="F">
+                            Femenino
+                        </label>
+                    </div>
+                </div>
+            </div>
             @switch($competition->boatType)
                 @case("llaut_med")
                 @case("llagut_cat")
@@ -121,10 +126,12 @@
                 @default
                     @break
             @endswitch
-            
+            <div class="row mt-4 mb-3">
+                <div class="col-12">
+                    <button class="btn btn-primary w-100 btn-block" type="button" id="save-team" value="Enviar">Guardar equipo</button>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <input type="submit" value="Enviar">
-        </div>
+
     </div>
 </form>

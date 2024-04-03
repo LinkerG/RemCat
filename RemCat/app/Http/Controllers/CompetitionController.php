@@ -141,7 +141,7 @@ class CompetitionController extends Controller
         $teamName = $request->input("teamName");
         $teamMembersArray = $request->input("teamMembers");
         $substitutes = $request->input("substitutes");
-        $substitutesTrimmed = preg_replace('/\s+/', '', $substitutes);
+        $substitutesTrimmed = preg_replace('/\s*,\s*/', ',', $substitutes);
         $substitutesArray = explode(",", $substitutesTrimmed);
         $teamMembers = array_merge($teamMembersArray, $substitutesArray);
         $insurance = $request->input("insurance") ? $request->input("insurance") : null;
@@ -235,6 +235,15 @@ class CompetitionController extends Controller
         
         return view("competitions/joinCompetitionSingleTeam", compact("competition", "year"));
     }
+    public function showJoinFormMultiple($year, $_id) {
+        $seasonName = $year . "_competitions";
+        $competition = (new Competition())
+        ->setCollection($seasonName)
+        ->where("_id", $_id)
+        ->first();
+        
+        return view("competitions/joinCompetitionMultipleTeam", compact("competition", "year"));
+    }
 
     // Ver todas las competiciones de un año
     public function showAllCompetitions($year) {
@@ -262,6 +271,70 @@ class CompetitionController extends Controller
 
         return response()->json($collections);
     
+    }
+
+    public function joinCompetitionApi(Request $request){
+        //dd($request->all());
+        $year = CalcSeason::calculate();
+        $_id = $request->input("_id") ? $request->input("_id") : new ObjectID();
+        $competition_id = $request->input("competition_id");
+        $category = $request->input("category1") . $request->input("category2");
+        $teamName = $request->input("teamName");
+        $teamMembersArray = $request->input("teamMembers");
+        $teamMembers1 = explode(",", $teamMembersArray);
+        $substitutes = $request->input("substitutes");
+        $substitutesTrimmed = preg_replace('/\s*,\s*/', ',', $substitutes);
+        $substitutesArray = explode(",", $substitutesTrimmed);
+        $teamMembers = array_merge($teamMembers1, $substitutesArray);
+        $insurance = $request->input("insurance") ? $request->input("insurance") : null;
+        $collectionName = $year . "_competitions_results";
+        
+        $ok = false;
+        if (!$competitionComparator = (
+            new Competition())
+            ->setCollection($collectionName)
+            ->where("competition_id", $competition_id)
+            ->where("category", $category)
+            ->where("team_name", $teamName)
+            ->exists()
+        ) {
+            $competitionResult = new Competition;
+            $competitionResult->_id = $_id;
+            $competitionResult->setCollection($collectionName);
+            $competitionResult->competition_id = $competition_id;
+            $competitionResult->team_name = $teamName;
+            $competitionResult->category = $category;
+            $competitionResult->team_members = $teamMembers;
+            $competitionResult->insurance = $insurance;
+            $competitionResult->distance = "";
+            $competitionResult->time = "";
+            $competitionResult->save();
+
+            $ok = true;
+        }
+        $response = [
+            "ok" => $ok,
+            "_id" => $_id,
+            "edit" => false
+        ];
+        return response()->json($response);
+        
+    }
+
+    function getCompetitionsFromTeam(Request $request){
+        $competition_id = $request->input("competition_id");
+        $teamName = $request->input("teamName");
+        $year = CalcSeason::calculate();
+        $collectionName = $year . "_competitions_results";
+
+        $competitions = (
+            new Competition())
+            ->setCollection($collectionName)
+            ->where("competition_id", $competition_id)
+            ->where("team_name", $teamName)
+            ->get();
+            
+        return response()->json($competitions);
     }
 
     //------------------ENDPOINTS-END------------------//
