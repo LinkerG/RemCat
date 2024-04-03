@@ -35,7 +35,7 @@ class UserController extends Controller
         return empty($errors) ? redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors)) : redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors));    
     }
 
-    public function auth() {
+    /*public function auth() {
         request()->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -54,7 +54,7 @@ class UserController extends Controller
         } else {
             return redirect()->route('login', ['lang' => app()->getLocale()]);
         }
-    }
+    }*/
     public function logout() {
         Auth::guard('user')->logout();
 
@@ -65,34 +65,6 @@ class UserController extends Controller
     //------------------CRUD-END------------------//
     
     //------------------ENDPOINTS------------------//
-    public function matchEmail(Request $request) {
-        $email = request()->input('email');
-        $password = request()->input("password");
-        
-        $exists = false;
-        $valid = false;
-        $isUser = false;
-        // Buscar usuario por correo electrónico
-        $user = User::where('email', $email)->first();
-        if ($user) {
-            if (Hash::check($password, $user->password)) {
-                $valid = true;
-                $isUser = true;
-            }
-            $exists = true;
-        } else {
-            // Si no se encuentra usuario, buscar equipo por correo electrónico
-            $team = Team::where('email', $email)->first();
-            if ($team) {
-                if (Hash::check($password, $team->password)) {
-                    $valid = true;
-                }
-                $exists = true;
-            }
-        }
-
-        return response()->json(['exists' => $exists, 'valid' => $valid, "isUser" => $isUser]);
-    }
     
     
     //------------------ENDPOINTS-END------------------//

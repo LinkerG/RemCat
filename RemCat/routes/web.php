@@ -12,6 +12,7 @@ use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 
 $defaultYear = CalcSeason::calculate();
 
@@ -33,18 +34,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         App::setLocale($lang);
         return view('login');
     })->name('login');
-    //POST PARA USUARIOS
-    Route::post('/userLogin',function($lang = 'es') {
+    
+    //POST PARA LOGIN
+    Route::post('/login',function($lang = 'es') {
         App::setLocale($lang);
-        $userController = new UserController();
-        return $userController->auth();
-    });
-    //POST PARA EQUIPO
-    Route::post('/teamLogin',function($lang = 'es') {
-        App::setLocale($lang);
+        $loginController = new LoginController();
 
-        $teamController = new TeamController();
-        return $teamController->auth();
+        return $loginController->auth();
     });
     //------------------ADMIN------------------//
     $defaultYear = CalcSeason::calculate();

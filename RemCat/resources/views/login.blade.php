@@ -8,32 +8,23 @@
     <script src="{{ asset('js/login.js') }}"></script>
     <title>RemCat - Login</title>
     <?php $route = "/" . App::getLocale() . "/" ?>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">   
 </head>
 <body>
-    @if(!$errors->isEmpty())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="wrapper loginWrapper">
         <div class="formWrapper">
             <h1 class="loginLabel">Login</h1>
             <form action="{{$route}}login" method="post" enctype="multipart/form-data">
               @csrf
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="" value="" required>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="" value="{{ old('email')}}" autofocus>
                     <label for="email">Email</label>
-                    <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
+                    @error('email') {{ $message }} @enderror    
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="" value="" required>
-                    <label for="name">{{ trans('admin.form.password') }}</label>
-                    <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="" value="">
+                    <label for="password">{{ trans('admin.form.password') }}</label>
+                    @error('password') {{ $message }} @enderror 
                 </div>
                 
                 <button type="button" id="login-submit-button" class="btn btn-primary">Log in</button>

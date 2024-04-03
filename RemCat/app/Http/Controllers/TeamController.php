@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Validation\ValidationException;
 
 class TeamController extends Controller
 {
@@ -35,26 +36,7 @@ class TeamController extends Controller
 
         return empty($errors) ? redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors)) : redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors));
     }
-    public function auth() {
-        request()->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
 
-        $email = request()->input('email');
-        $password = request()->input('password');
-
-        $team = Team::where('email',$email)->first();
-        if($team && Auth::guard('team')->attempt(['email'=>$email, 'password'=>$password])) {
-            session(['teamAuth' => true]);
-            session(['teamName' => $team->team_name]);
-            session(['teamFoto' => $team->foto]);
-
-            return redirect()->route('home',['lang' => app()->getLocale()]);
-        } else {
-            return redirect()->route('login', ['lang' => app()->getLocale()]);
-        }
-    }
     public function logout() {
         Auth::guard('team')->logout();
 

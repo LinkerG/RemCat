@@ -1,7 +1,7 @@
 let tokenInput;
 window.addEventListener("load", function(){
     tokenInput = document.querySelector('input[name="_token"]');
-    //formEvent();
+    formEvent();
     loginEvent();
 });
 
@@ -31,24 +31,6 @@ const dictionary = {
 }
 
 const currentDictionary = dictionary[lang];
-  
-const loginHtml = `
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="email" name="email" placeholder="" value="" required>
-        <label for="email">Email</label>
-        <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="password" name="password" placeholder="" value="" required>
-        <label for="name">`+currentDictionary['password']+`</label>
-        <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
-    </div>
-    <button type="button" id="login-submit-button" class="btn btn-primary">Log in</button>
-    <hr>
-    <p class="align-center">or</p>
-    <hr>
-    <button type="button" id="switch-button" class="btn btn-primary">Sign up</button>
-`;
 
 const signupHtml = `
     <div class="form-floating mb-3">
@@ -81,65 +63,49 @@ const signupHtml = `
 `;
 
 function loginEvent(){
-    let form = document.getElementsByTagName("form")[0];
     emailInput = document.getElementById("email");
     loginButton = document.getElementById("login-submit-button");
     let passwordInput = document.getElementById("password");
     loginButton.addEventListener("click", function(){
-        if(validateEmail(emailInput.value) && validateNonEmptyText(passwordInput.value)){
-            emailInput.classList.remove("formInvalid")
-            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
-            passwordInput.classList.remove("formInvalid")
-            passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "none"
 
-            let formData = new FormData();
-            formData.append('email', emailInput.value);
-            formData.append('password', passwordInput.value);
-            // Obtener el token CSRF del meta tag en el documento
-            let token = document.head.querySelector('meta[name="csrf-token"]').content;
-            // Agregar el token CSRF a los datos del formulario
-            formData.append('_token', token);
-            loginButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
-            fetch("/api/matchEmail", {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Hubo un problema al realizar la solicitud.');
-                }
-                return response.json();
-            })
-            .then(response => {
-                if(response.exists == false) {
-                    console.log("Preguntar si lleva a registro");
-                    let parent = loginButton.parentElement;
-                    loginButton.remove();
-                    let question = `
-                    <p>Este correo no tiene ninguna cuenta asociada, crear cuenta?</p>
-                    <button id="no-signup">No</button>
-                    <button id="yes-signup">Si</button>
-                    `
-                    parent.innerHTML += question;
-                    yesnoButtonEvents();
-                } else if(response.exists && response.valid){
-                    if(response.isUser){
-                        form.action = "/" + lang + "/userLogin";
-                    } else {
-                        form.action = "/" + lang + "/teamLogin";
-                    }
-                    form.submit();
-                }
-            })
-            .catch(error => {
-                console.error(error)
-            })
-        } else {
-            emailInput.classList.add("formInvalid")
-            emailInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
-            passwordInput.classList.add("formInvalid")
-            passwordInput.parentElement.querySelector(".invalid-feedback").style.display = "block"
-        }
+        let form = document.getElementsByTagName("form")[0];
+        let formData = new FormData();
+        formData.append('email', emailInput.value);
+        formData.append('password', passwordInput.value);
+        // Obtener el token CSRF del meta tag en el documento
+        let token = document.head.querySelector('meta[name="csrf-token"]').content;
+        // Agregar el token CSRF a los datos del formulario
+        formData.append('_token', token);
+        loginButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
+        fetch("/api/matchEmail", {
+            method: 'GET',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Hubo un problema al realizar la solicitud.');
+            }
+            return response.json();
+        })
+        .then(response => {
+            if(response.exists == false) {
+                console.log("Preguntar si lleva a registro");
+                let parent = loginButton.parentElement;
+                loginButton.remove();
+                let question = `
+                <p>Este correo no tiene ninguna cuenta asociada, crear cuenta?</p>
+                <button id="no-signup">No</button>
+                <button id="yes-signup">Si</button>
+                `
+                parent.innerHTML += question;
+                yesnoButtonEvents();
+            } else {
+                form.submit()
+            }
+        })
+        .catch(error => {
+            console.error(error)
+        })
     })
 }
 
@@ -169,12 +135,9 @@ function yesnoButtonEvents(){
     let yesButton = document.getElementById("yes-signup");
     let form = document.getElementsByTagName("form")[0];
     noButton.addEventListener("click", function(){
-        form.innerHTML = loginHtml;
-        form.action = "/"+lang+"/login"
-        form.appendChild(tokenInput);
-        loginEvent();
+        //form.appendChild(tokenInput);
+        question.remove();
     })
-
     yesButton.addEventListener("click", function(){
         form.innerHTML = signupHtml;
         form.action = "/"+lang+"/register/user"
@@ -208,16 +171,4 @@ function formEvent(){
         }
 
     })
-}
-
-function validateEmail(email) {
-    var regex = /^(?=.*\S).+@.+\..+$/;
-
-    return regex.test(email);
-}
-
-function validateNonEmptyText(string) {
-    let regex = /^[\S]+.*[\S]+$/;
-
-    return regex.test(string);
 }
