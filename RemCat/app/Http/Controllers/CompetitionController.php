@@ -94,16 +94,7 @@ class CompetitionController extends Controller
         $category = $request->input("category1") . $request->input("category2");
         
         $collectionName = $year . "_competitions_results";
-        /*
-        $parameters = [
-            "competition_id" => $competition_id, 
-            "category" => $category,
-            "teamName" => $request->input("teamName"),
-        ];
-        if (Competition::checkIfExists($seasonName, $parameters)) {
-            Competition::joinCompetition($year, $request, $competition_id);
-        } else{}
-        */
+
         $parameters = [
             "competition_id" => $competition_id, 
             "category" => $category,
@@ -208,7 +199,7 @@ class CompetitionController extends Controller
             "category" => $category,
             "teamName" => $request->input("teamName"),
         ];
-        if (Competition::checkIfExists($collectionName, $parameters)) {
+        if (!Competition::checkIfExists($collectionName, $parameters)) {
             $ok = Competition::joinCompetition($year, $request, $competition_id);
         } else{}
         $response = [

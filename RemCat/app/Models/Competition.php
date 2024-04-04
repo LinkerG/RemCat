@@ -7,6 +7,7 @@ use MongoDB\Laravel\Eloquent\Model;
 use App\Helpers\CalcSeason;
 use DateTime;
 use Carbon\Carbon;
+use Hamcrest\Arrays\IsArray;
 use MongoDB\BSON\ObjectID;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class Competition extends Model
         $competition = (new Competition())
         ->setCollection($seasonName)
         ->where("_id", $_id)
-        ->get();
+        ->first();
 
         return $competition;
     }
@@ -52,7 +53,7 @@ class Competition extends Model
             new Competition())
             ->setCollection($collectionName)
             ->where("competition_id", $request->input("competition_id"))
-            ->where("team_name", $request->input("teamName"))
+            ->where("teamName", $request->input("teamName"))
             ->get();
 
         return $competitions;
@@ -108,8 +109,8 @@ class Competition extends Model
 
     public static function joinCompetition($year, Request $request, $competition_id){
         $collectionName = $year . "_competitions_results";
-
         $teamMembersArray = $request->input("teamMembers");
+        if(!is_array($teamMembersArray)) $teamMembersArray = explode(",", $teamMembersArray);
         $substitutes = $request->input("substitutes");
         $substitutesTrimmed = preg_replace('/\s*,\s*/', ',', $substitutes);
         $substitutesArray = explode(",", $substitutesTrimmed);
