@@ -6,7 +6,7 @@
                 <!--
                     TODO: Poner el team name en readonly en este formulario
                 -->
-                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="Club de Rem Badalona" required>
+                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="{{session('teamName')}}" required readonly>
                 <label for="teamName">Team name</label>
                 <div class="invalid-feedback ms-2">Nombre no valido</div>
             </div>

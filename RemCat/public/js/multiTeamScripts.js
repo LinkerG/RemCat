@@ -13,9 +13,6 @@ window.addEventListener("load", function(){
 
 function saveButtonEvtHandler(){
     document.getElementById("save-team").addEventListener("click", function(){
-        
-        // Obtener el token CSRF del meta tag en el documento
-        
 
         let category1 = document.querySelector('[name="category1"]').value;
 

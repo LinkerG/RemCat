@@ -47,6 +47,23 @@
                                 </div>
                             </div>
                         </article>
+                        {{-- TODO: Habria que poner esto ->
+                            <article class="card" style="width: 18rem;">
+                                <img src="{{ asset($bannerRoute) }}" class="card-img-top" alt="{{ $competition->name }} banner">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $competition->name }}</h5>
+                                    <p class="card-text">Descripcion generica</p>
+                                    @if($competitionDate >= $today)
+                                        <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>
+                                        @if((session('teamAuth')))
+                                            <a href="{{ $route }}competitions/{{$year}}/joinMultiple/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionMultiple") }}</a>
+                                        @endif
+                                    @else
+                                        <a href="{{ $route }}competitions/{{$year}}/viewResults/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.viewResults") }}</a>
+                                    @endif
+                                </div>
+                            </article>
+                            --}}
                     @endforeach
                 @else
                     <h2 class="text-white z-3">{{ trans("text.comingSoon") }}</h2>
