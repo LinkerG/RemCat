@@ -28,14 +28,12 @@ class CompetitionController extends Controller
         $seasonName = $year . "_competitions";
 
         $error = [];
-        if (!$competitionComparator = (
-            new Competition())
-            ->setCollection($seasonName)
-            ->where("name", $request->input("name"))
-            ->where("boatType", $request->input("boatType"))
-            ->where("date", $date)
-            ->exists()
-        ) {
+        $parameters = [
+            "name" => $request->input("name"), 
+            "boatType" => $request->input("boatType"),
+            "date" => $date,
+        ];
+        if (Competition::checkIfExists($seasonName, $parameters)) {
             Competition::storeCompetition($year, $request);
         } else{}
         
