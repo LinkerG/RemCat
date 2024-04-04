@@ -92,20 +92,26 @@ class CompetitionController extends Controller
 
         $competition_id = $routeArray[4];
         $category = $request->input("category1") . $request->input("category2");
-        $teamName = $request->input("teamName");
         
         $collectionName = $year . "_competitions_results";
-        
-        if (!$competitionComparator = (
-            new Competition())
-            ->setCollection($collectionName)
-            ->where("competition_id", $competition_id)
-            ->where("category", $category)
-            ->where("team_name", $teamName)
-            ->exists()
-        ) {
+        /*
+        $parameters = [
+            "competition_id" => $competition_id, 
+            "category" => $category,
+            "teamName" => $request->input("teamName"),
+        ];
+        if (Competition::checkIfExists($seasonName, $parameters)) {
             Competition::joinCompetition($year, $request, $competition_id);
-        }
+        } else{}
+        */
+        $parameters = [
+            "competition_id" => $competition_id, 
+            "category" => $category,
+            "teamName" => $request->input("teamName"),
+        ];
+        if (Competition::checkIfExists($collectionName, $parameters)) {
+            Competition::joinCompetition($year, $request, $competition_id);
+        } else{}
     }
 
     public function changeIsActive(Request $request){
@@ -191,25 +197,20 @@ class CompetitionController extends Controller
 
     public function joinCompetitionApi(Request $request){
         $year = CalcSeason::calculate();
+        $collectionName = $year . "_competitions_results";
         $_id = $request->input("_id") ? $request->input("_id") : new ObjectID();
         $competition_id = $request->input("competition_id");
         $category = $request->input("category1") . $request->input("category2");
-        $teamName = $request->input("teamName");
-
-        $insurance = $request->input("insurance") ? $request->input("insurance") : null;
-        $collectionName = $year . "_competitions_results";
         
         $ok = false;
-        if (!$competitionComparator = (
-            new Competition())
-            ->setCollection($collectionName)
-            ->where("competition_id", $competition_id)
-            ->where("category", $category)
-            ->where("team_name", $teamName)
-            ->exists()
-        ) {
+        $parameters = [
+            "competition_id" => $competition_id, 
+            "category" => $category,
+            "teamName" => $request->input("teamName"),
+        ];
+        if (Competition::checkIfExists($collectionName, $parameters)) {
             $ok = Competition::joinCompetition($year, $request, $competition_id);
-        }
+        } else{}
         $response = [
             "ok" => $ok,
             "_id" => $_id,
@@ -222,7 +223,6 @@ class CompetitionController extends Controller
     function getCompetitionsFromTeam(Request $request){
         $year = CalcSeason::calculate();
         
-
         $competitions = Competition::getCompetitionsByTeam($year, $request);
             
         return response()->json($competitions);

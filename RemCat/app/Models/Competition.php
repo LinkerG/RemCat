@@ -26,7 +26,6 @@ class Competition extends Model
 
         $competitions = (new Competition())
         ->setCollection($seasonName)
-        
         ->where('isActive', $onlyActives)
         ->get();
         if($dateRestriction) $competitions = $competitions->where('date', '>=', $currentDate);
@@ -119,9 +118,9 @@ class Competition extends Model
         $competitionResult = new Competition;
         $competitionResult->setCollection($collectionName);
         $competitionResult->competition_id = $competition_id;
-        $competitionResult->team_name = $request->input("teamName");
+        $competitionResult->teamName = $request->input("teamName");
         $competitionResult->category = $request->input("category1") . $request->input("category2");
-        $competitionResult->team_members = $teamMembers;
+        $competitionResult->teamMembers = $teamMembers;
         $competitionResult->insurance = $request->input("insurance") ? $request->input("insurance") : null;
         $competitionResult->distance = "";
         $competitionResult->time = "";
