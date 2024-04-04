@@ -37,6 +37,7 @@ services:
       - mongodb:mongodb
     networks:
       - mainNet
+
   mongo-cli:
     image: mongo-express:1.0.2-20
     ports:
@@ -55,6 +56,17 @@ services:
       - mongodb
     links:
       - mongodb:mongodb
+    networks:
+      - mainNet
+
+  node:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    volumes: 
+      - ./nodeApp:/app
+    working_dir: '/app'
     networks:
       - mainNet
 
