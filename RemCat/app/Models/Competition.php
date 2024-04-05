@@ -27,8 +27,8 @@ class Competition extends Model
 
         $competitions = (new Competition())
         ->setCollection($seasonName)
-        ->where('isActive', $onlyActives)
         ->get();
+        if($onlyActives) $competitions = $competitions->where('isActive', true);
         if($dateRestriction) $competitions = $competitions->where('date', '>=', $currentDate);
         if($take != null) $competitions = $competitions->take($take);
 

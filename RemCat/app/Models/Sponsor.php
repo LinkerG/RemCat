@@ -15,8 +15,8 @@ class Sponsor extends Model
     public static function getAllSponsors($onlyActives = true, $take=null){
         $sponsors = (new Sponsor());
         $sponsors
-        ->where('isActive', $onlyActives)
         ->get();
+        if($onlyActives) $sponsors = $sponsors->where('isActive', true);
         if($take != null) $sponsors = $sponsors->take($take);
 
         return $sponsors;
