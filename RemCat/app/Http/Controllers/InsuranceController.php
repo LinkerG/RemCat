@@ -13,41 +13,32 @@ class InsuranceController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $cif = $request->input('cif');
-        $name = $request->input('name');
-        $address = $request->input("address");
-        $price = $request->input("price");
-
-        $insurance = new Insurance;
-        $insurance->cif = $cif;
-        $insurance->name = $name;
-        $insurance->address = $address;
-        $insurance->price = $price;
-        $insurance->isActive = true;
+    {   
         // TODO:
         //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
         //    solo se comprueba que el cif no este dupli
         //  - Hay que mirar que el cif tampoco exista en sponsors
         $error = [];
-        if(!Insurance::where("cif", $cif)->exists()){
-            $insurance->save();
+        $parameters = [
+            "cif" => $request->input('cif'),
+        ];
+        if(!Insurance::checkIfExists($parameters)){
+            Insurance::storeInsurance($request);
         } else {
             $error[] = "alreadyExists";
         }
-        
-        // Para redirigir con el idioma hay que hacerlo asi
+
         return redirect()->route('admin.insurances.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
 
     public function viewAll(){
-        $insurances = Insurance::all();
+        $insurances = Insurance::getAllInsurances($onlyActives = false);
 
         return view("admin/viewInsurances", compact("insurances"));
     }
 
     public function showEditForm($_id) {
-        $insurance = Insurance::where("_id", $_id)->first(); // Utiliza 'first()' para obtener el modelo, no solo la consulta
+        $insurance = Insurance::getInsuranceById($_id);
         
         return view("admin/editInsurances", ['insurance' => $insurance]);
     }
@@ -63,9 +54,9 @@ class InsuranceController extends Controller
             'price' => $price
         ];
 
-        $insurance = Insurance::where('_id', $_id)->update($updatedData);
+        $succes = Insurance::updateInsurance($_id, $updatedData) ? true : false;
 
-        return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->with('succes', 'true');
+        return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->with('succes', $succes);
     }
 
     public function changeIsActive(Request $request){
@@ -78,9 +69,9 @@ class InsuranceController extends Controller
             'isActive' => $newStatus
         ];
 
-        $insurance = Insurance::where('_id', $_id)->update($updatedData);
+        $succes = Insurance::updateInsurance($_id, $updatedData) ? true : false;
 
-        return response()->json(['message' => 'Estado cambiado correctamente']);
+        return response()->json(['changed' => $succes]);
     }
     
 }
