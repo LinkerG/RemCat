@@ -161,16 +161,6 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
 
             //------------------COMPETITIONS------------------//
             $defaultYear = CalcSeason::calculate();
-            // VIEW
-            Route::get('/competitions/{year?}', function ($lang = 'es', $year = null) use ($defaultYear) {
-                if ($year === null) {
-                    $year = $defaultYear;
-                }
-
-                $competitionController = new CompetitionController();
-                App::setLocale($lang);
-                return $competitionController->viewAll($year);
-            })->name('admin.competitions');
             // ADD
             Route::get('/competitions/add', function ($lang = 'es') {
                 App::setLocale($lang);
@@ -182,6 +172,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 
                 return $competitionController->store($request);
             });            
+            // VIEW
+            Route::get('/competitions/{year?}', function ($lang = 'es', $year = null) use ($defaultYear) {
+                if ($year === null) {
+                    $year = $defaultYear;
+                }
+
+                $competitionController = new CompetitionController();
+                App::setLocale($lang);
+                return $competitionController->viewAll($year);
+            })->name('admin.competitions');
             // EDIT
             Route::get('/competitions/edit/{year?}/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear) {
                 if ($year === null) {

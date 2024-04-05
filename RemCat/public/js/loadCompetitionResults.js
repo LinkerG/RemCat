@@ -3,9 +3,20 @@ let year;
 let competition_id;
 
 window.addEventListener("load", function(){
-    pathname = window.location.pathname.split("/");
-    year = pathname[3];
-    competition_id = pathname[5];
+    // Chatgptada indómita
+    pathname = window.location.pathname;
+    // Crear una expresión regular para extraer year y competition_id
+    let regex = /^\/\w+\/competitions\/(\d+)_(\d+)\/(?:info|results)\/(\w+)$/;
+    // Ejecutar la expresión regular en el pathname
+    let match = pathname.match(regex);
+    // Verificar si hubo una coincidencia
+    if (match) {
+        year = match[1];
+        competition_id = match[3];
+    } else {
+        console.error("No se encontraron year y competition_id en el pathname.");
+    }
+
     getResults()
 });
 
