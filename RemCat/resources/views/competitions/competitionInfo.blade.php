@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Info</title>
     @include('components.links')
+    <script src="{{ asset("js/loadCompetitionResults.js") }}"></script>
 </head>
 <body>
     @include('components.header')
@@ -44,8 +45,11 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="contaier shadow">
-                    a
+                <div class="contaier" id="results-container">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist"></div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent"></div>
                 </div>
             </div>
         </div>

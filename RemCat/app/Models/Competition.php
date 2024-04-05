@@ -136,7 +136,8 @@ class Competition extends Model
         $competitionResult->teamMembers = $teamMembers;
         $competitionResult->insurance = $request->input("insurance") ? $request->input("insurance") : null;
         $competitionResult->distance = "";
-        $competitionResult->time = "";
+        $competitionResult->time = "DNS";
+        $competitionResult->isLive = false;
         $competitionResult->save();
 
         return true;
