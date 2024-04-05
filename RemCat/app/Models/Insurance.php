@@ -11,14 +11,13 @@ class Insurance extends Model
     protected $connection = "mongodb";
     protected $collection = "Insurances";
 
-    public static function getAllInsurances($onlyActives = true, $take=null){
-        $insururances = (new Insurance());
-        $insururances
-        ->get();
-        if($onlyActives) $insururances = $insururances->where('isActive', true);
-        if($take != null) $insururances = $insururances->take($take);
-
-        return $insururances;
+    public static function getAllInsurances($onlyActives = true, $take = null) {
+        $insurances = Insurance::query();
+    
+        if ($onlyActives) $insurances->where('isActive', true);
+        if ($take != null) $insurances->take($take);
+    
+        return $insurances->get();
     }
 
     public static function getInsuranceById($_id){

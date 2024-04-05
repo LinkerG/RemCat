@@ -30,7 +30,7 @@
         </nav>
     </div>
     <!--Container Main start-->
-    <div class="height-100 bg-light">
+    <div class="iframe-container height-100 bg-light">
         <iframe id="main-iframe" src="{{ $route }}admin/menu" frameborder="0"></iframe>
     </div>
 </body>
