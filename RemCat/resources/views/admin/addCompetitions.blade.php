@@ -79,8 +79,10 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <div class="row h-75 ">
-                        <img class="my-2" src="" alt="preview of map" id="preview-map">
+                    <div class="row mh-75 h-75 ">
+                        <div class="my-2 d-flex justify-content-center align-items-center ">
+                            <img src="" alt="preview of map" id="preview-map">
+                        </div>
                     </div>
                     <div class="row h-25 ">
                         <div class="d-flex flex-column justify-content-end mb-2">
@@ -90,8 +92,10 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <div class="row h-75 ">
-                        <img class="my-2" src="" alt="preview of banner" id="preview-banner">
+                    <div class="row mh-75 h-75 ">
+                        <div class="my-2 d-flex justify-content-center align-items-center ">
+                            <img src="" alt="preview of banner" id="preview-banner">
+                        </div>
                     </div>
                     <div class="row h-25 ">
                         <div class="d-flex flex-column justify-content-end mb-2">
