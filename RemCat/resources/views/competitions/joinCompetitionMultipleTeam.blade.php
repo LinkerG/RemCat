@@ -12,7 +12,7 @@
 <body>
     @include('components.header')
     <div class="container shadow mt-4 p-5">
-        @include('competitions.forms.noOpenMultipleTeam')
+        @include('competitions.forms.multipleTeam')
     </div>
     <div class="alert-container d-none"></div>
 </body>

@@ -24,9 +24,11 @@
                         <h5 class="card-title">{{ $competition->name }}</h5>
                         <p class="card-text">Descripcion generica</p>
                         @if($competitionDate >= $today)
-                            <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>
                             @if((session('teamAuth')))
                                 <a href="{{ $route }}competitions/{{$year}}/joinMultiple/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionMultiple") }}</a>
+                                <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>
+                            @elseif((session('userAuth')) || ($competition->isOpen))
+                                <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>    
                             @endif
                         @else
                             <a href="{{ $route }}competitions/{{$year}}/viewResults/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.viewResults") }}</a>
