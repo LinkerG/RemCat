@@ -168,6 +168,12 @@ class CompetitionController extends Controller
         return view("competitions/viewCompetitions", compact("competitions", "year"));
     }
 
+    public function showCompetitionInfo($year, $_id) {
+        $competition = Competition::getCompetitionById($year, $_id);
+        
+        return view("competitions/competitionInfo", compact("competition", "year"));
+    }
+
     //------------------VIEW-CALLS-END------------------//
 
     //------------------ENDPOINTS------------------//
@@ -217,6 +223,12 @@ class CompetitionController extends Controller
         $competitions = Competition::getCompetitionsByTeam($year, $request);
             
         return response()->json($competitions);
+    }
+
+    function getResultsFromCompetition(Request $request){
+        $results = Competition::getResultsFromCompetition($request);
+
+        return response()->json($results);
     }
 
     //------------------ENDPOINTS-END------------------//
