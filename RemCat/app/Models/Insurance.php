@@ -60,7 +60,6 @@ class Insurance extends Model
     }
 
     public static function updateInsurance($_id, $updatedData){
-
         $insurance = (new Insurance())
         ->where("_id", $_id)
         ->update($updatedData);

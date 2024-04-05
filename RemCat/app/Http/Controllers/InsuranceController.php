@@ -22,7 +22,7 @@ class InsuranceController extends Controller
         $parameters = [
             "cif" => $request->input('cif'),
         ];
-        if(!Insurance::checkIfExists($parameters)){
+        if(!Sponsor::checkIfExists($parameters) || !Insurance::checkIfExists($parameters)){
             Insurance::storeInsurance($request);
         } else {
             $error[] = "alreadyExists";

@@ -7,9 +7,9 @@ use MongoDB\Laravel\Eloquent\Model;
 use App\Helpers\CalcSeason;
 use DateTime;
 use Carbon\Carbon;
-use Hamcrest\Arrays\IsArray;
 use MongoDB\BSON\ObjectID;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ImageController;
 
 class Competition extends Model
 {
