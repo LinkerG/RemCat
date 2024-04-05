@@ -42,7 +42,7 @@ class CompetitionController extends Controller
     
 
     public function viewAll($year){
-        $competition = Competition::getAllCompetitions($year, $dateRestriction = false, $onlyActives = false);
+        $competitions = Competition::getAllCompetitions($year, $dateRestriction = false, $onlyActives = false);
         $years = [];
     
         $mongoCollections = DB::connection('mongodb')->listCollections();

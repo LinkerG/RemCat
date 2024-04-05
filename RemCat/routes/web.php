@@ -84,6 +84,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 return $adminController->logout();
             })->name('admin.logout');
 
+            //El dashboard del dashboard, valga la redundancia
+            Route::get('/menu', function($lang = 'es') {
+                App::setLocale($lang);
+
+                return view('admin/adminMenu');
+            })->name('admin.menu');
+
             //------------------SPONSORS------------------//
             // VIEW
             Route::get('/sponsors', function ($lang = 'es') {
