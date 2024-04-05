@@ -14,8 +14,8 @@ class Insurance extends Model
     public static function getAllInsurances($onlyActives = true, $take=null){
         $insururances = (new Insurance());
         $insururances
-        ->where('isActive', $onlyActives)
         ->get();
+        if($onlyActives) $insururances = $insururances->where('isActive', true);
         if($take != null) $insururances = $insururances->take($take);
 
         return $insururances;
