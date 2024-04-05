@@ -48,7 +48,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
     });
     //------------------ADMIN------------------//
     $defaultYear = CalcSeason::calculate();
-    Route::prefix('/admin')->group(function() {
+    Route::prefix('/admin')->group(function() use ($defaultYear){
         //Login de admin
         Route::get('', function ($lang = 'es') {
             App::setLocale($lang);
