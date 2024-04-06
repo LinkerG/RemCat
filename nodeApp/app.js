@@ -1,14 +1,23 @@
 const mongoose = require('mongoose');
-const express = require('express');
-const app = express();
+import express from "express";
+const router = express.Router();
 const path = require('path');
 const port = 3000;
 
-mongoose.connect('mongodb://mongodb:27017/RemCat', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+mongoose.connect('mongodb://root:chocu@localhost:27017/RemCat');
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Error de conexión a la base de datos:'));
+db.once('open', () => {
+  console.log('Conexión exitosa a la base de datos MongoDB');
 });
 
+//ROUTES
+router.get('/', (req, res) => {
+  res.render('start', { title: 'Página de inicio' });
+});
+
+// Definir el modelo fuera del controlador de ruta
 const CompetitionResultSchema = new mongoose.Schema({
   competition_id: String,
   teamName: String,
@@ -22,49 +31,49 @@ const CompetitionResultSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now }
 });
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Error de conexión a la base de datos:'));
-db.once('open', () => {
-  console.log('Conexión exitosa a la base de datos MongoDB');
-});
+// Define un objeto para mapear los nombres de colecciones a modelos
+const collectionModels = {};
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jsx');
-app.engine('jsx', require('express-react-views').createEngine());
+// Función para obtener o definir un modelo basado en el nombre de la colección
+const getModelForCollection = (collectionName) => {
+  // Si ya tenemos un modelo para esta colección, devolverlo
+  if (collectionModels[collectionName]) {
+      return collectionModels[collectionName];
+  }
+  // Si no, definir y guardar el modelo
+  return collectionModels[collectionName] = mongoose.model(collectionName, CompetitionResultSchema);
+};
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-//ROUTES
-app.get('/', (req, res) => {
-  res.render('start', { title: 'Página de inicio' });
-});
-
-app.get('/generateQR/:collection/:_id', (req, res) => {
+// Ruta de manejo
+router.get('/generateQR/:collection/:_id', async (req, res) => {
   const { collection, competition_id } = req.params;
+  
+  // Obtener el modelo según el nombre de la colección
+  const CollectionModel = getModelForCollection(collection);
 
-  const CollectionModel = mongoose.model(collection, CompetitionResult.schema, collection);
-  CollectionModel.find({ competition_id: competition_id }, (err, results) => {
-    if (err) {
-      console.error('Error al realizar la consulta:', err);
-      return res.status(500).send('Error al obtener los resultados');
-    }
-
-    res.render("generateQR", { competitionResults: results });
-  });
+  try {
+      // Realizar la consulta utilizando el modelo obtenido
+      const results = await CollectionModel.find({ competition_id: competition_id }).exec();
+      res.render("generateQR", { competitionResults: results });
+  } catch (error) {
+      console.error('Error al realizar la consulta:', error);
+      res.status(500).send('Error al obtener los resultados');
+  }
 });
 
-app.use(express.static('public'));
 
-app.use((req, res, next) => {
+router.use(express.static('public'));
+
+router.use((req, res, next) => {
   res.status(404).send("Lo siento, no puedo encontrar esa página.");
 });
 
-app.use((err, req, res, next) => {
+router.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Algo salió mal!');
 });
 
-app.listen(port, (err) => {  
+router.listen(port, (err) => {  
   if (err) {
     return console.log('¡Error al arrancar!', err);
   }

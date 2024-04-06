@@ -74,8 +74,6 @@ services:
 volumes:
    mongoData:
     driver: local
-   clientdb:
-    driver: local
 
 networks:
   mainNet:
