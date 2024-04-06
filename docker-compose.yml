@@ -60,8 +60,7 @@ services:
       - mainNet
 
   node:
-    build:
-      context: .
+    image: node
     ports:
       - "3000:3000"
     volumes: 
