@@ -11,9 +11,12 @@
     "express"
   ],
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "express-react-views": "^0.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "npm install && node app.js"
   }
 }
