@@ -19,6 +19,6 @@
     "react-dom": "^18.2.0"
   },
   "scripts": {
-    "start": "npm install react react-dom && npm install && node app.js"
+    "start": "npm install & node app.js"
   }
 }

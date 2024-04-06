@@ -19,7 +19,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_laravel
       args:
         uid: 1000  # Valor de ejemplo para el ID de usuario
         user: chocu  # Valor de ejemplo para el nombre de usuario
@@ -60,7 +60,9 @@ services:
       - mainNet
 
   node:
-    image: node
+    build: 
+      context: .
+      dockerfile: Dockerfile_node
     ports:
       - "3000:3000"
     volumes: 

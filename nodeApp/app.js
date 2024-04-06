@@ -4,13 +4,29 @@ const app = express();
 const path = require('path');
 const port = 3000;
 
-// MODELOS
-const CompetitionResult = require('./models/CompetitionResult');
-//CONEXION
-mongoose.connect('mongodb://localhost:27017/nombre_de_tu_base_de_datos', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Conexión a la base de datos establecida'))
-  .catch((error) => console.error('Error al conectar a la base de datos:', error));
+mongoose.connect('mongodb://mongodb:27017/RemCat', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
+const CompetitionResultSchema = new mongoose.Schema({
+  competition_id: String,
+  teamName: String,
+  category: String,
+  teamMembers: [String],
+  insurance: String,
+  distance: String,
+  time: String,
+  isLive: Boolean,
+  updated_at: { type: Date, default: Date.now },
+  created_at: { type: Date, default: Date.now }
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Error de conexión a la base de datos:'));
+db.once('open', () => {
+  console.log('Conexión exitosa a la base de datos MongoDB');
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
@@ -24,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/generateQR/:collection/:_id', (req, res) => {
-  const { collection, _id } = req.params;
+  const { collection, competition_id } = req.params;
 
   const CollectionModel = mongoose.model(collection, CompetitionResult.schema, collection);
   CollectionModel.find({ competition_id: competition_id }, (err, results) => {
