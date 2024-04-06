@@ -99,7 +99,6 @@ function getAllTeamRegistrationsForCompetition(){
     })
     .then(response => response.json())
     .then(data => {
-        
         let spinner = document.getElementById("data-container").querySelector(".spinner-border");
         spinner.remove();
         data.forEach(registration => {

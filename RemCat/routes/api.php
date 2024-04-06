@@ -41,3 +41,4 @@ Route::post("competitions/changeIsCancelled", [CompetitionController::class, 'ch
 // Join competition
 Route::post("competitions/join", [CompetitionController::class, 'joinCompetitionApi']);
 Route::post("competitions/getCompetitionsFromTeam", [CompetitionController::class, 'getCompetitionsFromTeam']);
+Route::post("competitions/getResultsFromCompetition", [CompetitionController::class, 'getResultsFromCompetition']);
