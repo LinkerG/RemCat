@@ -59,6 +59,18 @@ class Competition extends Model
         return $competitions;
     }
 
+    public static function getResultsFromCompetition(Request $request){
+        $year = $request->input("year");
+        $collectionName = $year . "_competitions_results";
+        $results = (
+            new Competition())
+            ->setCollection($collectionName)
+            ->where("competition_id", $request->input("competition_id"))
+            ->get();
+
+        return $results;
+    }
+
     public static function checkIfExists($collection, $parameters){
         $comparator = (new Competition())
         ->setCollection($collection);
@@ -124,7 +136,8 @@ class Competition extends Model
         $competitionResult->teamMembers = $teamMembers;
         $competitionResult->insurance = $request->input("insurance") ? $request->input("insurance") : null;
         $competitionResult->distance = "";
-        $competitionResult->time = "";
+        $competitionResult->time = "DNS";
+        $competitionResult->isLive = false;
         $competitionResult->save();
 
         return true;

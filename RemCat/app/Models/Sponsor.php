@@ -12,15 +12,15 @@ class Sponsor extends Model
     protected $connection = "mongodb";
     protected $collection = "Sponsors";
 
-    public static function getAllSponsors($onlyActives = true, $take=null){
-        $sponsors = (new Sponsor());
-        $sponsors
-        ->get();
-        if($onlyActives) $sponsors = $sponsors->where('isActive', true);
-        if($take != null) $sponsors = $sponsors->take($take);
-
-        return $sponsors;
+    public static function getAllSponsors($onlyActives = true, $take = null) {
+        $sponsors = Sponsor::query();
+    
+        if ($onlyActives) $sponsors->where('isActive', true);
+        if ($take != null) $sponsors->take($take);
+    
+        return $sponsors->get();
     }
+    
 
     public static function getSponsorById($_id){
         $sponsor = (new Sponsor());

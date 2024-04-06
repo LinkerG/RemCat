@@ -85,3 +85,7 @@ button.fix-size{
     left: 0;
     z-index: 100;
 }
+
+.w-47{
+    min-width: 47% !important;
+}
