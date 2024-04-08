@@ -23,7 +23,6 @@
             </ul>
         </div>
     @endif
-    {{-- TODO: Añadir input banner --}}
     <div class="container shadow mt-4 mr-5 ml-5 p-5">
         <h1 class="" style="text-align: center">{{ trans('admin.competition.title') }}</h1>
         <form action="#" method="post" class="mt-1" enctype="multipart/form-data">

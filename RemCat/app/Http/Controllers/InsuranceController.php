@@ -14,10 +14,7 @@ class InsuranceController extends Controller
 
     public function store(Request $request)
     {   
-        // TODO:
-        //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
-        //    solo se comprueba que el cif no este dupli
-        //  - Hay que mirar que el cif tampoco exista en sponsors
+        //   TODO: Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor solo se comprueba que el cif no este dupli
         $error = [];
         $parameters = [
             "cif" => $request->input('cif'),
