@@ -73,10 +73,8 @@ class Competition extends Model
 
     public static function checkIfExists($collection, $parameters){
         $comparator = (new Competition())
-        ->setCollection($collection);
-        foreach ($parameters as $parameterName => $value) {
-            $comparator->where($parameterName, $value);
-        }
+        ->setCollection($collection)
+        ->where($parameters);
         
         return $comparator->exists();
     }
@@ -137,6 +135,7 @@ class Competition extends Model
         $competitionResult->insurance = $request->input("insurance") ? $request->input("insurance") : null;
         $competitionResult->distance = "";
         $competitionResult->time = "DNS";
+        $competitionResult->league_points = false;
         $competitionResult->isLive = false;
         $competitionResult->save();
 
