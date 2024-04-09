@@ -18,13 +18,8 @@ class SponsorController extends Controller
         $cif = $request->input('cif');
         $name = $request->input('name');
         $address = $request->input("address");
-        
-        
-        // TODO:
-        //  - Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor 
-        //    solo se comprueba que el cif no este dupli
-        //  - Hay que mirar que el cif tampoco exista en insurance
-
+    
+        // TODO: Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor  solo se comprueba que el cif no este dupli
         $error = [];
         $parameters = [
             "cif" => $request->input('cif'),

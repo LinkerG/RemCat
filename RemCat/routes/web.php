@@ -193,13 +193,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 return $competitionController->showEditForm($year, $_id);
             })->name('admin.competitions.edit');
 
-            Route::post('/competitions/edit/{year?}/{_id}', function (Request $request, $lang = 'es', $year = null, $_id)  use ($defaultYear)  {
+            Route::get('/competitions/info/{year}/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear)  {
                 if ($year === null) {
                     $year = $defaultYear;
                 }
                 $competitionController = new CompetitionController();
                 App::setLocale($lang);
-                return $competitionController->update($request, $year, $_id);
+                return $competitionController->showAdminCompetitionInfo($year, $_id);
             });
         });
     });
@@ -320,3 +320,9 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         return $competitionController->showCompetitionInfo($year, $_id);
     })->name('competitionInfo');
 });
+
+
+// Prueba websocket
+Route::get('/share/{year}/{competition_id}/{result_id}', function($year, $competition_id, $result_id){
+    return view('shareUbication', compact('year', 'competition_id', 'result_id'));
+})->name('competitionShare');
