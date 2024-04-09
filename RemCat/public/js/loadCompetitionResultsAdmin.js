@@ -1,8 +1,19 @@
 let pathname;
 let year;
 let competition_id;
+let serverName;
 
 window.addEventListener("load", function(){
+    if(window.location.hostname == "localhost") {
+        console.log("local");
+        serverName = window.location.host
+        console.log(window.location.host);
+    }else{
+        console.log("no local");
+        console.log(window.location.hostname);
+        serverName = window.location.hostname + ":" + window.location.port;
+    }
+    console.log(serverName);
     // Chatgptada indómita
     pathname = window.location.pathname;
     // Crear una expresión regular para extraer year y competition_id
@@ -16,8 +27,6 @@ window.addEventListener("load", function(){
     } else {
         console.error("No se encontraron year y competition_id en el pathname.");
     }
-    console.log(window.location.hostname);
-    console.log(window.location.port);
     getResults()
 });
 
@@ -135,7 +144,7 @@ function generateContent(category, resultsArray, isFirst) {
             qrColumn.classList.add("col-3")
             
             const qrImg = document.createElement("img")
-            let qrURL = generateQR(result._id);
+            let qrURL = generateQR(serverName + "/share/" + year + "/" + competition_id + "/" + result._id);
             qrImg.src = qrURL
 
             qrColumn.appendChild(qrImg);

@@ -324,5 +324,5 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
 
 // Prueba websocket
 Route::get('/share/{year}/{competition_id}/{result_id}', function($year, $competition_id, $result_id){
-    return view('shareUbication', compact('year', 'competition_id', 'result_id'));
+    return view('shareLocation', compact('year', 'competition_id', 'result_id'));
 })->name('competitionShare');

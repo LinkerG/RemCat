@@ -24,13 +24,13 @@ services:
         uid: 1000  # Valor de ejemplo para el ID de usuario
         user: chocu  # Valor de ejemplo para el nombre de usuario
     ports:
-      - "8000:8000"
+      - "8000:8000"  # Puerto para el servidor de desarrollo de Laravel
+      - "6001:6001"  # Puerto para los websockets
     volumes:
       - ./RemCat:/var/www/html
       - ./php:/usr/local/etc/php
-    command: >
-      sh -c "
-      php /var/www/html/artisan serve --host 0.0.0.0 --port 8000"
+    command: > # Arranca laravel y los websockets al iniciar la app
+      sh -c "php /var/www/html/artisan serve --host 0.0.0.0 --port 8000 & php /var/www/html/artisan websockets:serve"
     depends_on:
       - mongodb
     links:
