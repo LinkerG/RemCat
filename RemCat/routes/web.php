@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\TestEvent;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -12,10 +13,18 @@ use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TestEventController;
 
 $defaultYear = CalcSeason::calculate();
 
 // RUTAS DE LA WEB
+// Prueba websocket
+Route::get('/share/{year}/{competition_id}/{result_id}', function($year, $competition_id, $result_id){
+    $testController = new TestEventController();
+    
+    return view('shareLocation', compact('year', 'competition_id', 'result_id'));
+})->name('competitionShare');
+Route::get("/test", [TestEventController::class, 'testingEvent']);
 // Definición de idioma por defecto
 Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($defaultYear) {
 
@@ -321,8 +330,3 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
     })->name('competitionInfo');
 });
 
-
-// Prueba websocket
-Route::get('/share/{year}/{competition_id}/{result_id}', function($year, $competition_id, $result_id){
-    return view('shareLocation', compact('year', 'competition_id', 'result_id'));
-})->name('competitionShare');

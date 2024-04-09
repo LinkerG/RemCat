@@ -30,7 +30,7 @@ services:
       - ./RemCat:/var/www/html
       - ./php:/usr/local/etc/php
     command: > # Arranca laravel y los websockets al iniciar la app
-      sh -c "php /var/www/html/artisan serve --host 0.0.0.0 --port 8000 & php /var/www/html/artisan websockets:serve"
+      sh -c "php /var/www/html/artisan serve --host 0.0.0.0 --port 8000"
     depends_on:
       - mongodb
     links:

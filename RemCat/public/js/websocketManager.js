@@ -1,5 +1,5 @@
 window.addEventListener("load", function(){
-    var socket = new WebSocket('ws://' + window.location.hostname + ':6001');
+    var socket = new WebSocket("ws://" + window.location.hostname + ':6001');
     console.log(socket);
     socket.onopen = function(event) {
         enviarMensaje("conexion establecida")
