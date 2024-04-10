@@ -12,7 +12,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
     <div class="container-fluid d-flex align-items-center ">
         <h1>Listado de competiciones</h1>

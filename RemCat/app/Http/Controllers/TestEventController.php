@@ -9,5 +9,7 @@ class TestEventController extends Controller
 {
     function testingEvent(){
         event(new TestEvent());
+
+        return view("shareLocation");
     }
 }
