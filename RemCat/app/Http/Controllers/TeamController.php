@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Validation\ValidationException;
+use MongoDB\Laravel\Eloquent\Casts\ObjectId;
 
 class TeamController extends Controller
 {
@@ -21,20 +22,17 @@ class TeamController extends Controller
         $password = $request->input("password");
         $passwordEncrypted = Hash::make($password);
         //TODO : Imagen
+        $filename = ImageController::storeImage(request(), 'teams/photos', 'team-photo', $email);
 
         $team = new Team;
         $team->team_name = $name;
         $team->email = $email;
         $team->password = $passwordEncrypted;
+        $team->photo = $filename;
 
-        $errors = [];
-        if((!Team::where("email", $email)->exists()) && (!User::where("email", $email)->exists())){
-            $team->save();
-        } else {
-            $error[] = "alreadyExists";
-        }
+        $team->save();
 
-        return empty($errors) ? redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors)) : redirect()->route('login', ['lang' => app()->getLocale()])->withErrors(implode(', ', $errors));
+        return redirect()->route('login', ['lang' => app()->getLocale()]);
     }
 
     public function logout() {

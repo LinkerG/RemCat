@@ -31,7 +31,7 @@ Route::get('sponsors/fetchAll', [SponsorController::class, 'fetchAllSponsors']);
 // Devuelve las colecciones que existen de competiciones
 Route::get('competitons/fetchYears', [CompetitionController::class, 'fetchYears']);
 // Mira si el email mandado existe
-Route::get('matchEmail', [LoginController::class, 'matchEmail']);
+Route::get('matchEmail/{email}', [LoginController::class, 'matchEmail']);
 
 // Cambiar entre activo y no activo
 Route::post("sponsors/changeIsActive", [SponsorController::class, 'changeIsActive']);

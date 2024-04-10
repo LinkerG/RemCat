@@ -70,3 +70,15 @@ button.fix-size{
     width: 100%;
     margin-top: auto;
 }
+.invalid-feedback {
+    display: none;
+    color: red;
+}
+
+.input-error {
+    border: 1px solid red !important; /* !important se usa para asegurar que este estilo se aplique incluso si hay estilos inline */
+}
+
+.input-error + .invalid-feedback {
+    display: block;
+}

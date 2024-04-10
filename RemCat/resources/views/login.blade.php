@@ -14,20 +14,27 @@
     <div class="wrapper loginWrapper">
         <div class="formWrapper">
             <h1 class="loginLabel">Login</h1>
-            <form action="{{$route}}login" method="post" enctype="multipart/form-data">
-              @csrf
+            <form action="{{ $route }}login" method="post" enctype="multipart/form-data">
+                @csrf
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="" value="{{ old('email')}}" autofocus>
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="" value="{{ old('email')}}" autofocus>
                     <label for="email">Email</label>
-                    @error('email') {{ $message }} @enderror    
+                    @error('email') 
+                    <div class="invalid-feedback" style="color: red;">
+                        {{ $message }}
+                    </div>
+                    @enderror    
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="" value="">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="" value="">
                     <label for="password">{{ trans('admin.form.password') }}</label>
-                    @error('password') {{ $message }} @enderror 
+                    @error('password') 
+                    <div class="invalid-feedback" style="color: red;">
+                        {{ $message }}
+                    </div>
+                    @enderror 
                 </div>
-                
-                <button type="button" id="login-submit-button" class="btn btn-primary">Log in</button>
+                <button type="submit" id="login-submit-button" class="btn btn-primary">Log in</button>
                 <hr>
                 <p class="align-center">or</p>
                 <hr>
@@ -37,6 +44,6 @@
         <div class="footerFixedWrapper">
             @include("components.footer")
         </div>
-    </div>
+    </div>    
 </body>
 </html>

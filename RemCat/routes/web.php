@@ -193,16 +193,25 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         });
     });
     //-----------------ADMIN-END-----------------//
-
-    //-----------------TEAMS-----------------//
-    Route::prefix('/team')->group(function() use ($defaultYear) {
+    //-----------------REGISTER-----------------//
+    Route::prefix('/register')->group(function() use ($defaultYear) {
         //REGISTRO DE EQUIPOS
-        Route::post('/register', function (Request $request, $lang = 'es') {
+        Route::post('/team', function (Request $request, $lang = 'es') {
             $teamController = new TeamController();
             App::setLocale($lang);
                     
             return $teamController->store($request);
         });
+        //REGISTRO DE USUARIOS
+        Route::post('/user', function (Request $request, $lang = 'es') {
+            $userController = new UserController();
+            App::setLocale($lang);
+                    
+            return $userController->store($request);
+        });
+    });
+    //-----------------TEAMS-----------------//
+    Route::prefix('/team')->group(function() use ($defaultYear) {
         //MIDDLEWARE PARA EQUIPOS
         Route::middleware(['team.auth'])->group(function () {
             //Logout
@@ -224,12 +233,6 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
 
     //-----------------USERS---------------------//
     Route::prefix('/user')->group(function() use ($defaultYear) {
-        Route::post('/register', function (Request $request, $lang = 'es') {
-            $userController = new UserController();
-            App::setLocale($lang);
-                    
-            return $userController->store($request);
-        });
         //MIDDLEWARE PARA USUARIOS
         Route::middleware(['user.auth'])->group(function() {
             //LOGOUT

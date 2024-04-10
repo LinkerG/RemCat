@@ -52,30 +52,17 @@ class LoginController extends Controller{
         }
     }
     //-------------------END-POINTS-LOGIN---------------------//
-    public function matchEmail() {
-        $email = request()->input('email');
-        $password = request()->input("password");
-        
+    public function matchEmail($email) {
         $exists = false;
-        $valid = false;
-        $isUser = false;
         // Buscar usuario y equipo por correo electrónico
         $user = User::where('email', $email)->first();
         $team = Team::where('email', $email)->first();
         if ($user) {
-            if (Hash::check($password, $user->password)) {
-                $valid = true;
-                $isUser = true;
-            }
             $exists = true;
         } else if($team){
-            if (Hash::check($password, $team->password)) {
-                $valid = true;
-            }
             $exists = true;
         }
-
-        return response()->json(['exists' => $exists, 'valid' => $valid, "isUser" => $isUser]);
+        return response()->json(['exists' => $exists]);
     }
 }
 
