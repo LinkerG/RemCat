@@ -119,6 +119,7 @@ button.fix-size{
 
 .cancel-popup-close:hover {
     color: black;
+}
 
 .data-container{
     border-radius: var(--bs-border-radius);
