@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include("components.links")
     <script src="{{ asset('js/login.js') }}"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZJld8gcAnjfOhAt7qo3EgdvyVMHLoyF6T727CeyU-yXmuSCrzzVq4hdnSvr_iAnI29fAkG7H0VB1C-a&currency=EUR"></script>
     <title>RemCat - Login</title>
     <?php $route = "/" . App::getLocale() . "/" ?>
     <meta name="csrf-token" content="{{ csrf_token() }}">   
