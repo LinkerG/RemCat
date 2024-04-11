@@ -6,37 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include("components.links")
     <script src="{{ asset('js/login.js') }}"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZJld8gcAnjfOhAt7qo3EgdvyVMHLoyF6T727CeyU-yXmuSCrzzVq4hdnSvr_iAnI29fAkG7H0VB1C-a&currency=EUR"></script>
     <title>RemCat - Login</title>
     <?php $route = "/" . App::getLocale() . "/" ?>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">   
 </head>
 <body>
-    @if(!$errors->isEmpty())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="wrapper loginWrapper">
         <div class="formWrapper">
             <h1 class="loginLabel">Login</h1>
-            <form action="{{$route}}login" method="post" enctype="multipart/form-data">
-              @csrf
+            <form action="{{ $route }}login" method="post" enctype="multipart/form-data">
+                @csrf
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="" value="" required>
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="" value="{{ old('email')}}" autofocus>
                     <label for="email">Email</label>
-                    <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
+                    @error('email') 
+                    <div class="invalid-feedback" style="color: red;">
+                        {{ $message }}
+                    </div>
+                    @enderror    
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="" value="" required>
-                    <label for="name">{{ trans('admin.form.password') }}</label>
-                    <div class="invalid-feedback ms-2">Por favor rellena correctamente este campo</div>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="" value="">
+                    <label for="password">{{ trans('admin.form.password') }}</label>
+                    @error('password') 
+                    <div class="invalid-feedback" style="color: red;">
+                        {{ $message }}
+                    </div>
+                    @enderror 
                 </div>
-                
-                <button type="button" id="login-submit-button" class="btn btn-primary">Log in</button>
+                <button type="submit" id="login-submit-button" class="btn btn-primary">Log in</button>
                 <hr>
                 <p class="align-center">or</p>
                 <hr>
@@ -46,6 +45,6 @@
         <div class="footerFixedWrapper">
             @include("components.footer")
         </div>
-    </div>
+    </div>    
 </body>
 </html>
