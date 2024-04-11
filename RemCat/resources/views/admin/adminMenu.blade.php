@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Single team</title>
-    @include('components.links')
+    <title>Document</title>
 </head>
 <body>
-    @include('components.header')
-    <div class="container shadow mt-4 p-5">
-        @include('competitions.forms.singleTeam')
-    </div>
+    <h1>SOY EL PUTO MENU</h1>
 </body>
 </html>

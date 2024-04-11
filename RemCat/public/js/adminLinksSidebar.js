@@ -1,26 +1,18 @@
-$(document).ready(function() {
-    $('.nav_link').click(function(event) {
-        event.preventDefault();
-        
-        var page = $(this).data('page');
-        
-        $.ajax({
-            url: '{{ $route }}admin/' + page,
-            method: 'GET',
-            success: function(response, status, xhr) {
-                if (xhr.status === 200) {
-                    $('#main-content').html(response);
-                } else {
-                    console.error('Error: Unexpected response status', xhr.status);
-                }
-            },
-            error: function(xhr, status, error) {
-                if (xhr.status === 400) {
-                    console.error('Error:', error);
-                } else {
-                    console.error('Error: Unexpected error status', xhr.status);
-                }
-            }
-        });
-    });
+const lang = document.querySelector("html").getAttribute("lang");
+let iframe;
+window.addEventListener("load", function(){
+    iframe = document.getElementById("main-iframe");
+    initNavBarLinks();
 });
+
+function initNavBarLinks(){
+    let links = document.getElementsByClassName("nav_link");
+    for (let i = 0; i < links.length; i++) {
+        let link = links[i];
+        link.addEventListener("click", function(){
+            let dataRoute = link.dataset.route;
+            let route = "/" + lang + "/" + dataRoute;
+            iframe.src = route;
+        })
+    }
+}
