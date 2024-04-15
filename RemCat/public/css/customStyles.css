@@ -71,6 +71,55 @@ button.fix-size{
     margin-top: auto;
 }
 
+.invalid-feedback {
+    display: none;
+    color: red;
+}
+
+.input-error {
+    border: 1px solid red !important; /* !important se usa para asegurar que este estilo se aplique incluso si hay estilos inline */
+}
+
+.input-error + .invalid-feedback {
+    display: block;
+}
+.cancel-popup {
+    display: none; /* Por defecto, el popup estará oculto */
+    position: fixed;
+    z-index: 9999; /* Asegura que el popup esté en la parte superior */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+}
+
+/* Contenido del popup */
+.cancel-popup-content {
+    background-color: #fefefe;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Botón de cerrar */
+.cancel-popup-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cancel-popup-close:hover {
+    color: black;
+
 .data-container{
     border-radius: var(--bs-border-radius);
     border: var(--bs-border-width) solid var(--bs-border-color);

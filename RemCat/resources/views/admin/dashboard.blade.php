@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,9 +24,9 @@
                     {{-- <a href="" data-route="" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Equipos</span> </a>  --}}
                     <a href="" data-route="admin/insurances" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Aseguradoras</span> </a> 
                     <a href="" data-route="admin/sponsors" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Sponsors</span> </a> 
-                    <a href="" data-route="admin/logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Salir</span> </a>
+                    <a href="{{ $route }}admin/logout" data-route="admin/logout" class="nav_link_logout"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Salir</span> </a>
                 </div>
-            </div> 
+            </div>
         </nav>
     </div>
     <!--Container Main start-->
