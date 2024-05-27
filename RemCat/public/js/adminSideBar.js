@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     const linkColor = document.querySelectorAll('.nav_link')
     
     function colorLink(event) {
-        event.preventDefault(); // Evita la acción predeterminada del enlace (la redirección)
+        event.preventDefault(); 
         if (linkColor) {
             linkColor.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
@@ -41,5 +41,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
     linkColor.forEach(l=> l.addEventListener('click', colorLink))
     
-     // Your code to run since DOM is loaded and ready
 });

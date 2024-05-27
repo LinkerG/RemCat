@@ -1,7 +1,7 @@
 let tokenInput;
 let loginHtml; // Necesario para guardar el HTML del formulario de inicio de sesión
 let paypalButtonAdded = false;
-
+let purchaseConfirmed = false
 window.addEventListener("load", function(){
     tokenInput = document.querySelector('input[name="_token"]');
     loginHtml = document.getElementsByTagName("form")[0].innerHTML; // Guarda el HTML del formulario de inicio de sesión
@@ -63,6 +63,8 @@ const signupHtml = `
         <input type="text" class="form-control" value="`+currentDictionary['isTeam']+`" disabled >
     </div>
     <div id="paypal-btn-container"><div id="paypal-btn"></div></div>
+    <div class="invalid-feedback ms-2" id="purchaseError"></div>
+    <div class="valid-feedback ms-2" id="purchaseSuccess"></div>
     <div id="cancelPopup" class="cancel-popup">
         <div class="cancel-popup-content">
             <span class="cancel-popup-close" onclick="closeCancelPopup()">&times;</span>
@@ -89,7 +91,7 @@ function signupEvent(){
     if(isTeamCheck) {
         isTeamCheck.addEventListener("change", function(){
             let nameLabel = document.getElementById("nameLabel")
-            let paypalButtonContainer = document.getElementById("paypal-btn-container");
+            let paypalButtonContainer = document.getElementById("paypal-btn-container");    
             if (isTeamCheck.checked) {
                 nameLabel.innerHTML = currentDictionary['teamName'];
                 form.action = "/"+lang+"/register/team"
@@ -116,7 +118,16 @@ function signupEvent(){
                         },
                         onApprove: function(data,actions) {
                             actions.order.capture().then(function (details) {
-                                console.log(details);
+                                purchaseConfirmed = true
+                                paypalBtn = document.getElementById('paypal-btn')
+                                paypalButtonContainer.style.display = "none";
+                                paypalBtn.innerHTML = '';
+                                paypalButtonAdded = false;
+                                document.getElementById("purchaseError").innerText = "";
+                                document.getElementById("purchaseError").style.display = "none"; 
+                                document.getElementById("purchaseSuccess").innerText = "Se ha realizado el pago con exito!";
+                                document.getElementById("purchaseSuccess").style.display = "block";
+
                             });
                         },
                     }).render('#paypal-btn')
@@ -130,13 +141,14 @@ function signupEvent(){
                     paypalBtn = document.getElementById('paypal-btn')
                     paypalButtonContainer.style.display = "none";
                     paypalBtn.innerHTML = '';
-                    paypalButtonAdded = false; // Marcar que el botón de PayPal ha sido eliminado
+                    paypalButtonAdded = false; 
                 }
             }
         });
     }
     let submit_button = document.getElementById("submit-button");
     submit_button.addEventListener("click", function(){
+        let isTeamCheck = document.getElementById("isTeamCheck");
         let emailInput = document.getElementById('email')
         let email = document.getElementById("email").value;
         let switchBtn = document.getElementById('switch-button')
@@ -145,35 +157,58 @@ function signupEvent(){
         switchBtn.disabled = true;
         fileInput.disabled = true;
         checkbox.disabled = true;
-        fetch(`/api/matchEmail/${email}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.exists)
-                if (data.exists) {
-                    emailInput.classList.add("input-error");
-                    document.getElementById("emailError").innerText = "Este correo ya esta registrado.";
-                    document.getElementById("emailError").style.display = "block"; 
-                    switchBtn.disabled = false;
-                    fileInput.disabled = false;
-                    checkbox.disabled = false;
-                } else {
-                    if(validateForm()) {
-                        submit_button.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
-                        emailInput.classList.remove("input-error");
-                        document.getElementById("emailError").innerText = "";
-                        document.getElementById("emailError").style.display = "none";
-                        form.submit();
-                    } else {
+        if(validateForm() == true) {
+            fetch(`/api/matchEmail/${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.exists)
+                    if (data.exists) {
+                        emailInput.classList.add("input-error");
+                        document.getElementById("emailError").innerText = "Este correo ya esta registrado.";
+                        document.getElementById("emailError").style.display = "block"; 
                         switchBtn.disabled = false;
                         fileInput.disabled = false;
                         checkbox.disabled = false;
+                    } else {
+                        console.log(purchaseConfirmed)
+                        if(purchaseConfirmed && isTeamCheck.checked){
+                            let paypalButtonContainer = document.getElementById("paypal-btn-container"); 
+                            paypalBtn = document.getElementById('paypal-btn')
+                            paypalButtonContainer.style.display = "none";
+                            paypalBtn.innerHTML = '';
+                            paypalButtonAdded = false; 
+                            submit_button.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
+                            emailInput.classList.remove("input-error");
+                            document.getElementById("emailError").innerText = "";
+                            document.getElementById("emailError").style.display = "none";
+                            document.getElementById("purchaseError").innerText = "";
+                            document.getElementById("purchaseError").style.display = "none"; 
+                            form.submit();
+                        } else if(!isTeamCheck.checked) {
+                            submit_button.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
+                            emailInput.classList.remove("input-error");
+                            document.getElementById("emailError").innerText = "";
+                            document.getElementById("emailError").style.display = "none";
+                            form.submit();
+                        } else if(!purchaseConfirmed){
+                            document.getElementById("purchaseError").innerText = "Tienes que realizar el pago antes de poder continuar.";
+                            document.getElementById("purchaseError").style.display = "block"; 
+                            switchBtn.disabled = false;
+                            fileInput.disabled = false;
+                            checkbox.disabled = false;
+                        }
                     }
-                }
-            })
+                })
             .catch(error => {
                 console.error('Error al verificar el correo electrónico:', error);
             });
+        } else {
+            switchBtn.disabled = false;
+            fileInput.disabled = false;
+            checkbox.disabled = false;
+        }
     });
+
     let backToLoginBtn = document.getElementById('switch-button')
     let loginLabel = document.getElementsByClassName("loginLabel")[0];
     backToLoginBtn.addEventListener('click', function() {
@@ -214,6 +249,7 @@ function formEvent(){
     })
 }
 function validateForm() {
+    console.log('entro')
     let emailInput = document.getElementById("email");
     let passwordInput = document.getElementById("password");
     let nameInput = document.getElementById("name");
@@ -224,30 +260,45 @@ function validateForm() {
     if (!validateEmail(emailInput.value)) {
         emailInput.classList.add("input-error");
         document.getElementById("emailError").innerText = "Por favor, introduce una dirección de correo electrónico válida sin espacios.";
-        document.getElementById("emailError").style.display = "block"; // Muestra el mensaje de error
+        document.getElementById("emailError").style.display = "block"; 
+        isValid = false;
+    } else if(emailInput.value == '') {
+        emailInput.classList.add("input-error");
+        document.getElementById("emailError").innerText = "Por favor, introduce una dirección de correo electrónico.";
+        document.getElementById("emailError").style.display = "block"; 
         isValid = false;
     } else {
         emailInput.classList.remove("input-error");
         document.getElementById("emailError").innerText = "";
-        document.getElementById("emailError").style.display = "none"; // Oculta el mensaje de error
+        document.getElementById("emailError").style.display = "none"; 
     }
 
     // Validación de la contraseña
     if (!validatePassword(passwordInput.value)) {
         passwordInput.classList.add("input-error");
         document.getElementById("passwordError").innerText = "La contraseña no puede contener espacios.";
-        document.getElementById("passwordError").style.display = "block"; // Muestra el mensaje de error
+        document.getElementById("passwordError").style.display = "block"; 
+        isValid = false;
+    }else if(passwordInput.value == '') {
+        passwordInput.classList.add("input-error");
+        document.getElementById("passwordError").innerText = "Introduzca una contraseña.";
+        document.getElementById("passwordError").style.display = "block"; 
         isValid = false;
     } else {
         passwordInput.classList.remove("input-error");
         document.getElementById("passwordError").innerText = "";
-        document.getElementById("passwordError").style.display = "none"; // Oculta el mensaje de error
+        document.getElementById("passwordError").style.display = "none"; 
     }
 
     // Validación del nombre
     if (!validateName(nameInput.value)) {
         nameInput.classList.add("input-error");
         document.getElementById("nameError").innerText = "El nombre debe contener solo letras y un espacio entre cada palabra.";
+        document.getElementById("nameError").style.display = "block"; // Muestra el mensaje de error
+        isValid = false;
+    }else if(nameInput.value == '') {
+        nameInput.classList.add("input-error");
+        document.getElementById("nameError").innerText = "Introduce un nombre con apellidos.";
         document.getElementById("nameError").style.display = "block"; // Muestra el mensaje de error
         isValid = false;
     } else {
