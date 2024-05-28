@@ -48,7 +48,7 @@ services:
       - ME_CONFIG_MONGODB_SERVER=mongodb
       - ME_CONFIG_BASICAUTH_USERNAME=root
       - ME_CONFIG_BASICAUTH_PASSWORD=chocu
-      - ME_CONFIG_SITE_BASEURL=/mongoadmin
+      - ME_CONFIG_SITE_BASEURL=/
       # Uncomment this line below when you use reverse proxy and want to reach the UI on specific path
       #- ROOT_URL=https://example.com/nosqlclient
     depends_on:

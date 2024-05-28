@@ -88,9 +88,9 @@
                     ?>
                     @if($competitionDate == $today)
                         <td>
-                            <div class="d-flex align-items-center justify-content-center ">
-                                <button data-id="{{ $competition->_id }}" class="btn btn-primary px-5 start-competition" >Start</button>
-                            </div>
+                            <a href="{{ $route }}admin/competitions/info/{{$year}}/{{$competition->_id}}">
+                                <button data-id="{{ $competition->_id }}" class="btn btn-primary px-5 start-competition">Start</button>
+                            </a>
                         </td>
                     @else
                         <td>
