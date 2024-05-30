@@ -11,9 +11,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    @include("components.header")
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
     <h1>Listado de aseguradoras</h1>
+    <a type="button" class="btn btn-primary rounded" href="{{$route}}admin/insurances/add">Añadir aeguradora</a>
     <table class="table table-striped" data-model="insurances">
         <thead>
             <tr>

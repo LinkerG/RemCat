@@ -12,13 +12,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    
+
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
-    <div class="container-fluid d-flex align-items-center ">
+    <div class="container-fluid d-flex align-items-center">
         <h1>Listado de competiciones</h1>
         <div class="filtros ms-auto d-flex align-items-center">
-            <div class="input-group ">
-                <button type="button" class="btn btn-primary dropdown-toggle mx-5 " data-bs-toggle="dropdown">
+            <div class="input-group">
+                <a type="button" class="btn btn-primary rounded" href="{{$route}}admin/competitions/add">Añadir competicion</a>
+                <button type="button" class="btn btn-primary dropdown-toggle mx-5 rounded" data-bs-toggle="dropdown">
                   Select year
                 </button>
                 <ul class="dropdown-menu">
@@ -26,9 +27,6 @@
                             <li><a href="{{$route}}admin/competitions/{{$yearOption}}"> {{str_replace('_', '-', $yearOption);}} </a></li>
                     @endforeach
                 </ul>
-            </div>
-            <div>
-                <input type="text" name="" id="" placeholder="buscador">
             </div>
         </div>
     </div>
@@ -80,7 +78,7 @@
                     @endif
                     <td>{{$competition->date}}</td>
                     <td>{{$competition->sponsor_price}}</td>
-                    <?php 
+                    <?php
                     $today = new DateTime();
                     $competitionDate = new DateTime($competition->date);
                     $today = $today->format('Y-m-d');

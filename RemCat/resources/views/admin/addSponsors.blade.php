@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add sponsors</title>
     @include('components.links')
+    <?php $route = "/" . App::getLocale() . "/" ?>
     <script src="{{asset('js/formValidator.js')}}"></script>
     <script src="{{asset('js/imagePreview.js')}}"></script>
 </head>
 <body>
-    @include('components.header')
     @if(!$errors->isEmpty())
         <div class="alert alert-danger">
             <ul>
@@ -46,7 +46,7 @@
             </div>
             <div class="mt-5 flex-row-reverse " style="display: flex">
                 <button class="btn btn-success btn-lg fix-size" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
-                <button class="btn btn-primary btn-lg fix-size me-3" type="button">{{ trans('admin.backButton') }}</button>
+                <a class="btn btn-primary btn-lg fix-size me-3" href="{{$route}}admin/sponsors" type="button">{{ trans('admin.backButton') }}</a>
             </div>
         </form>
     </div>

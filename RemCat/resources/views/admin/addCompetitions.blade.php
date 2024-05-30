@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add insurance</title>
+    <?php $route = "/" . App::getLocale() . "/" ?>
     @include('components.links')
     <script src="{{asset('js/formValidator.js')}}"></script>
     <script src="{{asset('js/sponsorSelectorPopup.js')}}"></script>
@@ -13,7 +14,6 @@
     </style>
 </head>
 <body>
-    @include('components.header')
     @if(!$errors->isEmpty())
         <div class="alert alert-danger">
             <ul>
@@ -23,7 +23,7 @@
             </ul>
         </div>
     @endif
-    <div class="container shadow mt-4 mr-5 ml-5 p-5">
+    <div class="container shadow mt-4 mr-5 ml-5 p-2 rounded">
         <h1 class="" style="text-align: center">{{ trans('admin.competition.title') }}</h1>
         <form action="#" method="post" class="mt-1" enctype="multipart/form-data">
             @csrf
@@ -118,12 +118,12 @@
                     <div class="col-12 my-2">
                         <div class="d-flex justify-content-between ">
                             <button class="btn btn-success btn btn-block w-47" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
-                            <button class="btn btn-primary btn btn-block w-47" type="button">{{ trans('admin.backButton') }}</button>
+                            <a class="btn btn-primary btn btn-block w-47 rounded" href="{{$route}}admin/competitions/view" type="button">{{ trans('admin.backButton') }}</a>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <input type="hidden" name="sponsors-list" id="sponsors-list" style="display: none;" value="[]">
         </form>
     </div>
