@@ -131,16 +131,24 @@ function generateContent(category, resultsArray, isFirst) {
 
         group.forEach(result => {
             console.log(result);
-            const qrColumn = document.createElement("div")
-            qrColumn.classList.add("col-3")
             
-            const qrImg = document.createElement("img")
-            let qrURL = generateQR(result._id);
-            qrImg.src = qrURL
+            const teamGroup = document.createElement("div")
+            teamGroup.style.display = "flex"
+            teamGroup.style.alignItems = "center"
 
-            qrColumn.appendChild(qrImg);
+            const teamName = document.createElement("p")
+            teamName.innerHTML = result.team_name
+            teamName.style.marginTop = "1rem"
+            teamName.style.marginRight = "2rem"
 
-            qrDiv.appendChild(qrColumn);
+            const teamTime = document.createElement("input");
+            teamTime.value = result.time === "" ? "DNS" : result.time;
+
+            teamGroup.appendChild(teamName);
+            teamGroup.appendChild(teamTime);
+
+
+            qrDiv.appendChild(teamGroup);
         });
 
         groupName.appendChild(groupNameText);
@@ -149,11 +157,13 @@ function generateContent(category, resultsArray, isFirst) {
 
         containerDiv.appendChild(groupDiv);
     });
-
+    const updateButton = document.createElement("button");
+    updateButton.innerText = "Update"
     // Añadir el div container al div principal
     div.appendChild(containerDiv);
-
+    div.appendChild(updateButton);
     // Devolver el HTML generado
+    console.log(div);
     return div;
 }
 
