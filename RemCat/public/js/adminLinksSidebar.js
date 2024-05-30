@@ -1,7 +1,9 @@
 const lang = document.querySelector("html").getAttribute("lang");
 let iframe;
+let button;
 window.addEventListener("load", function(){
     iframe = document.getElementById("main-iframe");
+    button = document.getElementById("add-button");
     initNavBarLinks();
 });
 
@@ -13,6 +15,7 @@ function initNavBarLinks(){
             let dataRoute = link.dataset.route;
             let route = "/" + lang + "/" + dataRoute;
             iframe.src = route;
+            button.href = route + "/add"
         })
     }
 }
