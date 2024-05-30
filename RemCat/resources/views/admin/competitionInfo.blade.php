@@ -8,6 +8,7 @@
     @include('components.links')
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script type="module" src="{{ asset('js/loadCompetitionResultsAdmin.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <h1>{{ $competition->name }}</h1>

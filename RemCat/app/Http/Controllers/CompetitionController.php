@@ -237,6 +237,19 @@ class CompetitionController extends Controller
         return response()->json($results);
     }
 
+    public function setTimes(Request $request) {
+        // Decodificar el JSON de timesToUpdate
+        $times = json_decode($request->input('timesToUpdate'), true);
+        $year = $request->input('year');
+        $competition_id = $request->input('competition_id');
+
+        Competition::setTimesForCompetition($year, $competition_id, $times);
+        
+        $response = ["ok" => "ok"];
+
+        return response()->json($response);
+    }
+
     //------------------ENDPOINTS-END------------------//
 
 }

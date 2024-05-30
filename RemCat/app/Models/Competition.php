@@ -141,4 +141,18 @@ class Competition extends Model
 
         return true;
     }
+
+    public static function setTimesForCompetition($year, $competition_id, $times) {
+        $collectionName = $year . "_competitions_results";
+        foreach($times as $time) {
+            $resultId = $time['id'];
+            $newTime = $time['value'];
+            $updatedData = ["time" => $newTime];
+            
+            $updateResult = (new Competition())
+            ->setCollection($collectionName)
+            ->where("_id", $resultId)
+            ->update($updatedData);
+        }
+    }
 }

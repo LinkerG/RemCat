@@ -1,8 +1,10 @@
 let pathname;
 let year;
 let competition_id;
+let token;
 
 window.addEventListener("load", function(){
+    token = document.head.querySelector('meta[name="csrf-token"]').content;
     // Chatgptada indómita
     pathname = window.location.pathname;
     // Crear una expresión regular para extraer year y competition_id
@@ -143,6 +145,8 @@ function generateContent(category, resultsArray, isFirst) {
 
             const teamTime = document.createElement("input");
             teamTime.value = result.time === "" ? "DNS" : result.time;
+            teamTime.classList.add("time-" + result.category)
+            teamTime.id = result._id
 
             teamGroup.appendChild(teamName);
             teamGroup.appendChild(teamTime);
@@ -159,11 +163,47 @@ function generateContent(category, resultsArray, isFirst) {
     });
     const updateButton = document.createElement("button");
     updateButton.innerText = "Update"
+    updateButton.classList.add("btn", "btn-primary", "btn-block")
+    updateButton.addEventListener("click", function() {
+        const timesToUpdate = Array.from(document.getElementsByClassName("time-" + resultsArray[0][0].category));
+        console.log(timesToUpdate);
+        
+        let formData = new FormData();
+        formData.append('_token', token);
+        formData.append('competition_id', competition_id)
+        formData.append('year', year)
+    
+        let times = [];
+        timesToUpdate.forEach(time => {
+            times.push({id: time.id, value: time.value});
+        });
+        
+        // Convertimos el array de objetos a una cadena JSON
+        formData.append('timesToUpdate', JSON.stringify(times));
+    
+        for (var pair of formData.entries()) {
+            console.log(pair[0]); 
+            console.log(pair[1]);
+        }
+    
+        fetch('/api/competitions/setTimes', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+    
+
     // Añadir el div container al div principal
     div.appendChild(containerDiv);
     div.appendChild(updateButton);
     // Devolver el HTML generado
-    console.log(div);
     return div;
 }
 
