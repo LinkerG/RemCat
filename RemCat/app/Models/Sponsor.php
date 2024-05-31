@@ -14,13 +14,13 @@ class Sponsor extends Model
 
     public static function getAllSponsors($onlyActives = true, $take = null) {
         $sponsors = Sponsor::query();
-    
+
         if ($onlyActives) $sponsors->where('isActive', true);
         if ($take != null) $sponsors->take($take);
-    
+
         return $sponsors->get();
     }
-    
+
 
     public static function getSponsorById($_id){
         $sponsor = (new Sponsor());
@@ -45,7 +45,7 @@ class Sponsor extends Model
         foreach ($parameters as $parameterName => $value) {
             $comparator->where($parameterName, $value);
         }
-        
+
         return $comparator->exists();
     }
 
@@ -54,7 +54,6 @@ class Sponsor extends Model
         $sponsor->cif = $request->input("cif");
         $sponsor->name = $request->input('name');
         $sponsor->address = $request->input("address");
-        $sponsor->price = $request->input("price");
         $sponsor->isActive = true;
 
         $sponsor->save();

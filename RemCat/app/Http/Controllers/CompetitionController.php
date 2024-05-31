@@ -23,40 +23,41 @@ class CompetitionController extends Controller
         $dateStr = $request->input("competition-date");
         $dateTime = DateTime::createFromFormat('Y-m-d', $dateStr);
         $date = Carbon::parse($dateTime)->toDateString();
-        
+
         $year = CalcSeason::calculate();
         $seasonName = $year . "_competitions";
 
         $error = [];
         $parameters = [
-            "name" => $request->input("name"), 
+            "name" => $request->input("name"),
             "boatType" => $request->input("boatType"),
             "date" => $date,
         ];
-        if (Competition::checkIfExists($seasonName, $parameters)) {
+        if (!Competition::checkIfExists($seasonName, $parameters)) {
             Competition::storeCompetition($year, $request);
-        } else{}
-        
+            return redirect()->route('admin.competitions', ['lang' => app()->getLocale()]);
+        }
+
         return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
-    
+
 
     public function viewAll($year){
         $competitions = Competition::getAllCompetitions($year, $dateRestriction = false, $onlyActives = false);
         $years = [];
-    
+
         $mongoCollections = DB::connection('mongodb')->listCollections();
-    
+
         foreach ($mongoCollections as $collection) {
             if (preg_match("/^\d{2}_\d{2}_competitions$/", $collection->getName())) {
                 $collectionName = $collection->getName();
                 $years[] = strstr($collectionName, '_competitions', true);
             }
         }
-        
-        
+
+
         return view("admin/viewCompetitions", compact("competitions", "year", "years"));
-    }    
+    }
 
     public function showEditForm($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);
@@ -78,7 +79,7 @@ class CompetitionController extends Controller
             'sponsor_price' => $request->input('price'),
             'sponsors_list' => $request->input('sponsors-list'),
         ];
-        
+
         $succes = Competition::updateCompetition($year, $_id, $updatedData) ? true : false;
 
         return redirect()->route('admin.competitions', ['lang' => app()->getLocale()])->with('succes', $succes);
@@ -92,11 +93,11 @@ class CompetitionController extends Controller
 
         $competition_id = $routeArray[4];
         $category = $request->input("category1") . $request->input("category2");
-        
+
         $collectionName = $year . "_competitions_results";
 
         $parameters = [
-            "competition_id" => $competition_id, 
+            "competition_id" => $competition_id,
             "category" => $category,
             "teamName" => $request->input("teamName"),
         ];
@@ -108,7 +109,7 @@ class CompetitionController extends Controller
     public function changeIsActive(Request $request){
         $_id = $request->input("_id");
         $year = $request->input("year");
-        
+
         $newStatus = $request->input("newStatus");
         if($newStatus === "true") $newStatus = true;
         else $newStatus = false;
@@ -157,7 +158,7 @@ class CompetitionController extends Controller
     }
     public function showJoinFormMultiple($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);
-        
+
         return view("competitions/joinCompetitionMultipleTeam", compact("competition", "year"));
     }
 
@@ -170,13 +171,13 @@ class CompetitionController extends Controller
 
     public function showAdminCompetitionInfo($year, $_id){
         $competition = Competition::getCompetitionById($year, $_id);
-        
+
         return view("admin/competitionInfo", compact("competition", "year"));
     }
 
     public function showCompetitionInfo($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);
-        
+
         return view("competitions/competitionInfo", compact("competition", "year"));
     }
 
@@ -195,7 +196,7 @@ class CompetitionController extends Controller
         }
 
         return response()->json($collections);
-    
+
     }
 
     public function joinCompetitionApi(Request $request){
@@ -204,10 +205,10 @@ class CompetitionController extends Controller
         $_id = $request->input("_id") ? $request->input("_id") : new ObjectID();
         $competition_id = $request->input("competition_id");
         $category = $request->input("category1") . $request->input("category2");
-        
+
         $ok = false;
         $parameters = [
-            "competition_id" => $competition_id, 
+            "competition_id" => $competition_id,
             "category" => $category,
             "teamName" => $request->input("teamName"),
         ];
@@ -225,9 +226,9 @@ class CompetitionController extends Controller
 
     function getCompetitionsFromTeam(Request $request){
         $year = CalcSeason::calculate();
-        
+
         $competitions = Competition::getCompetitionsByTeam($year, $request);
-            
+
         return response()->json($competitions);
     }
 

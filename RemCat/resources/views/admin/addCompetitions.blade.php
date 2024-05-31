@@ -98,7 +98,7 @@
                     </div>
                     <div class="row h-25 ">
                         <div class="d-flex flex-column justify-content-end mb-2">
-                            <label for="image-banner" class="form-label ms-2 mt-2">{{ trans('admin.competition.banner') }}</label>
+                            <label for="image-banner" class="form-label ms-2 mt-2">Banner</label>
                             <input class="form-control" type="file" id="image-banner" name="image-banner">
                         </div>
                     </div>

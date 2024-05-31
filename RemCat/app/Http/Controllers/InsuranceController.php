@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Insurance;
 use Illuminate\Http\Request;
+use App\Models\Sponsor;
 
 class InsuranceController extends Controller
 {
@@ -13,7 +14,7 @@ class InsuranceController extends Controller
     }
 
     public function store(Request $request)
-    {   
+    {
         //   TODO: Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor solo se comprueba que el cif no este dupli
         $error = [];
         $parameters = [
@@ -36,7 +37,7 @@ class InsuranceController extends Controller
 
     public function showEditForm($_id) {
         $insurance = Insurance::getInsuranceById($_id);
-        
+
         return view("admin/editInsurances", ['insurance' => $insurance]);
     }
 
@@ -70,5 +71,8 @@ class InsuranceController extends Controller
 
         return response()->json(['changed' => $succes]);
     }
-    
+
+    public function getAllInsurances() {
+        
+    }
 }

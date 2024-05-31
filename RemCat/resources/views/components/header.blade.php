@@ -37,13 +37,10 @@
                     <li><a class="dropdown-item" href="{{$route}}admin/competitions/add"> Añadir competicion </a></li>
                     <li><hr class="dropdown-divider"></hr></li>
                     @if(session('adminAuth'))
-                        <li><p>Admin</p></li>
                         <li><a class="dropdown-item" href="{{$route}}admin/logout">Log out</a></li>
                     @elseif(session('userAuth'))
-                        <li><p>User</p></li>
                         <li><a class="dropdown-item" href="{{$route}}user/logout">Log out</a></li>
                     @elseif(session('teamAuth'))
-                        <li><p>Team</p></li>
                         <li><a class="dropdown-item" href="{{$route}}team/logout">Log out</a></li>
                     @endif
                   </ul>
