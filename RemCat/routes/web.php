@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Helpers\CalcSeason;
 use Illuminate\Support\Facades\URL;
-// Controladores 
+// Controladores
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\CompetitionController;
@@ -34,7 +34,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         App::setLocale($lang);
         return view('login');
     })->name('login');
-    
+
     //POST PARA LOGIN
     Route::post('/login',function($lang = 'es') {
         App::setLocale($lang);
@@ -54,8 +54,8 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         //Post del login de admin
         Route::post('', function ($lang = 'es') {
             $adminController = new AdminController();
-            App::setLocale($lang);  
-    
+            App::setLocale($lang);
+
             return $adminController->auth();
         })->name('admin.login.post');
 
@@ -64,7 +64,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             //Pagina inicial admin
             Route::get('/dashboard', function($lang = 'es') {
                 App::setLocale($lang);
-                
+
                 $logoUrl = URL::asset('images/logo-white-sin-texto.png');
 
                 return view('admin/dashboard', [
@@ -76,7 +76,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             Route::get('/logout', function($lang = 'es') {
                 App::setLocale($lang);
                 $adminController = new AdminController();
-    
+
                 return $adminController->logout();
             })->name('admin.logout');
 
@@ -98,26 +98,26 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             Route::get('/sponsors/add', function ($lang = 'es') {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
-        
+
                 return $sponsorController->showAddForm();
             })->name('admin.sponsors.add');
             Route::post('/sponsors/add', function (Request $request, $lang = 'es') {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
-                
+
                 return $sponsorController->store($request);
             })->name('admin.sponsor.store');
             // EDIT
             Route::get('/sponsors/edit/{_id}', function ($lang = 'es', $_id) {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
-        
+
                 return $sponsorController->showEditForm($_id);
             })->name('admin.sponsors.edit');
             Route::post('/sponsors/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
                 $sponsorController = new SponsorController();
                 App::setLocale($lang);
-                
+
                 return $sponsorController->update($request, $_id);
             });
 
@@ -138,7 +138,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             Route::post('/insurances/add', function (Request $request, $lang = 'es') {
                 $insuranceController = new InsuranceController();
                 App::setLocale($lang);
-                
+
                 return $insuranceController->store($request);
             });
             // EDIT
@@ -151,7 +151,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             Route::post('/insurances/edit/{_id}', function (Request $request, $lang = 'es', $_id) {
                 $insuranceController = new InsuranceController();
                 App::setLocale($lang);
-                
+
                 return $insuranceController->update($request, $_id);
             });
 
@@ -162,12 +162,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 App::setLocale($lang);
                 return view('admin/addCompetitions');
             })->name('admin.competitions.add');
+
             Route::post('/competitions/add', function (Request $request, $lang = 'es') {
                 $competitionController = new CompetitionController();
                 App::setLocale($lang);
-                
+
                 return $competitionController->store($request);
-            });            
+            });
             // VIEW
             Route::get('/competitions/{year?}', function ($lang = 'es', $year = null) use ($defaultYear) {
                 if ($year === null) {
@@ -206,14 +207,14 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         Route::post('/team', function (Request $request, $lang = 'es') {
             $teamController = new TeamController();
             App::setLocale($lang);
-                    
+
             return $teamController->store($request);
         });
         //REGISTRO DE USUARIOS
         Route::post('/user', function (Request $request, $lang = 'es') {
             $userController = new UserController();
             App::setLocale($lang);
-                    
+
             return $userController->store($request);
         });
     });
@@ -225,7 +226,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             Route::get('/logout', function($lang = 'es') {
                 App::setLocale($lang);
                 $teamController = new TeamController();
-    
+
                 return $teamController->logout();
             })->name('team.logout');
 
@@ -253,7 +254,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             Route::get('/logout', function($lang = 'es') {
                 App::setLocale($lang);
                 $userController = new UserController();
-    
+
                 return $userController->logout();
             })->name('user.logout');
 
@@ -277,7 +278,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         App::setLocale($lang);
         return $competitionController->showAllCompetitions($year);
     });
-    
+
     Route::get('/competitions/{year}/join/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear) {
         if ($year === null) {
             $year = $defaultYear;
@@ -287,6 +288,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         App::setLocale($lang);
         return $competitionController->showJoinForm($year, $_id);
     })->name('joinCompetition');
+    
     Route::post('/competitions/{year?}/join/{_id}', function (Request $request, $lang = 'es', $year = null, $_id)  use ($defaultYear) {
         if ($year === null) {
             $year = $defaultYear;
@@ -296,7 +298,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         App::setLocale($lang);
         return $competitionController->joinCompetition($request);
     })->name('joinCompetitionPost');
-    
+
     Route::get('/competitions/{year}/joinMultiple/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear) {
         if ($year === null) {
             $year = $defaultYear;
@@ -314,8 +316,8 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         $competitionController = new CompetitionController();
         App::setLocale($lang);
         return $competitionController->joinCompetitionArray($request);
-    })->name('joinCompetitionMultiplePost');  
-    
+    })->name('joinCompetitionMultiplePost');
+
     Route::get('/competitions/{year}/info/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear) {
         if ($year === null) {
             $year = $defaultYear;

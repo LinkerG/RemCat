@@ -57,7 +57,7 @@ class InsuranceController extends Controller
 
     public function showEditForm($_id) {
         $insurance = Insurance::getInsuranceById($_id);
-        
+
         return view("admin/editInsurances", ['insurance' => $insurance]);
     }
 
@@ -91,5 +91,8 @@ class InsuranceController extends Controller
 
         return response()->json(['changed' => $succes]);
     }
-    
+
+    public function getAllInsurances() {
+
+    }
 }

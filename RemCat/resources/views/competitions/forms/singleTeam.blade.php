@@ -1,3 +1,4 @@
+<script src="{{ asset('js/joinCompetitionSingle.js')}}"></script>
 <form action="#" method="post" enctype="multipart/form-data">
     @csrf
     <div class="row">
@@ -35,7 +36,10 @@
                         </label>
                     </div>
                 </div>
+                <h2>Aseguradora</h2>
+                
             </div>
+
             <div class="col-8 boat-layout">
                 @switch($competition->boatType)
                 @case("llaut_med")
@@ -118,7 +122,7 @@
                 @default
                     @break
             @endswitch
-            
+
         </div>
         <div class="row">
             <input type="submit" value="Enviar">

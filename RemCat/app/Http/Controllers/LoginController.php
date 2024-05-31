@@ -25,9 +25,10 @@ class LoginController extends Controller{
         $team = Team::where('email',$email)->first();
         $user = User::where('email',$email)->first();
 
-        if($team && Auth::guard('team')->attempt(request()->only('email','password'))) {  
+        if($team && Auth::guard('team')->attempt(request()->only('email','password'))) {
             session(['teamAuth' => true]);
             session(['teamName' => $team->team_name]);
+            session(['teamEmail' => $team->email]);
             session(['teamFoto' => $team->foto]);
 
             return redirect()->route('home',['lang' => app()->getLocale()]);
@@ -35,6 +36,7 @@ class LoginController extends Controller{
         }else if($user && Auth::guard('user')->attempt(request()->only('email','password'))){
             session(['userAuth' => true]);
             session(['userName' => $user->name]);
+            session(['userEmail' => $user->email]);
             session(['userFoto' => $user->foto]);
 
             return redirect()->route('home',['lang' => app()->getLocale()]);

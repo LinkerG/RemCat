@@ -19,6 +19,7 @@ class SponsorController extends Controller
         $error = [];
         $parameters = [
             "cif" => $request->input('cif'),
+            "name" => $request->input('name'),
         ];
 
         // echo "CIF from request: " . $request->input("cif") . "<br>";
@@ -38,7 +39,7 @@ class SponsorController extends Controller
         if (!$sponsorExists && !$insuranceExists) {
             Sponsor::storeSponsor($request);
         } else {
-            $error[] = "alreadyExists";
+            $error[] = "Already exists";
         }
 
         // // Depuración: Mostrar errores
@@ -57,14 +58,14 @@ class SponsorController extends Controller
 
     public function showEditForm($_id) {
         $sponsor = Sponsor::getSponsorById($_id);
-        
+
         return view("admin/editSponsors", ['sponsor' => $sponsor]);
     }
 
     public function update(Request $request, $_id) {
         $name = $request->input('name');
         $address = $request->input("address");
-        
+
 
         $updatedData = [
             'name' => $name,
@@ -94,7 +95,7 @@ class SponsorController extends Controller
     // ENDPOINTS
     public function fetchAllSponsors(){
         $sponsors = Sponsor::getAllSponsors();
-        
+
         return response()->json($sponsors);
     }
 }
