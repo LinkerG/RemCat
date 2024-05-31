@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Insurance;
-use Illuminate\Http\Request;
 use App\Models\Sponsor;
+use Illuminate\Http\Request;
 
 class InsuranceController extends Controller
 {
@@ -15,19 +15,39 @@ class InsuranceController extends Controller
 
     public function store(Request $request)
     {
-        //   TODO: Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor solo se comprueba que el cif no este dupli
         $error = [];
         $parameters = [
             "cif" => $request->input('cif'),
         ];
-        if(!Sponsor::checkIfExists($parameters) || !Insurance::checkIfExists($parameters)){
+
+        // echo "CIF from request: " . $request->input("cif") . "<br>";
+
+        // // Depuración: Verificar los parámetros
+        // echo '<pre>';
+        // print_r($parameters);
+        // echo '</pre>';
+
+        // Comprobación de existencia en Sponsor y Insurance
+        $sponsorExists = Sponsor::checkIfExists($parameters);
+        $insuranceExists = Insurance::checkIfExists($parameters);
+
+        // echo "Sponsor exists: " . ($sponsorExists ? 'true' : 'false') . "<br>";
+        // echo "Insurance exists: " . ($insuranceExists ? 'true' : 'false') . "<br>";
+
+        if (!$sponsorExists && !$insuranceExists) {
             Insurance::storeInsurance($request);
         } else {
             $error[] = "alreadyExists";
         }
 
-        return redirect()->route('admin.insurances.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
+        // // Depuración: Mostrar errores
+        // echo '<pre>';
+        // print_r($error);
+        // echo '</pre>';
+
+        return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
+
 
     public function viewAll(){
         $insurances = Insurance::getAllInsurances($onlyActives = false);
@@ -73,6 +93,6 @@ class InsuranceController extends Controller
     }
 
     public function getAllInsurances() {
-        
+
     }
 }

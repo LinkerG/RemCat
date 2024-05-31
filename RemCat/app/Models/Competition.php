@@ -135,10 +135,24 @@ class Competition extends Model
         $competitionResult->insurance = $request->input("insurance") ? $request->input("insurance") : null;
         $competitionResult->distance = "";
         $competitionResult->time = "DNS";
-        $competitionResult->league_points = false;
+        $competitionResult->timeValidated = false;
         $competitionResult->isLive = false;
         $competitionResult->save();
 
         return true;
+    }
+
+    public static function setTimesForCompetition($year, $competition_id, $times) {
+        $collectionName = $year . "_competitions_results";
+        foreach($times as $time) {
+            $resultId = $time['id'];
+            $newTime = $time['value'];
+            $updatedData = ["time" => $newTime];
+
+            $updateResult = (new Competition())
+            ->setCollection($collectionName)
+            ->where("_id", $resultId)
+            ->update($updatedData);
+        }
     }
 }

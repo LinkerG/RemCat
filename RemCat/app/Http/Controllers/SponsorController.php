@@ -14,26 +14,40 @@ class SponsorController extends Controller
         return view('admin/addSponsors');
     }
 
-    public function store(Request $request){
-        $cif = $request->input('cif');
-        $name = $request->input('name');
-        $address = $request->input("address");
-
-        // TODO: Hay que comprobar en servidor lo mismo que en JS, por ahora en servidor  solo se comprueba que el cif no este dupli
+    public function store(Request $request)
+    {
         $error = [];
         $parameters = [
             "cif" => $request->input('cif'),
             "name" => $request->input('name'),
         ];
 
-        if(!Sponsor::checkIfExists($parameters) && !Insurance::checkIfExists($parameters)){
+        // echo "CIF from request: " . $request->input("cif") . "<br>";
+
+        // // Depuración: Verificar los parámetros
+        // echo '<pre>';
+        // print_r($parameters);
+        // echo '</pre>';
+
+        // Comprobación de existencia en Sponsor y Insurance
+        $sponsorExists = Sponsor::checkIfExists($parameters);
+        $insuranceExists = Insurance::checkIfExists($parameters);
+
+        // echo "Sponsor exists: " . ($sponsorExists ? 'true' : 'false') . "<br>";
+        // echo "Insurance exists: " . ($insuranceExists ? 'true' : 'false') . "<br>";
+
+        if (!$sponsorExists && !$insuranceExists) {
             Sponsor::storeSponsor($request);
         } else {
             $error[] = "Already exists";
         }
 
-        // Para redirigir con el idioma hay que hacerlo asi
-        return redirect()->route('admin.sponsors.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
+        // // Depuración: Mostrar errores
+        // echo '<pre>';
+        // print_r($error);
+        // echo '</pre>';
+
+        return redirect()->route('admin.sponsors', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
 
     public function viewAll(){

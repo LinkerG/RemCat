@@ -38,14 +38,18 @@ class Insurance extends Model
         return $insururance;
     }
 
-    public static function checkIfExists($parameters){
-        $comparator = (new Insurance());
+    public static function checkIfExists($parameters)
+    {
+        $query = self::query(); // Inicia una nueva instancia de consulta para el modelo Insurance
+
         foreach ($parameters as $parameterName => $value) {
-            $comparator->where($parameterName, $value);
+            $query->where($parameterName, $value);
         }
-        
-        return $comparator->exists();
+
+        // Devuelve un booleano indicando si existe algún registro que coincida
+        return $query->exists();
     }
+
 
     public static function storeInsurance(Request $request){
         $insurance = new Insurance;

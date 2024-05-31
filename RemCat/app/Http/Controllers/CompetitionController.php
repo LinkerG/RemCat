@@ -35,10 +35,12 @@ class CompetitionController extends Controller
         ];
         if (!Competition::checkIfExists($seasonName, $parameters)) {
             Competition::storeCompetition($year, $request);
-            return redirect()->route('admin.competitions', ['lang' => app()->getLocale()]);
+            echo "a";
+        } else{
+            echo "b";
         }
 
-        return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
+        //return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
 
 
@@ -153,7 +155,7 @@ class CompetitionController extends Controller
     // Apuntarse a competicion
     public function showJoinForm($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);
-        
+
         return view("competitions/joinCompetitionSingleTeam", compact("competition", "year"));
     }
     public function showJoinFormMultiple($year, $_id) {
@@ -236,6 +238,19 @@ class CompetitionController extends Controller
         $results = Competition::getResultsFromCompetition($request);
 
         return response()->json($results);
+    }
+
+    public function setTimes(Request $request) {
+        // Decodificar el JSON de timesToUpdate
+        $times = json_decode($request->input('timesToUpdate'), true);
+        $year = $request->input('year');
+        $competition_id = $request->input('competition_id');
+
+        Competition::setTimesForCompetition($year, $competition_id, $times);
+
+        $response = ["ok" => "ok"];
+
+        return response()->json($response);
     }
 
     //------------------ENDPOINTS-END------------------//
