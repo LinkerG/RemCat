@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Team;
+use App\Models\Competition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,13 @@ class TeamController extends Controller
         session()->flush();
 
         return redirect()->route('home', ['lang' => app()->getLocale()]);
+    }
+
+    public function showMyCompetitions(){
+        $team = session("teamName");
+        $competitions = Competition::getCompetitionsForToday($team);
+
+        return view("myCompetitions", ['competitions' => $competitions]);
     }
 
     //------------------CRUD-END------------------//

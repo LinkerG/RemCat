@@ -141,6 +141,12 @@ class CompetitionController extends Controller
         return response()->json(['changed' => $succes]);
     }
 
+    public function validateTime($result_id){      
+        Competition::validateTime($result_id);
+
+        echo "Tiempo validado correctamente";
+    }
+
     //------------------CRUD-END------------------//
 
     //------------------VIEW-CALLS------------------//
