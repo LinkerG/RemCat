@@ -33,11 +33,14 @@ class CompetitionController extends Controller
             "boatType" => $request->input("boatType"),
             "date" => $date,
         ];
-        if (Competition::checkIfExists($seasonName, $parameters)) {
+        if (!Competition::checkIfExists($seasonName, $parameters)) {
             Competition::storeCompetition($year, $request);
-        } else{}
+            echo "a";
+        } else{
+            echo "b";
+        }
         
-        return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
+        //return redirect()->route('admin.competitions.add', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }
     
 

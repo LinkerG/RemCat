@@ -135,7 +135,7 @@ class Competition extends Model
         $competitionResult->insurance = $request->input("insurance") ? $request->input("insurance") : null;
         $competitionResult->distance = "";
         $competitionResult->time = "DNS";
-        $competitionResult->league_points = false;
+        $competitionResult->timeValidated = false;
         $competitionResult->isLive = false;
         $competitionResult->save();
 
@@ -148,7 +148,7 @@ class Competition extends Model
             $resultId = $time['id'];
             $newTime = $time['value'];
             $updatedData = ["time" => $newTime];
-            
+
             $updateResult = (new Competition())
             ->setCollection($collectionName)
             ->where("_id", $resultId)
