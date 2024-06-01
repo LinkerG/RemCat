@@ -1,10 +1,11 @@
 <script src="{{ asset('js/joinCompetitionSingle.js')}}"></script>
-<form action="#" method="post" enctype="multipart/form-data">
+<script src="https://www.paypal.com/sdk/js?client-id=AZJld8gcAnjfOhAt7qo3EgdvyVMHLoyF6T727CeyU-yXmuSCrzzVq4hdnSvr_iAnI29fAkG7H0VB1C-a&currency=EUR"></script>
+<form action="#" method="post" enctype="multipart/form-data" id="joinSingleForm">
     @csrf
     <div class="row">
         <div class="col-4">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="{{session('teamName')}}" required readonly>
+                <input type="text" class="form-control" id="teamName" name="teamName" placeholder="" value="{{ session('teamName') }}" required readonly>
                 <label for="teamName">Team name</label>
                 <div class="invalid-feedback ms-2">Nombre no valido</div>
             </div>
@@ -28,20 +29,31 @@
                     <label class="form-check-label" for="M">
                         Masculino
                     </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="radio" name="category2" id="F" value="F">
-                      <label class="form-check-label" for="F">
-                          Femenino
-                        </label>
-                    </div>
                 </div>
-                <h2>Aseguradora</h2>
-                
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="category2" id="F" value="F">
+                    <label class="form-check-label" for="F">
+                        Femenino
+                    </label>
+                </div>
             </div>
-
-            <div class="col-8 boat-layout">
-                @switch($competition->boatType)
+            <h2>Aseguradora</h2>
+            <div class="mb-3">
+                <select class="form-select" name="insurance_id" id="insuranceSelect">
+                    <option selected disabled>Selecciona aseguradora</option>
+                    @foreach ($insurances as $insurance)
+                        <option value="{{ $insurance->id }}" data-price="{{ $insurance->price }}">{{ $insurance->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div id="paypal-btn-container" style="display: none;">
+                <div id="paypal-btn"></div>
+            </div>
+            <div id="purchaseError" class="alert alert-danger" style="display: none;"></div>
+            <div id="purchaseSuccess" class="alert alert-success" style="display: none;"></div>
+        </div>
+        <div class="col-8 boat-layout">
+            @switch($competition->boatType)
                 @case("llaut_med")
                 @case("llagut_cat")
                     <div class="row">
@@ -85,7 +97,6 @@
                         <div class="col-12">
                             <input type="text" class="form-control" id="participante10" placeholder="Suplentes" name="substitutes">
                         </div>
-                    </div>
                     @break
                 @case("batel")
                     <div class="row">
@@ -113,19 +124,16 @@
                             <input type="text" class="form-control" id="participante8" placeholder="4 Estribor" name="teamMembers[]">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <input type="text" class="form-control" id="participante10" placeholder="Suplentes" name="substitutes">
-                        </div>
+                    <div class="col-12">
+                        <input type="text" class="form-control" id="participante10" placeholder="Suplentes" name="substitutes">
                     </div>
                     @break
                 @default
                     @break
             @endswitch
-
         </div>
         <div class="row">
-            <input type="submit" value="Enviar">
+            <input type="submit" id="submit-button" value="Enviar">
         </div>
     </div>
 </form>

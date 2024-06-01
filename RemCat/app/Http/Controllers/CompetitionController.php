@@ -153,10 +153,10 @@ class CompetitionController extends Controller
     }
 
     // Apuntarse a competicion
-    public function showJoinForm($year, $_id) {
+    public function showJoinForm($year, $_id, $insurances) {
         $competition = Competition::getCompetitionById($year, $_id);
 
-        return view("competitions/joinCompetitionSingleTeam", compact("competition", "year"));
+        return view("competitions/joinCompetitionSingleTeam", compact("competition", "year", "insurances"));
     }
     public function showJoinFormMultiple($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);

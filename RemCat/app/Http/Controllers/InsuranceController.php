@@ -92,7 +92,9 @@ class InsuranceController extends Controller
         return response()->json(['changed' => $succes]);
     }
 
-    public function getAllInsurances() {
+    public static function getAllInsurances() {
+        $insurances = Insurance::getAllInsurances();
 
+        return $insurances;
     }
 }
