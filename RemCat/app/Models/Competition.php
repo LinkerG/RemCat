@@ -71,6 +71,17 @@ class Competition extends Model
         return $results;
     }
 
+    public static function getCompetitionResult($year, $competition_id){
+        $collectionName = $year . "_competitions_results";
+        $results = (
+            new Competition())
+            ->setCollection($collectionName)
+            ->where("competition_id", $competition_id)
+            ->get();
+
+        return $results;
+    }
+
     public static function checkIfExists($collection, $parameters){
         $comparator = (new Competition())
         ->setCollection($collection)

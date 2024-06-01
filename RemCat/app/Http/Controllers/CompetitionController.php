@@ -172,7 +172,7 @@ class CompetitionController extends Controller
 
     // Ver todas las competiciones de un año
     public function showAllCompetitions($year) {
-        $competitions = Competition::getAllCompetitions($year);
+        $competitions = Competition::getAllCompetitions($year, false);
 
         return view("competitions/viewCompetitions", compact("competitions", "year"));
     }
@@ -187,6 +187,13 @@ class CompetitionController extends Controller
         $competition = Competition::getCompetitionById($year, $_id);
 
         return view("competitions/competitionInfo", compact("competition", "year"));
+    }
+
+    public function showCompetitionResult($year, $_id) {
+        $competition = Competition::getCompetitionById($year, $_id);
+        $results = Competition::getCompetitionResult($year, $_id);
+
+        return view("competitions/results", compact("competition", "results", "year"));
     }
 
     //------------------VIEW-CALLS-END------------------//

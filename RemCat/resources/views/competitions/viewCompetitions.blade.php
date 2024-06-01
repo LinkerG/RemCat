@@ -26,7 +26,6 @@
                         @if($competitionDate >= $today)
                             @if((session('teamAuth')))
                                 <a href="{{ $route }}competitions/{{$year}}/joinMultiple/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionMultiple") }}</a>
-                                <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>
                             @elseif((session('userAuth')) || ($competition->isOpen))
                                 <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>    
                             @endif

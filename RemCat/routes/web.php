@@ -328,6 +328,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         App::setLocale($lang);
         return $competitionController->showCompetitionInfo($year, $_id);
     })->name('competitionInfo');
+
+    Route::get('/competitions/{year?}/viewResults/{_id}', function ($lang = 'es', $year = null, $_id)  use ($defaultYear) {
+        if ($year === null) {
+            $year = $defaultYear;
+        }
+
+        $competitionController = new CompetitionController();
+        App::setLocale($lang);
+        return $competitionController->showCompetitionResult($year, $_id);
+    })->name('competitionResult');
 });
 
 // Validador de tiempo
