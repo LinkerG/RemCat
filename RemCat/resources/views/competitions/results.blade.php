@@ -14,7 +14,6 @@
     <div class="wrapper">
         @include('components.header')
         <h1>{{ $competition->name }}</h1>
-        <h2>{{ trans("text.categories") }}</h2>
         <div class="container shadow ">
             <div class="contaier" id="results-container">
                 <nav>

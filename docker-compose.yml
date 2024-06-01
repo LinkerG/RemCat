@@ -23,6 +23,7 @@ services:
       args:
         uid: 1000  # Valor de ejemplo para el ID de usuario
         user: chocu  # Valor de ejemplo para el nombre de usuario
+    # image: linkerg/remcat:latest
     ports:
       - "8000:8000"
     volumes:
