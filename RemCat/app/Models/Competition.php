@@ -155,4 +155,38 @@ class Competition extends Model
             ->update($updatedData);
         }
     }
+
+    public static function getCompetitionsForToday($name) {
+        $date = new DateTime();
+        $date = $date->format('Y-m-d');
+        $year = CalcSeason::calculate();
+        
+        // Obtener los IDs de las competiciones de hoy
+        $competitionsToday = (new Competition())
+            ->setCollection($year . "_competitions")
+            ->where("date", $date)
+            ->pluck('_id')
+            ->toArray(); // Asegurarse de que es un array
+    
+        // Obtener las competiciones para el usuario basadas en los IDs de las competiciones de hoy
+        $competitionsForUser = (new Competition())
+            ->setCollection($year . "_competitions_results")
+            ->where("teamName", $name)
+            ->whereIn("competition_id", $competitionsToday)
+            ->get();
+
+        return $competitionsForUser;
+    }
+
+    public static function validateTime($result_id){
+        $year = CalcSeason::calculate();
+        $collectionName = $year . "_competitions_results";
+
+        $updatedData = ["timeValidated" => true];
+
+        $updateResult = (new Competition())
+        ->setCollection($collectionName)
+        ->where("_id", $result_id)
+        ->update($updatedData);
+    }
 }

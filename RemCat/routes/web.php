@@ -235,6 +235,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
 
                 return view('teams/teamIndex');
             })->name('team.frontPage');
+
+            Route::get('/myCompetitions', function($lang = 'es') {
+                $userController = new TeamController();
+                App::setLocale($lang);
+                    
+                return $userController->showMyCompetitions();
+            })->name('team.myCompetitions');
         });
     });
     //-----------------TEAMS-END--------------------//
@@ -322,6 +329,13 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         return $competitionController->showCompetitionInfo($year, $_id);
     })->name('competitionInfo');
 });
+
+// Validador de tiempo
+Route::get('/validateTime/{result_id}', function($result_id) {
+    $competitionController = new CompetitionController();
+
+    return $competitionController->validateTime($result_id);
+})->name('validateTime');
 
 
 // Prueba websocket

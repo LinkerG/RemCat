@@ -30,17 +30,21 @@
                 <ul class="dropdown-menu">
                     @if(!session('adminAuth') && !session('teamAuth') && !session('userAuth'))
                         <li><a class="dropdown-item" href="{{$route}}login">Login</a></li>
-                        <li><a class="dropdown-item" href="{{$route}}register">Register</a></li>
                     @endif
-                    <li><a class="dropdown-item" href="{{$route}}admin/sponsors/add"> Añadir sponsor </a></li>
-                    <li><a class="dropdown-item" href="{{$route}}admin/insurances/add"> Añadir aseguradora </a></li>
-                    <li><a class="dropdown-item" href="{{$route}}admin/competitions/add"> Añadir competicion </a></li>
                     <li><hr class="dropdown-divider"></hr></li>
                     @if(session('adminAuth'))
+                    <li><p>Admin</p></li>
+                        <li><a class="dropdown-item" href="{{$route}}admin/sponsors/add"> Añadir sponsor </a></li>
+                        <li><a class="dropdown-item" href="{{$route}}admin/insurances/add"> Añadir aseguradora </a></li>
+                        <li><a class="dropdown-item" href="{{$route}}admin/competitions/add"> Añadir competicion </a></li>
                         <li><a class="dropdown-item" href="{{$route}}admin/logout">Log out</a></li>
                     @elseif(session('userAuth'))
+                        <li><p>User</p></li>
+                        <li><a class="dropdown-item" href="{{$route}}myCompetitions"> Ver mis competiciones </a></li>
                         <li><a class="dropdown-item" href="{{$route}}user/logout">Log out</a></li>
                     @elseif(session('teamAuth'))
+                        <li><p>Team</p></li>
+                        <li><a class="dropdown-item" href="{{$route}}myCompetitions"> Ver mis competiciones </a></li>
                         <li><a class="dropdown-item" href="{{$route}}team/logout">Log out</a></li>
                     @endif
                   </ul>
