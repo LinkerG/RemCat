@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="wrapper loginWrapper">
-        <div class="formWrapper">
+        <main class="formWrapper">
             <h1 class="loginLabel">Login</h1>
             <form action="{{ $route }}login" method="post" enctype="multipart/form-data">
                 @csrf
@@ -41,7 +41,7 @@
                 <hr>
                 <button type="button" id="switch-button" class="btn btn-primary">Sign up</button>
             </form>
-        </div>
+        </main>
         <div class="footerFixedWrapper">
             @include("components.footer")
         </div>

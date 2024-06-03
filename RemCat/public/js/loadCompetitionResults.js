@@ -6,7 +6,7 @@ let token;
 window.addEventListener("load", function() {
     token = document.head.querySelector('meta[name="csrf-token"]').content;
     pathname = window.location.pathname;
-    let regex = /^\/\w+\/competitions\/(\d+)_(\d+)\/(viewResults)\/(\w+)$/;
+    let regex = /^\/\w+\/competitions\/(\d+)_(\d+)\/(viewResults|info)\/(\w+)$/;
     let match = pathname.match(regex);
     if (match) {
         year = match[1] + "_" + match[2];

@@ -7,6 +7,7 @@
     <title>Info</title>
     @include('components.links')
     <script src="{{ asset("js/loadCompetitionResults.js") }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">   
 </head>
 <body>
     @include('components.header')

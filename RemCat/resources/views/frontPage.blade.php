@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{asset('css/frontPage.css')}}">
     <script src="{{asset('js/selfWrittingText.js')}}"></script>
     <script src="{{asset('js/frontPageScripts.js')}}"></script>
+    <?php $route = "/" . App::getLocale() . "/" ?>
     <title>Document</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
                     </div>
                 </div>
                 <div class="scroll-down-wrapper col-6">
-                    <button id="scroll-to-competitions">IR ABAJO</button>
+                    
                 </div>
             </div>
         </div>
@@ -44,26 +45,10 @@
                                 </div>
                                 <div class="competitionInfo">
                                     <h4 class="">{{$competition->name}}</h4>
+                                    <a href="{{ $route }}competitions/{{ $year }}/info/{{$competition->_id}}">View more</a>
                                 </div>
                             </div>
                         </article>
-                        {{-- TODO: Habria que poner esto ->
-                            <article class="card" style="width: 18rem;">
-                                <img src="{{ asset($bannerRoute) }}" class="card-img-top" alt="{{ $competition->name }} banner">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $competition->name }}</h5>
-                                    <p class="card-text">Descripcion generica</p>
-                                    @if($competitionDate >= $today)
-                                        <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>
-                                        @if((session('teamAuth')))
-                                            <a href="{{ $route }}competitions/{{$year}}/joinMultiple/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionMultiple") }}</a>
-                                        @endif
-                                    @else
-                                        <a href="{{ $route }}competitions/{{$year}}/viewResults/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.viewResults") }}</a>
-                                    @endif
-                                </div>
-                            </article>
-                            --}}
                     @endforeach
                 @else
                     <h2 class="text-white z-3">{{ trans("text.comingSoon") }}</h2>
@@ -73,7 +58,7 @@
         </div>
         <div style="background-color:rgb(255, 255, 255);font-size:36px" class="parallax-serparator container-fluid ">
             <h2>{{ trans("text.ourSponsors") }}</h2>
-            <section class="container-fluid overflow-auto  mt-4 mb-4">
+            <section class="container-fluid overflow-auto d-flex mt-4 mb-4">
                 @foreach ($sponsors as $sponsor)
                     <?php $imgRoute = "storage/sponsors/logos/" . $sponsor->image_logo; ?>
                     <figure>
