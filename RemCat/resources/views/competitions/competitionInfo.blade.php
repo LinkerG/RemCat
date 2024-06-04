@@ -8,6 +8,7 @@
     @include('components.links')
     <script src="{{ asset("js/loadCompetitionResults.js") }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">   
+    <?php $route = "/" . App::getLocale() . "/" ?>
 </head>
 <body>
     @include('components.header')
@@ -39,6 +40,13 @@
                 </div>
             </div>
         </div>
+        <div>
+            @if((session('teamAuth') && !$competition->isOpen))
+                <a href="{{ $route }}competitions/{{$year}}/joinMultiple/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionMultiple") }}</a>
+            @elseif ((session('userAuth') || session('teamAuth')) && $competition->isOpen)
+                <a href="{{ $route }}competitions/{{$year}}/join/{{$competition->_id}}" class="btn btn-primary">{{ trans("text.joinCompetitionSingle") }}</a>    
+            @endif
+        </div>
         <div class="row">
             <div class="col-12">
                 <h2>{{ trans("text.results") }}</h2>
@@ -53,6 +61,14 @@
                     <div class="tab-content" id="nav-tabContent"></div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <h2>Sponsors de esta competicion</h2>
+            <section class="container-fluid overflow-auto d-flex mt-4 mb-4">
+                @foreach ($sponsors as $sponsor)
+                        <p class="m-5">{{ $sponsor->name }}</p>
+                @endforeach
+            </section>
         </div>
     </div>
 </body>

@@ -23,12 +23,14 @@ class Sponsor extends Model
 
 
     public static function getSponsorById($_id){
-        $sponsor = (new Sponsor());
-        $sponsor
-        ->where('_id', $_id)
-        ->first();
+        $query = self::query(); // Inicia una nueva instancia de consulta para el modelo Insurance
 
-        return $sponsor;
+        $query->where('_id', $_id);
+        $query->get();
+        
+
+        // Devuelve un booleano indicando si existe algún registro que coincida
+        return $query;
     }
 
     public static function getSponsorByCif($cif){

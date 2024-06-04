@@ -185,8 +185,8 @@ class CompetitionController extends Controller
 
     public function showCompetitionInfo($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);
-
-        return view("competitions/competitionInfo", compact("competition", "year"));
+        $sponsors = json_decode($competition->sponsors_list);
+        return view("competitions/competitionInfo", compact("competition", "year", "sponsors"));
     }
 
     public function showCompetitionResult($year, $_id) {

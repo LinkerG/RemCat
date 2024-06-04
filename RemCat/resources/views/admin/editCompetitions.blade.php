@@ -10,7 +10,6 @@
     <script src="{{asset('js/sponsorSelectorPopup.js')}}"></script>
 </head>
 <body>
-    @include('components.header')
     @if(!$errors->isEmpty())
         <div class="alert alert-danger">
             <ul>
