@@ -23,4 +23,27 @@ class ImageController extends Controller
             return $route;
         }
     }
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $uploadedImages = [];
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '-' . $image->getClientOriginalName();
+                $image->move(public_path('uploads'), $imageName);
+                $uploadedImages[] = [
+                    'name' => $image->getClientOriginalName(),
+                    'url' => asset('uploads/' . $imageName)
+                ];
+                // Guarda la información de la imagen en la base de datos si es necesario
+            }
+        }
+
+        return response()->json(['images' => $uploadedImages]);
+    }
+
 }

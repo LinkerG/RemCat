@@ -40,6 +40,7 @@
                 <th>Date</th>
                 <th class="text-center">Sponsors</th>
                 <th class="text-center">Start competition</th>
+                <th class="text-center">Upload images</th>
                 <th class="text-center">Cancelled</th>
                 <th class="text-center">Status</th>
                 <th>Edit</th>
@@ -94,6 +95,19 @@
                         <td>
                             <div class="d-flex align-items-center justify-content-center ">
                                 <button data-id="{{ $competition->_id }}" class="btn btn-primary px-5 start-competition" disabled>Start</button>
+                            </div>
+                        </td>
+                    @endif
+                    @if($competitionDate < $today)
+                        <td>
+                            <a href="{{ $route }}admin/competitions/images/{{$year}}/{{$competition->_id}}">
+                                <button data-id="{{ $competition->_id }}" class="btn btn-primary px-5 images-competition">Upload images</button>
+                            </a>
+                        </td>
+                    @else
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <button data-id="{{ $competition->_id }}" class="btn btn-primary px-5 images-competition" disabled>Upload images</button>
                             </div>
                         </td>
                     @endif

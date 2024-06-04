@@ -141,7 +141,7 @@ class CompetitionController extends Controller
         return response()->json(['changed' => $succes]);
     }
 
-    public function validateTime($result_id){      
+    public function validateTime($result_id){
         Competition::validateTime($result_id);
 
         echo "Tiempo validado correctamente";
@@ -182,7 +182,11 @@ class CompetitionController extends Controller
 
         return view("admin/competitionInfo", compact("competition", "year"));
     }
+    public function showAdminImagesDragAndDrop($year,$_id) {
+        $competition = Competition::getCompetitionById($year,$_id);
 
+        return view('admin/addCompetitionsImages', compact('competition', 'year'));
+    }
     public function showCompetitionInfo($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);
         $sponsors = json_decode($competition->sponsors_list);

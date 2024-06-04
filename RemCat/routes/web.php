@@ -206,6 +206,17 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 App::setLocale($lang);
                 return $competitionController->showAdminCompetitionInfo($year, $_id);
             });
+
+            Route::get('/competitions/images/{year}/{_id}', function($lang = 'es', $year = null, $_id)  use ($defaultYear) {
+                if ($year === null) {
+                    $year = $defaultYear;
+                }
+
+                $competitionController = new CompetitionController();
+                App::setLocale($lang);
+
+                return $competitionController->showAdminImagesDragAndDrop($year, $_id);
+            });
         });
     });
     //-----------------ADMIN-END-----------------//
@@ -247,7 +258,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
             Route::get('/myCompetitions', function($lang = 'es') {
                 $userController = new TeamController();
                 App::setLocale($lang);
-                    
+
                 return $userController->showMyCompetitions();
             })->name('team.myCompetitions');
         });
