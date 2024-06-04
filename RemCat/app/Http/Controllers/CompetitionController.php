@@ -10,7 +10,7 @@ use App\Helpers\CalcSeason;
 use DateTime;
 use Carbon\Carbon;
 use MongoDB\BSON\ObjectID;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CompetitionController extends Controller
 {
@@ -147,7 +147,7 @@ class CompetitionController extends Controller
     public function uploadCompetitionImages($request, $_id, $year){
         ImageController::multipleUpload($request, $_id, $year);
 
-        
+
     }
 
     public function validateTime($result_id){
@@ -170,7 +170,11 @@ class CompetitionController extends Controller
     // Apuntarse a competicion
     public function showJoinForm($year, $_id, $insurances) {
         $competition = Competition::getCompetitionById($year, $_id);
-
+        if(session('userAuth')) {
+            return view("competitions/joinCompetitionSingleTeam", compact("competition", "year", "insurances"));
+        } elseif(session('teamAuth')) {
+            return view("competitions/joinCompetitionMultipleTeam", compact("competition", "year"));
+        }
         return view("competitions/joinCompetitionSingleTeam", compact("competition", "year", "insurances"));
     }
     public function showJoinFormMultiple($year, $_id) {
@@ -212,7 +216,73 @@ class CompetitionController extends Controller
         $competition = Competition::getCompetitionById($year, $_id);
         $results = Competition::getCompetitionResult($year, $_id);
 
-        return view('admin/competitionPdf', compact('competition', 'results', 'year'));
+        $resultsOrdenados = json_decode($results, true);
+
+        // Inicializar array de categorías
+        $categories = [
+            'Alevin' => ['Masculino' => [], 'Femenino' => []],
+            'Infantil' => ['Masculino' => [], 'Femenino' => []],
+            'Cadete' => ['Masculino' => [], 'Femenino' => []],
+            'Juvenil' => ['Masculino' => [], 'Femenino' => []],
+            'Sénior' => ['Masculino' => [], 'Femenino' => []],
+            'Veterano' => ['Masculino' => [], 'Femenino' => []],
+        ];
+
+        // Asignar nombres a las categorías
+        $category_names = [
+            'A' => 'Alevin',
+            'I' => 'Infantil',
+            'C' => 'Cadete',
+            'J' => 'Juvenil',
+            'S' => 'Sénior',
+            'V' => 'Veterano',
+        ];
+
+        // Función para convertir tiempo de mm:ss:ms a milisegundos
+        function timeToMilliseconds($time) {
+            list($minutes, $seconds, $milliseconds) = sscanf($time, '%d:%d:%d');
+            return ($minutes * 60 * 1000) + ($seconds * 1000) + $milliseconds;
+        }
+
+        // Recorrer datos y organizar por categoría
+        foreach ($resultsOrdenados as $item) {
+            if (!isset($item['category'])) continue;
+            $category = $item['category'];
+            $gender = $category[1] == 'M' ? 'Masculino' : 'Femenino';
+            $category_key = $category[0];
+
+            if (isset($category_names[$category_key])) {
+                $category_name = $category_names[$category_key];
+                $time = $item['time'] ?? 'DNS';
+                if ($time === 'DNS') {
+                    $time = 'Descalificado';
+                }
+                $categories[$category_name][$gender][] = ['teamName' => $item['teamName'], 'time' => $time];
+            }
+        }
+
+        // Ordenar los equipos por tiempo en cada categoría y género
+        foreach ($categories as $category => $genders) {
+            foreach ($genders as $gender => &$teams) {
+                usort($teams, function ($a, $b) {
+                    if ($a['time'] === 'Descalificado' && $b['time'] === 'Descalificado') {
+                        return 0;
+                    } elseif ($a['time'] === 'Descalificado') {
+                        return 1;
+                    } elseif ($b['time'] === 'Descalificado') {
+                        return -1;
+                    } else {
+                        $timeA = timeToMilliseconds($a['time']);
+                        $timeB = timeToMilliseconds($b['time']);
+                        return $timeA - $timeB;
+                    }
+                });
+            }
+        }
+
+        $pdf = Pdf::loadView('admin/competitionPdf', compact('competition', 'results', 'year', 'categories'));
+        return $pdf->stream();
+        // return $pdf->download('competition.pdf');
     }
     //------------------VIEW-CALLS-END------------------//
 

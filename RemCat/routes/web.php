@@ -324,6 +324,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
 
         $competitionController = new CompetitionController();
         $insurances = InsuranceController::getAllInsurances();
+        
         App::setLocale($lang);
         return $competitionController->showJoinForm($year, $_id, $insurances);
     })->name('joinCompetition');
