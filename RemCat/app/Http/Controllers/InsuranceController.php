@@ -20,30 +20,15 @@ class InsuranceController extends Controller
             "cif" => $request->input('cif'),
         ];
 
-        // echo "CIF from request: " . $request->input("cif") . "<br>";
-
-        // // Depuración: Verificar los parámetros
-        // echo '<pre>';
-        // print_r($parameters);
-        // echo '</pre>';
-
         // Comprobación de existencia en Sponsor y Insurance
         $sponsorExists = Sponsor::checkIfExists($parameters);
         $insuranceExists = Insurance::checkIfExists($parameters);
-
-        // echo "Sponsor exists: " . ($sponsorExists ? 'true' : 'false') . "<br>";
-        // echo "Insurance exists: " . ($insuranceExists ? 'true' : 'false') . "<br>";
 
         if (!$sponsorExists && !$insuranceExists) {
             Insurance::storeInsurance($request);
         } else {
             $error[] = "alreadyExists";
         }
-
-        // // Depuración: Mostrar errores
-        // echo '<pre>';
-        // print_r($error);
-        // echo '</pre>';
 
         return redirect()->route('admin.insurances', ['lang' => app()->getLocale()])->withErrors(implode(', ', $error));
     }

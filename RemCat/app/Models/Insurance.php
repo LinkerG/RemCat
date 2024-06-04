@@ -13,10 +13,10 @@ class Insurance extends Model
 
     public static function getAllInsurances($onlyActives = true, $take = null) {
         $insurances = Insurance::query();
-    
+
         if ($onlyActives) $insurances->where('isActive', true);
         if ($take != null) $insurances->take($take);
-    
+
         return $insurances->get();
     }
 
@@ -41,11 +41,9 @@ class Insurance extends Model
     public static function checkIfExists($parameters)
     {
         $query = self::query(); // Inicia una nueva instancia de consulta para el modelo Insurance
-
         foreach ($parameters as $parameterName => $value) {
             $query->where($parameterName, $value);
         }
-
         // Devuelve un booleano indicando si existe algún registro que coincida
         return $query->exists();
     }
