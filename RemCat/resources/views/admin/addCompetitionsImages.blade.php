@@ -29,10 +29,10 @@
                             </div>
                             <div class="preview-zone hidden">
                                 <div class="box box-solid">
-                                    <div class="box-header with-border p-4">
+                                    <div class="box-header with-border">
                                         <div><b>Visualizar</b></div>
                                     </div>
-                                    <div class="box-body d-flex"></div>
+                                    <div class="box-body"></div>
                                 </div>
                             </div>
                         </div>

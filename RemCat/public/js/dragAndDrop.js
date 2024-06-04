@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const previewZone = document.querySelector('.preview-zone .box-body');
     const dropzone = document.querySelector('.dropzone');
+    let fileArray = [];
 
     function readFile(file) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const htmlPreview = `
-                <div class="box">
+                <div class="box" data-file-name="${file.name}">
                     <img src="${e.target.result}" alt="Imagen">
                     <p>${file.name}</p>
                     <button type="button" class="btn btn-danger btn-xs remove-preview">
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleFiles(files) {
         for (let file of files) {
+            fileArray.push(file);
             readFile(file);
         }
         document.querySelector('.preview-zone').classList.remove('hidden');
@@ -50,13 +52,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.addEventListener('click', function(e) {
         if (e.target && e.target.classList.contains('remove-preview')) {
+            const fileName = e.target.closest('.box').getAttribute('data-file-name');
+            fileArray = fileArray.filter(file => file.name !== fileName);
             e.target.closest('.box').remove();
         }
     });
 
     document.getElementById('upload-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const formData = new FormData(this);
+        const formData = new FormData();
+        fileArray.forEach(file => formData.append('images[]', file));
+
         fetch("{{ route('your-upload-route') }}", {
             method: "POST",
             headers: {
@@ -78,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>`;
                 previewZone.insertAdjacentHTML('beforeend', htmlPreview);
             });
+            fileArray = []; // Reset the file array after successful upload
         })
         .catch(error => {
             alert("Error al subir las imágenes");
