@@ -103,9 +103,12 @@ class CompetitionController extends Controller
             "category" => $category,
             "teamName" => $request->input("teamName"),
         ];
-        if (Competition::checkIfExists($collectionName, $parameters)) {
+        if (!Competition::checkIfExists($collectionName, $parameters)) {
             Competition::joinCompetition($year, $request, $competition_id);
-        } else{}
+        } else{
+        }
+
+        return redirect()->route('home');
     }
 
     public function changeIsActive(Request $request){
@@ -139,6 +142,12 @@ class CompetitionController extends Controller
         $succes = Competition::updateCompetition($year, $_id, $updatedData) ? true : false;
 
         return response()->json(['changed' => $succes]);
+    }
+
+    public function uploadCompetitionImages($request, $_id, $year){
+        ImageController::multipleUpload($request, $_id, $year);
+
+        
     }
 
     public function validateTime($result_id){

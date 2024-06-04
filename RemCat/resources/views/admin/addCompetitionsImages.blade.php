@@ -13,7 +13,7 @@
 </head>
 <body>
     <section>
-        <form id="upload-form" method="POST" enctype="multipart/form-data">
+        <form id="upload-form" method="POST" enctype="multipart/form-data" action="#">
             @csrf
             <div class="container">
                 <div class="row">

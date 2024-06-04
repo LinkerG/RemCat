@@ -7,6 +7,7 @@ use App\Http\Controllers\TUserController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\CompetitionController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -45,3 +46,5 @@ Route::post("competitions/getCompetitionsFromTeam", [CompetitionController::clas
 Route::post("competitions/getResultsFromCompetition", [CompetitionController::class, 'getResultsFromCompetition']);
 // Update
 Route::post("competitions/setTimes", [CompetitionController::class, 'setTimes']);
+//Subir fotos
+Route::post('uploadImages', [ImageController::class, 'multipleUpload']);
