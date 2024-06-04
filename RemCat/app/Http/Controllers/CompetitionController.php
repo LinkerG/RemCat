@@ -144,6 +144,12 @@ class CompetitionController extends Controller
         return response()->json(['changed' => $succes]);
     }
 
+    public function uploadCompetitionImages($request, $_id, $year){
+        ImageController::multipleUpload($request, $_id, $year);
+
+        
+    }
+
     public function validateTime($result_id){
         Competition::validateTime($result_id);
 

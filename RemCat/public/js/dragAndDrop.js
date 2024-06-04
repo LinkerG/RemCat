@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const previewZone = document.querySelector('.preview-zone .box-body');
     const dropzone = document.querySelector('.dropzone');
+    const competition_id = document.getElementById("cid").dataset.id
+    const competition_year = document.getElementById("year").dataset.year
+    console.log(competition_id);
+    console.log(competition_year);    
     let fileArray = [];
 
     function readFile(file) {
@@ -58,12 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('upload-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+    /*document.getElementById('upload-form').addEventListener('submit', function(e) {
         const formData = new FormData();
+        formData.append("competition_id", competition_id);
+        formData.append("competition_year", competition_year);
         fileArray.forEach(file => formData.append('images[]', file));
 
-        fetch("{{ route('your-upload-route') }}", {
+        fetch("/api/uploadImages", {
             method: "POST",
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -90,5 +95,5 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("Error al subir las imágenes");
             console.error('Error:', error);
         });
-    });
+    });*/
 });
