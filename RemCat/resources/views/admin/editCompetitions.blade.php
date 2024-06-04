@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add insurance</title>
+    <?php $route = "/" . App::getLocale() . "/" ?>
     @include('components.links')
     <script src="{{asset('js/formValidator.js')}}"></script>
     <script src="{{asset('js/sponsorSelectorPopup.js')}}"></script>
@@ -40,12 +41,12 @@
                             <option @if($competition->boatType == "llagut_cat") selected @endif value="llagut_cat">Llagut català</option>
                         </select>
                         <label for="boatType" class="form-label">{{ trans('admin.competition.boatType') }}</label>
-                    </div>                    
+                    </div>
                     {{-- Columna 1 ROW 3--}}
                     <div class="mb-3">
                         <label for="competition-date" class="form-label ms-2 mt-2">{{ trans('admin.form.date') }}</label>                  {{-- Esto de aqui es para que el html se trague la fecha --}}
                         <input class="form-control" type="date" id="competition-date" name="competition-date" value="{{ $competition->date instanceof \Carbon\Carbon ? $competition->date->format('Y-m-d') : \Carbon\Carbon::parse($competition->date)->format('Y-m-d') }}">
-                    </div>                                      
+                    </div>
                     {{-- Columna 1 ROW 3--}}
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="price" name="price" placeholder="" value="{{$competition->sponsor_price}}">
@@ -91,7 +92,7 @@
             </div>
             <div class="mt-5 flex-row-reverse " style="display: flex">
                 <button class="btn btn-success btn-lg fix-size" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
-                <button class="btn btn-primary btn-lg fix-size me-3" type="button">{{ trans('admin.backButton') }}</button>
+                <a class="btn btn-primary btn-lg fix-size me-3" href="{{$route}}admin/competitions" type="button">{{ trans('admin.backButton') }}</a>
             </div>
             <input type="hidden" name="sponsors-list" id="sponsors-list" style="display: none;" value="{{$competition->sponsors_list}}">
         </form>

@@ -199,7 +199,12 @@ class CompetitionController extends Controller
 
         return view("competitions/results", compact("competition", "results", "year"));
     }
+    public function competitionPdf($year, $_id) {
+        $competition = Competition::getCompetitionById($year, $_id);
+        $results = Competition::getCompetitionResult($year, $_id);
 
+        return view('admin/competitionPdf', compact('competition', 'results', 'year'));
+    }
     //------------------VIEW-CALLS-END------------------//
 
     //------------------ENDPOINTS------------------//

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add sponsors</title>
+    <?php $route = "/" . App::getLocale() . "/" ?>
     @include('components.links')
     <script src="{{asset('js/formValidator.js')}}"></script>
 </head>
@@ -44,7 +45,7 @@
             </div>
             <div class="mt-5 flex-row-reverse " style="display: flex">
                 <button class="btn btn-success btn-lg fix-size" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
-                <button class="btn btn-primary btn-lg fix-size me-3" type="button">{{ trans('admin.backButton') }}</button>
+                <a class="btn btn-primary btn-lg fix-size me-3" href="{{$route}}admin/competitions" type="button">{{ trans('admin.backButton') }}</a>
             </div>
         </form>
     </div>

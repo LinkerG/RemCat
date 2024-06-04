@@ -61,7 +61,11 @@ class SponsorController extends Controller
 
         return view("admin/editSponsors", ['sponsor' => $sponsor]);
     }
+    public function pdf($_id) {
+        $sponsor = Sponsor::getSponsorById($_id);
 
+        return view('admin/sponsorPdf', ['sponsor' => $sponsor]);
+    }
     public function update(Request $request, $_id) {
         $name = $request->input('name');
         $address = $request->input("address");

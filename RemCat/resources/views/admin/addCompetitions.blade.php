@@ -118,7 +118,7 @@
                     <div class="col-12 my-2">
                         <div class="d-flex justify-content-between ">
                             <button class="btn btn-success btn btn-block w-47" id="submit-button" type="button">{{ trans('admin.addButton') }}</button>
-                            <a class="btn btn-primary btn btn-block w-47 rounded" href="{{$route}}admin/competitions/view" type="button">{{ trans('admin.backButton') }}</a>
+                            <a class="btn btn-primary btn btn-block w-47 rounded" href="{{$route}}admin/competitions" type="button">{{ trans('admin.backButton') }}</a>
                         </div>
                     </div>
                 </div>

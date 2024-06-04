@@ -38,7 +38,7 @@
                 <th>Boat Type</th>
                 <th>O/P</th>
                 <th>Date</th>
-                <th class="text-center">Sponsors</th>
+                <th class="text-center">PDF</th>
                 <th class="text-center">Start competition</th>
                 <th class="text-center">Upload images</th>
                 <th class="text-center">Cancelled</th>
@@ -78,7 +78,11 @@
                     </td>
                     @endif
                     <td>{{$competition->date}}</td>
-                    <td>{{$competition->sponsor_price}}</td>
+                    <td>
+                        <a href="{{ $route }}admin/competitions/pdf/{{ $year }}/{{ $competition->_id }}">
+                            <button data-id="{{ $competition->_id }}" class="btn btn-primary">PDF</button>
+                        </a>
+                    </td>
                     <?php
                     $today = new DateTime();
                     $competitionDate = new DateTime($competition->date);

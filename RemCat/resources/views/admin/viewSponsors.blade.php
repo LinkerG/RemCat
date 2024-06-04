@@ -31,7 +31,7 @@
                     <td>{{$sponsor->cif}}</td>
                     <td>{{$sponsor->name}}</td>
                     <td>{{$sponsor->address}}</td>
-                    <td>{{$sponsor->logo}}</td>
+                    <td></td>
                     @if($sponsor->isActive)
                     <td>
                         <div class="form-check form-switch">

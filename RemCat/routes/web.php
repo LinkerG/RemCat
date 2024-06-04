@@ -120,7 +120,6 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
 
                 return $sponsorController->update($request, $_id);
             });
-
             //------------------INSURANCES------------------//
             // VIEW
             Route::get('/insurances', function ($lang = 'es') {
@@ -216,6 +215,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
                 App::setLocale($lang);
 
                 return $competitionController->showAdminImagesDragAndDrop($year, $_id);
+            });
+            Route::get('/competitions/pdf/{year}/{_id}', function($lang = 'es', $year = null, $_id)  use ($defaultYear) {
+                if ($year === null) {
+                    $year = $defaultYear;
+                }
+
+                $competitionController = new CompetitionController();
+                App::setLocale($lang);
+
+                return $competitionController->competitionPdf($year,$_id);
             });
         });
     });
