@@ -53,11 +53,12 @@ class ImageController extends Controller
             $i = 0;
             foreach ($request->file('images') as $image) {
                 $i++;
-                ImageController::storeImage2($image, "competition-images", $i, $_id);
+                $route = ImageController::storeImage2($image, "competition-images", $i, $_id);
+                $uploadedImages[] = $route;
             }
         }
 
-        return response()->json(['ok' => true]);
+        return $uploadedImages;
     }
 
 }

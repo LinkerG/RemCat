@@ -70,6 +70,18 @@
                 @endforeach
             </section>
         </div>
+        <div class="row">
+            <h2>Fotos</h2>
+            <section class="container-fluid d-flex mt-4 mb-4 flex-wrap">
+                @foreach ($competition->images as $image)
+                    <?php $imgRoute = './storage/competition-images/' . $image ?>
+                        <img 
+                        class="m-5"
+                        src="{{ asset($imgRoute) }}" 
+                        alt="a">
+                @endforeach
+            </section>
+        </div>
     </div>
 </body>
 </html>

@@ -145,9 +145,13 @@ class CompetitionController extends Controller
     }
 
     public function uploadCompetitionImages($request, $_id, $year){
-        ImageController::multipleUpload($request, $_id, $year);
+        $images = ImageController::multipleUpload($request, $_id, $year);
 
+        $updatedData = [
+            'images' => $images
+        ];
 
+        $succes = Competition::updateCompetition($year, $_id, $updatedData) ? true : false;
     }
 
     public function validateTime($result_id){

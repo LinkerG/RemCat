@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const previewZone = document.querySelector('.preview-zone .box-body');
     const dropzone = document.querySelector('.dropzone');
-    const competition_id = document.getElementById("cid").dataset.id
-    const competition_year = document.getElementById("year").dataset.year
-    console.log(competition_id);
-    console.log(competition_year);    
+    const dropzoneWrapper = document.querySelector('.dropzone-wrapper');
+    const inputElement = dropzone;  // Assuming dropzone is the file input element
+
     let fileArray = [];
 
     function readFile(file) {
@@ -28,26 +27,39 @@ document.addEventListener('DOMContentLoaded', function() {
             fileArray.push(file);
             readFile(file);
         }
+        updateInputFiles();
         document.querySelector('.preview-zone').classList.remove('hidden');
+    }
+
+    function updateInputFiles() {
+        // Clear the input element files
+        inputElement.value = '';
+        
+        // Create a DataTransfer object to hold the files
+        const dataTransfer = new DataTransfer();
+        fileArray.forEach(file => dataTransfer.items.add(file));
+        
+        // Assign the files to the input element
+        inputElement.files = dataTransfer.files;
     }
 
     dropzone.addEventListener('change', function(e) {
         handleFiles(e.target.files);
     });
 
-    document.querySelector('.dropzone-wrapper').addEventListener('dragover', function(e) {
+    dropzoneWrapper.addEventListener('dragover', function(e) {
         e.preventDefault();
         e.stopPropagation();
         this.classList.add('dragover');
     });
 
-    document.querySelector('.dropzone-wrapper').addEventListener('dragleave', function(e) {
+    dropzoneWrapper.addEventListener('dragleave', function(e) {
         e.preventDefault();
         e.stopPropagation();
         this.classList.remove('dragover');
     });
 
-    document.querySelector('.dropzone-wrapper').addEventListener('drop', function(e) {
+    dropzoneWrapper.addEventListener('drop', function(e) {
         e.preventDefault();
         e.stopPropagation();
         this.classList.remove('dragover');
@@ -59,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const fileName = e.target.closest('.box').getAttribute('data-file-name');
             fileArray = fileArray.filter(file => file.name !== fileName);
             e.target.closest('.box').remove();
+            updateInputFiles();
         }
     });
 
@@ -90,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 previewZone.insertAdjacentHTML('beforeend', htmlPreview);
             });
             fileArray = []; // Reset the file array after successful upload
+            updateInputFiles(); // Ensure the input files are reset as well
         })
         .catch(error => {
             alert("Error al subir las imágenes");
