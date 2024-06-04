@@ -11,10 +11,11 @@
     </style>
 </head>
 <body>
+    <h1 class="text-center">RESULTADOS DE LA COMPETICION {{ $competition->name }}</h1>
     @foreach($categories as $category => $genders)
-        <p class="category">{{ $category }}</p>
+        <h2 class="category">Categoría: {{ $category }}</p>
         @foreach($genders as $gender => $teams)
-            <p class="gender">{{ $gender }}</p>
+            <h3 class="gender">{{ $gender }}</h3>
             @foreach($teams as $team)
                 <p class="team">Equipo: {{ $team['teamName'] }}, Tiempo: {{ $team['time'] }}</p>
             @endforeach
