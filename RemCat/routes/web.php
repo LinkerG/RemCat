@@ -216,6 +216,16 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
 
                 return $competitionController->showAdminImagesDragAndDrop($year, $_id);
             });
+            Route::post('/competitions/images/{year}/{_id}', function(Request $request, $lang = 'es', $year = null, $_id)  use ($defaultYear) {
+                if ($year === null) {
+                    $year = $defaultYear;
+                }
+
+                $competitionController = new CompetitionController();
+                App::setLocale($lang);
+
+                return $competitionController->uploadCompetitionImages($request, $_id, $year);
+            });
             
         });
     });
