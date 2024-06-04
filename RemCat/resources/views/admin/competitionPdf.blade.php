@@ -10,6 +10,15 @@
         table {
             padding: 1%;
             margin-bottom: 2%;
+            border-collapse: collapse;
+            margin-left: 50px;
+        }
+        td,th {
+            border:1px solid black;
+            padding: 5px;
+        }
+        .gender {
+            margin-left: 30px;
         }
     </style>
 </head>

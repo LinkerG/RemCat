@@ -247,8 +247,8 @@ class CompetitionController extends Controller
         function timeToMilliseconds($time) {
             $parts = explode(':', $time);
             if (count($parts) === 3) {
-                list($minutes, $seconds, $milliseconds) = $parts;
-                return ($minutes * 60 * 1000) + ($seconds * 1000) + $milliseconds;
+                list($hours, $minutes, $seconds) = $parts;
+                return ($hours * 3600 * 1000) + ($minutes * 60 * 1000) + ($seconds * 1000);
             } else {
                 return PHP_INT_MAX; // Para manejar tiempos no válidos o descalificados
             }
@@ -291,8 +291,7 @@ class CompetitionController extends Controller
         }
 
         $pdf = Pdf::loadView('admin/competitionPdf', compact('competition', 'results', 'year', 'categories'));
-        return $pdf->stream();
-        // return $pdf->download('competition.pdf');
+        return $pdf->download('competition-' . $competition->name . '.pdf');
     }
     //------------------VIEW-CALLS-END------------------//
 

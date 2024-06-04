@@ -78,17 +78,25 @@
                     </td>
                     @endif
                     <td>{{$competition->date}}</td>
-                    <td>
-                        <a href="{{ $route }}admin/competitions/pdf/{{ $year }}/{{ $competition->_id }}">
-                            <button data-id="{{ $competition->_id }}" class="btn btn-primary">PDF</button>
-                        </a>
-                    </td>
                     <?php
                     $today = new DateTime();
                     $competitionDate = new DateTime($competition->date);
                     $today = $today->format('Y-m-d');
                     $competitionDate = $competitionDate->format('Y-m-d');
                     ?>
+                    @if($competitionDate < $today)
+                        <td>
+                            <a href="{{ $route }}admin/competitions/pdf/{{ $year }}/{{ $competition->_id }}">
+                                <button data-id="{{ $competition->_id }}" class="btn btn-primary">PDF</button>
+                            </a>
+                        </td>
+                    @else
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <button data-id="{{ $competition->_id }}" class="btn btn-primary" disabled>PDF</button>
+                            </div>
+                        </td>
+                    @endif
                     @if($competitionDate == $today)
                         <td>
                             <a href="{{ $route }}admin/competitions/info/{{$year}}/{{$competition->_id}}">
