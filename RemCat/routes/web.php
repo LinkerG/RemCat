@@ -313,7 +313,7 @@ Route::prefix('{lang?}')->where(['lang' => 'en|es|ca'])->group(function () use($
         if ($year === null) {
             $year = $defaultYear;
         }
-
+        
         $competitionController = new CompetitionController();
         App::setLocale($lang);
         return $competitionController->joinCompetition($request);

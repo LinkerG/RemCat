@@ -103,9 +103,12 @@ class CompetitionController extends Controller
             "category" => $category,
             "teamName" => $request->input("teamName"),
         ];
-        if (Competition::checkIfExists($collectionName, $parameters)) {
+        if (!Competition::checkIfExists($collectionName, $parameters)) {
             Competition::joinCompetition($year, $request, $competition_id);
-        } else{}
+        } else{
+        }
+
+        return redirect()->route('home');
     }
 
     public function changeIsActive(Request $request){
