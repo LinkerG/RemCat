@@ -212,13 +212,13 @@ class CompetitionController extends Controller
 
         return view("competitions/results", compact("competition", "results", "year"));
     }
-    
+
     public function competitionPdf($year, $_id) {
         $competition = Competition::getCompetitionById($year, $_id);
         $results = Competition::getCompetitionResult($year, $_id);
-    
+
         $resultsOrdenados = json_decode($results, true);
-    
+
         // Inicializar array de categorías
         $categories = [
             'Alevin' => ['Masculino' => [], 'Femenino' => []],
@@ -228,7 +228,7 @@ class CompetitionController extends Controller
             'Sénior' => ['Masculino' => [], 'Femenino' => []],
             'Veterano' => ['Masculino' => [], 'Femenino' => []],
         ];
-    
+
         // Asignar nombres a las categorías
         $category_names = [
             'A' => 'Alevin',
@@ -238,20 +238,25 @@ class CompetitionController extends Controller
             'S' => 'Sénior',
             'V' => 'Veterano',
         ];
-    
+
         // Función para convertir tiempo de mm:ss:ms a milisegundos
         function timeToMilliseconds($time) {
-            list($minutes, $seconds, $milliseconds) = explode(':', $time);
-            return ($minutes * 60 * 1000) + ($seconds * 1000) + $milliseconds;
+            $parts = explode(':', $time);
+            if (count($parts) === 3) {
+                list($minutes, $seconds, $milliseconds) = $parts;
+                return ($minutes * 60 * 1000) + ($seconds * 1000) + $milliseconds;
+            } else {
+                return PHP_INT_MAX; // Para manejar tiempos no válidos o descalificados
+            }
         }
-    
+
         // Recorrer datos y organizar por categoría
         foreach ($resultsOrdenados as $item) {
             if (!isset($item['category'])) continue;
             $category = $item['category'];
             $gender = $category[1] == 'M' ? 'Masculino' : 'Femenino';
             $category_key = $category[0];
-    
+
             if (isset($category_names[$category_key])) {
                 $category_name = $category_names[$category_key];
                 $time = $item['time'] ?? 'DNS';
@@ -261,7 +266,7 @@ class CompetitionController extends Controller
                 $categories[$category_name][$gender][] = ['teamName' => $item['teamName'], 'time' => $time];
             }
         }
-    
+
         // Ordenar los equipos por tiempo en cada categoría y género
         foreach ($categories as $category => $genders) {
             foreach ($genders as $gender => &$teams) {
@@ -280,7 +285,7 @@ class CompetitionController extends Controller
                 });
             }
         }
-    
+
         $pdf = Pdf::loadView('admin/competitionPdf', compact('competition', 'results', 'year', 'categories'));
         return $pdf->stream();
         // return $pdf->download('competition.pdf');
