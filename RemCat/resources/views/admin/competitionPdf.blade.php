@@ -7,18 +7,30 @@
     <title>Pdf</title>
 
     <style>
-
+        table {
+            padding: 1%;
+            margin-bottom: 2%;
+        }
     </style>
 </head>
 <body>
     <h1 class="text-center">RESULTADOS DE LA COMPETICION {{ $competition->name }}</h1>
     @foreach($categories as $category => $genders)
-        <h2 class="category">Categoría: {{ $category }}</p>
+        <h2 class="category">Categoría: {{ $category }}</h2>
         @foreach($genders as $gender => $teams)
             <h3 class="gender">{{ $gender }}</h3>
-            @foreach($teams as $team)
-                <p class="team">Equipo: {{ $team['teamName'] }}, Tiempo: {{ $team['time'] }}</p>
-            @endforeach
+            <table>
+                <tr>
+                    <th>Nombre del equipo</th>
+                    <th>Tiempo</th>
+                </tr>
+                @foreach($teams as $team)
+                    <tr>
+                        <td>{{ $team['teamName'] }}</td>
+                        <td>{{ $team['time'] }}</td>
+                    </tr>
+                @endforeach
+            </table>
         @endforeach
     @endforeach
 </body>
