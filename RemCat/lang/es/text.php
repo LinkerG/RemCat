@@ -9,6 +9,7 @@ return [
     'comingSoon' => 'Más competiciones próximanente',
     'allCompetitions' => 'Todas las competiciones',
     'competitions' => 'Regatas',
+    'categories' => 'Categorias',
     'joinCompetitionSingle' => 'Apuntate',
     'joinCompetitionMultiple' => 'Inscribir equipos',
     'viewResults' => 'Ver resultados',

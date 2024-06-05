@@ -9,6 +9,13 @@
     <script src="{{ asset("js/loadCompetitionResults.js") }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">   
     <?php $route = "/" . App::getLocale() . "/" ?>
+    <style>
+        .image-custom{
+            max-width: 20rem;
+            object-fit: contain;
+            aspect-ratio: 1/1;
+        }
+    </style>
 </head>
 <body>
     @include('components.header')
@@ -19,7 +26,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-7 bg-black p1 text-white " >
+            <div class="col-7 p1 " >
                 {{ $competition->image_map }}
             </div>
             <div class="col-5">
@@ -76,7 +83,7 @@
                 @foreach ($competition->images as $image)
                     <?php $imgRoute = './storage/competition-images/' . $image ?>
                         <img 
-                        class="m-5"
+                        class="m-2 image-custom"
                         src="{{ asset($imgRoute) }}" 
                         alt="a">
                 @endforeach

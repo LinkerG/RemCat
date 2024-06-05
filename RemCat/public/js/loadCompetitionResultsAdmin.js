@@ -139,7 +139,7 @@ function generateContent(category, resultsArray, isFirst) {
             teamGroup.style.alignItems = "center"
 
             const teamName = document.createElement("p")
-            teamName.innerHTML = result.team_name
+            teamName.innerHTML = result.teamName
             teamName.style.marginTop = "1rem"
             teamName.style.marginRight = "2rem"
 

@@ -57,16 +57,6 @@
             <button class="z-3 " id="viewAllCompetitionsButton" style="margin-bottom: 5rem !important;">{{ trans("text.allCompetitions") }}</button>
         </div>
         <div style="background-color:rgb(255, 255, 255);font-size:36px" class="parallax-serparator container-fluid ">
-            <h2>{{ trans("text.ourSponsors") }}</h2>
-            <section class="container-fluid overflow-auto d-flex mt-4 mb-4">
-                @foreach ($sponsors as $sponsor)
-                    <?php $imgRoute = "storage/sponsors/logos/" . $sponsor->image_logo; ?>
-                    <figure>
-                        <img src="{{asset($imgRoute)}}" alt="logo of {{$sponsor->name}}">
-                        <figcaption>{{ $sponsor->name }}</figcaption>
-                    </figure>
-                @endforeach
-            </section>
         </div>
     </div>
     @include("components.footer")

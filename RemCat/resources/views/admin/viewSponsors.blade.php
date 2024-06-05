@@ -13,7 +13,7 @@
 <body>
     <?php if(isset($succes)) echo "SUUUUUUUUUUUU";?>
     <h1>Listado de sponsors</h1>
-    <a type="button" class="btn btn-primary rounded" href="{{$route}}admin.competitio">Añadir sponsor</a>
+    <a type="button" class="btn btn-primary rounded" href="{{$route}}admin/sponsors/add">Añadir sponsor</a>
     <table class="table table-striped" data-model="sponsors">
         <thead>
             <tr>

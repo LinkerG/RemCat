@@ -110,6 +110,7 @@ class Competition extends Model
         $competition->sponsors_list = $request->input('sponsors-list');
         $competition->image_map = $mapImage;
         $competition->image_banner = $bannerImage;
+        $competition->images = [];
         $competition->isCancelled = false;
         $competition->isActive = true;
         $competition->save();
